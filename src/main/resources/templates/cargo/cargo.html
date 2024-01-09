@@ -2,15 +2,15 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head th:replace="~{/util/bace :: common_header(~{::link}, ~{::title})}">
-  <title>Рейсы</title>
+  <title>Грузы</title>
 </head>
 
 <body>
 <nav th:replace="~{/util/navBar :: NavBar}"></nav>
-<table class="table table-bordered">
+<table class="table table-sm table-bordered border-primary">
+  <caption th:text="'Рейс ' + ${track_name}"></caption>
   <thead class="table-dark">
   <tr>
-
     <th scope="col">Код заказа клиента</th>
     <th scope="col">ПЭК ШК</th>
     <th scope="col">Мест</th>
@@ -26,8 +26,8 @@
 
   </tr>
   </thead>
-  <tbody class="table-group-divider">
-  <tr th:each="carg :${cargos}">
+  <tbody class="table-secondary">
+  <tr th:each="carg :${cargos}" th:class="${carg.issuance()} ? 'table-warning' : (${carg.processed()} ? 'table-success':'table-secondary')">
     <td>
       <h6 th:text="${carg.clientBarcode()}"/>
     </td>

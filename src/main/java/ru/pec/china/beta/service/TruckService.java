@@ -5,10 +5,10 @@ import org.springframework.core.convert.ConversionService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.pec.china.beta.dto.TruckDTO;
-import ru.pec.china.beta.repositories.CargoRepositories;
 import ru.pec.china.beta.repositories.TruckRepositories;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Service
@@ -16,13 +16,11 @@ import java.util.stream.Collectors;
 public class TruckService {
 
     private final TruckRepositories truckRepositories;
-    private final CargoRepositories cargoRepositories;
     private final ConversionService conversionService;
 
     @Autowired
-    public TruckService(TruckRepositories truckRepositories, CargoRepositories cargoRepositories, ConversionService conversionService) {
+    public TruckService(TruckRepositories truckRepositories, ConversionService conversionService) {
         this.truckRepositories = truckRepositories;
-        this.cargoRepositories = cargoRepositories;
         this.conversionService = conversionService;
     }
 
@@ -33,6 +31,10 @@ public class TruckService {
 
     public void delete(Integer id){
         truckRepositories.findById(id).ifPresent(truckRepositories::delete);
+    }
+
+    public String findById(int id){
+        return truckRepositories.findById(id).map(truck -> Objects.requireNonNull(conversionService.convert(truck, TruckDTO.class)).trackName()).orElse("не существует");
     }
 
 }

@@ -42,6 +42,7 @@ public class TruckController {
     public String cargoList(@PathVariable("id") int id,
                             Model model){
         model.addAttribute("cargos", cargoService.findAllByTrackId(id));
+        model.addAttribute("track_name", truckService.findById(id));
         return "cargo/cargo";
     }
 }

@@ -7,7 +7,7 @@
 
 <body>
 <nav th:replace="~{/util/navBar :: NavBar}"></nav>
-<table class="table table-bordered">
+<table class="table table-bordered ">
     <thead class="table-dark">
     <tr>
 
@@ -18,7 +18,7 @@
 
     </tr>
     </thead>
-    <tbody class="table-group-divider">
+    <tbody class="table-primary">
     <tr th:each="truck :${trucks}">
         <td>
             <h6 th:text="${#temporals.format(truck.zonedDateTime(), 'dd-MM-yyyy HH:mm zzz', 'Europe/Moscow')}"/>
