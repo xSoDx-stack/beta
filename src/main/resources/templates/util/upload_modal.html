@@ -1,0 +1,24 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<!------------------------------------------------------------------------------->
+<div th:fragment="UploadToModal" class="modal fade" id="UploadModal" tabindex="-1" aria-labelledby="labelModal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="labelModal">Загрузка файла</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+            </div>
+            <form th:method="POST" th:action="@{/upload}" enctype="multipart/form-data">
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="formFile" class="form-label">Укажите файл таблицы</label>
+                        <input class="form-control" type="file" th:name="file" id="formFile">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" value="Import" class="btn btn-primary">Загрузить</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!------------------------------------------------------------------------------------->

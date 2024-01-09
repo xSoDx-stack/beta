@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{/util/bace :: common_header(~{::link}, ~{::title})}">
+  <title>Рейсы</title>
+</head>
+
+<body>
+<nav th:replace="~{/util/navBar :: NavBar}"></nav>
+<table class="table table-bordered">
+  <thead class="table-dark">
+  <tr>
+
+    <th scope="col">Код заказа клиента</th>
+    <th scope="col">ПЭК ШК</th>
+    <th scope="col">Мест</th>
+    <th scope="col">Принято</th>
+    <th scope="col">Вес(кг)</th>
+    <th scope="col">Объём</th>
+    <th scope="col">Габариты ДxШxВ</th>
+    <th scope="col">Город</th>
+    <th scope="col">Местный/перевалочный</th>
+    <th scope="col">Выдан</th>
+    <th scope="col">Принят</th>
+
+
+  </tr>
+  </thead>
+  <tbody class="table-group-divider">
+  <tr th:each="carg :${cargos}">
+    <td>
+      <h6 th:text="${carg.clientBarcode()}"/>
+    </td>
+    <td>
+      <h6 th:text="${carg.pecCode()}"/>
+    </td>
+    <td>
+      <h6 th:text="${carg.numberOfSeats()}"/>
+    </td>
+    <td>
+      <h6 th:text="${carg.numberOfSeatsUserScan()} + ' из ' + ${carg.numberOfSeats()}"/>
+    </td>
+    <td>
+      <h6 th:text="${carg.weight()}"/>
+    </td>
+    <td>
+      <h6 th:text="${carg.volume()}"/>
+    </td>
+    <td>
+      <h6 th:text="${carg.dimensions()}"/>
+    </td>
+    <td>
+      <h6 th:text="${carg.city()}"/>
+    </td>
+    <td>
+      <h6 th:text="${carg.localOrTransshipment()}"/>
+    </td>
+    <td>
+      <h6 th:text="${carg.issuance()} ? 'да' : 'нет'"/>
+    </td>
+    <td>
+      <h6 th:text="${carg.processed()} ? 'да': 'нет'"/>
+    </td>
+  </tr>
+  </tbody>
+</table>
+
+</body>
+<div th:replace="~{util/upload_modal :: UploadToModal}"></div>
+</html>
