@@ -8,6 +8,7 @@ public class CargoDTOtoCargoConverter implements Converter<CargoDTO, Cargo> {
     @Override
     public Cargo convert(CargoDTO source) {
         var cargo = new Cargo();
+        cargo.setId(source.id());
         cargo.setClientBarcode(source.clientBarcode());
         cargo.setPecCode(source.pecCode());
         cargo.setNumberOfSeats(source.numberOfSeats());
@@ -18,7 +19,8 @@ public class CargoDTOtoCargoConverter implements Converter<CargoDTO, Cargo> {
         cargo.setCity(source.city());
         cargo.setLocalOrTransshipment(source.localOrTransshipment());
         cargo.setProcessedByUser(source.processedByUser());
-
+        cargo.setIssuanceByUser(source.issuanceByUser());
+        cargo.setTimeOfIssue(source.timeOfIssue());
         return cargo;
     }
 }

@@ -11,6 +11,7 @@ public class CargoToTruckDTOConverter implements Converter<Cargo, CargoDTO> {
     @Override
     public CargoDTO convert(Cargo source) {
         return new CargoDTO(
+                source.getId(),
                 source.getClientBarcode(),
                 source.getPecCode(),
                 source.getNumberOfSeats(),
@@ -22,6 +23,8 @@ public class CargoToTruckDTOConverter implements Converter<Cargo, CargoDTO> {
                 source.getCity(),
                 source.getLocalOrTransshipment(),
                 source.getProcessedByUser(),
+                source.getIssuanceByUser(),
+                source.getTimeOfIssue(),
                 source.isProcessed(),
                 source.isIssuance()
         );

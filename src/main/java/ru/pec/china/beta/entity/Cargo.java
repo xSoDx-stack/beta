@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.ZonedDateTime;
 import java.util.UUID;
 @Getter
 @Setter
@@ -50,6 +51,12 @@ public class Cargo {
 
     @Column(name = "processed_by_user")
     private Integer processedByUser; //Обработка пользователем(id)
+
+    @Column(name = "issuance_by_user")
+    private Integer issuanceByUser; //Выдан пользователем
+
+    @Column(name = "time_of_issue")
+    private ZonedDateTime timeOfIssue; //Время выдачи
 
     @Column(name = "processed", columnDefinition = "boolean  default false")
     private boolean processed; //обработанный да/нет
