@@ -14,4 +14,6 @@ public interface CargoRepositories extends JpaRepository<Cargo, UUID> {
     List<Cargo> findAllByProcessedTrueAndIssuanceFalse();
 
     List<Cargo> findAllByProcessedFalse();
+
+    List<Cargo> findAllByIssuanceTrue();
 }

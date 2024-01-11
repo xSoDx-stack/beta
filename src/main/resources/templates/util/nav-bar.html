@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
-<nav th:fragment="NavBar" class="navbar navbar-expand-lg bg-body-tertiary">
+<nav th:fragment="NavBar" class="navbar navbar-expand-lg bg-body-tertiary ">
     <div class="container-fluid">
         <a class="navbar-brand">ПЭК Юг</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Переключатель навигации">
@@ -15,9 +15,9 @@
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">Грузы</a>
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" th:href="@{/cargo/all}">Все выгруженные</a></li>
-                        <li><a class="dropdown-item" th:href="@{/cargo/all/processed}">Принятые</a></li>
-                        <li><a class="dropdown-item" href="#">Выданные</a></li>
+                        <li><a class="dropdown-item" th:href="@{/cargo/unloaded}">Все выгруженные</a></li>
+                        <li><a class="dropdown-item" th:href="@{/cargo/processed}">Принятые</a></li>
+                        <li><a class="dropdown-item" th:href="@{/cargo/issuance}">Выданные</a></li>
                         <li><hr class="dropdown-divider"></li>
                         <li><a class="dropdown-item" href="#">Не обработанные</a></li>
                         <li><a class="dropdown-item" href="#">На остатках</a></li>

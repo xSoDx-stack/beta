@@ -31,6 +31,11 @@ public class CargoService {
                 conversionService.convert(cargo, CargoDTO.class)).collect(Collectors.toList());
     }
 
+    public List<CargoDTO> findAllByIssuance(){
+        return cargoRepositories.findAllByIssuanceTrue().stream().map(cargo ->
+                conversionService.convert(cargo, CargoDTO.class)).collect(Collectors.toList());
+    }
+
     public List<CargoDTO> findAllByTrackId(Integer id){
         return cargoRepositories.findAllByTruckId(id).stream().map(cargo ->
                 conversionService.convert(cargo, CargoDTO.class)).collect(Collectors.toList());

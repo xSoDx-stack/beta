@@ -21,15 +21,21 @@ public class CargoController {
         this.truckService = truckService;
     }
 
-    @GetMapping("/all")
-    public String allCargoList(Model model){
+    @GetMapping("/unloaded")
+    public String CargoListUnloaded(Model model){
         model.addAttribute("cargos", cargoService.findAllUnloaded());
         return "cargo/cargo";
     }
 
-    @GetMapping("/all/processed")
-    public String allProcessed(Model model){
+    @GetMapping("/processed")
+    public String Processed(Model model){
         model.addAttribute("cargos", cargoService.findAllByProcessed());
+        return "cargo/cargo";
+    }
+
+    @GetMapping("/issuance")
+    public String Issuance(Model model){
+        model.addAttribute("cargos", cargoService.findAllByIssuance());
         return "cargo/cargo";
     }
 

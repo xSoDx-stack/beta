@@ -7,9 +7,10 @@
 
 <body>
 <nav th:replace="~{/util/nav-bar :: NavBar}"></nav>
+
 <table class="table table-sm table-bordered border-primary text-center">
   <caption th:if="${track_name}" th:text="'Рейс ' + ${track_name}"></caption>
-  <thead class="table-dark text-wrap">
+  <thead class="table-dark">
   <tr>
     <th scope="col">Код заказа клиента</th>
     <th scope="col">ПЭК ШК</th>
@@ -69,7 +70,7 @@
 
 <div th:replace="~{util/_modal :: UploadToModal}"></div>
 <script th:inline="javascript">
-  $('.offcanvas-body').each(function(index) {
+  $('.container').each(function() {
     $(this).barcode($(this).data('code'), 'code128', {barWidth:2, barHeight:130});
   });
 </script>

@@ -6,10 +6,13 @@
         <h5 class="offcanvas-title" id="staticBackdropLabel">Обработка груза</h5>
         <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Закрыть"></button>
     </div>
-
-    <div class="offcanvas-body" th:attr="data-code=${carg.clientBarcode()}">
-        <div>
-
+    <div class="offcanvas-body">
+        <form class="d-flex" role="search">
+            <input class="form-control me-2 " type="search" placeholder="Поиск" aria-label="Поиск">
+            <button class="btn btn-outline-success" type="submit">Поиск</button>
+        </form>
+        <br>
+        <div class="container" th:attr="data-code=${carg.clientBarcode()}">
         </div>
     </div>
 </div>
