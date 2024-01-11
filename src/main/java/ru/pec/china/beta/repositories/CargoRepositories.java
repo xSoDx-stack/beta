@@ -10,4 +10,8 @@ import java.util.UUID;
 @Repository
 public interface CargoRepositories extends JpaRepository<Cargo, UUID> {
     List<Cargo> findAllByTruckId(Integer id);
+
+    List<Cargo> findAllByProcessedTrueAndIssuanceFalse();
+
+    List<Cargo> findAllByProcessedFalse();
 }

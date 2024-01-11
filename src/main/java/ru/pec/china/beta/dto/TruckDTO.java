@@ -9,5 +9,8 @@ public record TruckDTO(
         Integer id,
         String trackName,
         ZonedDateTime zonedDateTime,
-        List<Cargo> cargos
+        List<Cargo> cargos,
+        Integer processed, //количество обработанных
+        Integer issuance // количество выданных
+
 ){}

@@ -6,15 +6,15 @@
 </head>
 
 <body>
-<nav th:replace="~{/util/navBar :: NavBar}"></nav>
+<nav th:replace="~{/util/nav-bar :: NavBar}"></nav>
 <table class="table table-sm table-bordered border-primary text-center">
-  <caption th:text="'Рейс ' + ${track_name}"></caption>
+  <caption th:if="${track_name}" th:text="'Рейс ' + ${track_name}"></caption>
   <thead class="table-dark text-wrap">
   <tr>
     <th scope="col">Код заказа клиента</th>
     <th scope="col">ПЭК ШК</th>
     <th scope="col">Мест</th>
-    <th scope="col">Принято</th>
+    <th style="width: 6rem;" scope="col">Выгружено мест</th>
     <th scope="col">Вес(кг)</th>
     <th scope="col">Объём</th>
     <th style="width: 6rem;" scope="col">Габариты ДxШxВ</th>
@@ -29,8 +29,8 @@
   <tbody class="table-secondary">
   <tr th:each="carg,i :${cargos}" th:class="${carg.issuance()} ? 'table-warning' : (${carg.processed()} ? 'table-success':'table-secondary')">
     <td>
-      <a th:text="${carg.clientBarcode()}" class="btn" data-bs-toggle="modal" th:attr="data-bs-target='#BarcodeModal' + ${carg.id()}">></a>
-      <div th:replace="~{util/upload_modal :: ModalToBarcode(${carg.clientBarcode()}, ${carg.id()})}"></div>
+      <a th:text="${carg.clientBarcode()}" class="btn" data-bs-toggle="offcanvas" th:attr="data-bs-target='#staticBackdrop' + ${carg.id()}">></a>
+      <div th:replace="~{util/offcanvas :: EditCargo(${carg})}"></div>
     </td>
     <td>
       <h6 th:text="${carg.pecCode()}"/>
@@ -67,9 +67,9 @@
 </table>
 </body>
 
-<div th:replace="~{util/upload_modal :: UploadToModal}"></div>
+<div th:replace="~{util/_modal :: UploadToModal}"></div>
 <script th:inline="javascript">
-  $('.modal-body').each(function(index) {
+  $('.offcanvas-body').each(function(index) {
     $(this).barcode($(this).data('code'), 'code128', {barWidth:2, barHeight:130});
   });
 </script>

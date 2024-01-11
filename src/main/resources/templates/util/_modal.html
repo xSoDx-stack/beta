@@ -24,14 +24,13 @@
 <!------------------------------------------------------------------------------------->
 <!-- Модальное окно для вывода штрих кода  -->
 <div th:fragment="ModalToBarcode(barcode,id)" class="modal fade" th:id="'BarcodeModal' + ${id}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
                 <h1 class="modal-title fs-5" id="exampleModalLabel">Штрихкод груза</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
             </div>
-            <div class="modal-body align-content-center"  th:attr="data-code=${barcode}"></div>
-
+                <div class="modal-body"  th:attr="data-code=${barcode}"></div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
             </div>

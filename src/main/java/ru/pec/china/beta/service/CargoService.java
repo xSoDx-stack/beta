@@ -21,10 +21,22 @@ public class CargoService {
         this.conversionService = conversionService;
     }
 
+    public List<CargoDTO> findAllUnloaded(){
+        return cargoRepositories.findAllByProcessedFalse().stream().map(cargo ->
+                conversionService.convert(cargo, CargoDTO.class)).collect(Collectors.toList());
+    }
+
+    public List<CargoDTO> findAllByProcessed(){
+        return cargoRepositories.findAllByProcessedTrueAndIssuanceFalse().stream().map(cargo ->
+                conversionService.convert(cargo, CargoDTO.class)).collect(Collectors.toList());
+    }
 
     public List<CargoDTO> findAllByTrackId(Integer id){
-        return cargoRepositories.findAllByTruckId(id).stream().map(cargo -> conversionService.convert(cargo, CargoDTO.class)).collect(Collectors.toList());
+        return cargoRepositories.findAllByTruckId(id).stream().map(cargo ->
+                conversionService.convert(cargo, CargoDTO.class)).collect(Collectors.toList());
     }
+
+
 
 
 

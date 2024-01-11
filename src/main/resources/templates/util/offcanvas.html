@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<div th:fragment="EditCargo(carg)" class="offcanvas offcanvas-start" data-bs-backdrop="static" tabindex="-1" th:id="'staticBackdrop' + ${carg.id()}" aria-labelledby="staticBackdropLabel">
+    <div class="offcanvas-header">
+        <h5 class="offcanvas-title" id="staticBackdropLabel">Обработка груза</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Закрыть"></button>
+    </div>
+
+    <div class="offcanvas-body" th:attr="data-code=${carg.clientBarcode()}">
+        <div>
+
+        </div>
+    </div>
+</div>
+
+</html>

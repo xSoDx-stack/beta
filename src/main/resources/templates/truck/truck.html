@@ -6,14 +6,14 @@
 </head>
 
 <body>
-<nav th:replace="~{/util/navBar :: NavBar}"></nav>
+<nav th:replace="~{/util/nav-bar :: NavBar}"></nav>
 <table class="table table-bordered ">
     <thead class="table-dark">
     <tr>
 
         <th scope="col">Дата создания</th>
         <th scope="col">Номер машины</th>
-        <th scope="col">Количество индексов/обработанное количество</th>
+        <th scope="col">индексы/обработано/выдано</th>
         <th scope="col">Действия</th>
 
     </tr>
@@ -28,7 +28,7 @@
             <h6> <a th:text="${truck.trackName()}" th:href="@{/truck/{id}/cargo(id=${truck.id()})}"/></h6>
         </td>
         <td>
-            <h6 th:text="${truck.cargos().size()}"/>
+            <h6 th:text="${truck.cargos().size()} + '/' + ${truck.processed()} + '/' + ${truck.issuance()}"/>
         </td>
         <td>
             <a type="button" class="btn btn-secondary" th:href="@{/truck/delete/{id}/(id=${truck.id()})}">
@@ -42,5 +42,5 @@
 </table>
 
 </body>
-<div th:replace="~{util/upload_modal :: UploadToModal}"></div>
+<div th:replace="~{util/_modal :: UploadToModal}"></div>
 </html>

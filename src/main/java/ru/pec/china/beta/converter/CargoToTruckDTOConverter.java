@@ -30,9 +30,8 @@ public class CargoToTruckDTOConverter implements Converter<Cargo, CargoDTO> {
         );
     }
 
-    private Double dimension(Double volume, Integer numberOfSeats){
+    private BigDecimal dimension(Double volume, Integer numberOfSeats){
         BigDecimal bd = new BigDecimal(Double.toString(volume/numberOfSeats));
-        bd = bd.setScale(3, RoundingMode.HALF_UP);
-        return bd.doubleValue();
+        return bd.setScale(3, RoundingMode.HALF_UP);
     }
 }

@@ -10,20 +10,23 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" th:href="@{/}">Главная</a>
+                    <a class="nav-link active" aria-current="page" th:href="@{/}">Рейсы</a>
                 </li>
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        Выпадающий список
-                    </a>
+                    <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">Грузы</a>
                     <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" th:href="@{/cargo/all}">Все выгруженные</a></li>
+                        <li><a class="dropdown-item" th:href="@{/cargo/all/processed}">Принятые</a></li>
+                        <li><a class="dropdown-item" href="#">Выданные</a></li>
                         <li><hr class="dropdown-divider"></li>
-                        <li>
-                            <a class="dropdown-item" data-bs-toggle="modal"
-                               type="button"
-                               data-bs-target="#UploadModal">Загрузить таблицу</a></li>
-                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="#">Не обработанные</a></li>
+                        <li><a class="dropdown-item" href="#">На остатках</a></li>
                     </ul>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-bs-toggle="modal"
+                       type="button"
+                       data-bs-target="#UploadModal">Загрузить таблицу</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link disabled">Отключенная</a>
