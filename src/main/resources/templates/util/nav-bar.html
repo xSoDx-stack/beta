@@ -32,8 +32,8 @@
                     <a class="nav-link disabled">Отключенная</a>
                 </li>
             </ul>
-            <form class="d-flex" role="search">
-                <input class="form-control me-2" type="search" placeholder="Поиск" aria-label="Поиск">
+            <form class="d-flex" role="search" th:action="@{/search}" th:method="GET">
+                <input class="form-control me-2" name="search"  th:value="${search}"  type="search" placeholder="Поиск" aria-label="Поиск">
                 <button class="btn btn-outline-success" type="submit">Поиск</button>
             </form>
         </div>
