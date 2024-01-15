@@ -21,9 +21,6 @@ public class UploadService {
     private final PersonRepositories personRepositories;
     private final TruckRepositories truckRepositories;
     private final CargoRepositories cargoRepositories;
-
-//    private final LocalDateTime  data = LocalDateTime.now();
-
     private final ZonedDateTime date = ZonedDateTime.now();
 
     @Autowired

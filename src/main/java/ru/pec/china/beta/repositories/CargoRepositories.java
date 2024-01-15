@@ -19,6 +19,6 @@ public interface CargoRepositories extends JpaRepository<Cargo, UUID> {
 
     List<Cargo> findAllByIssuanceTrue();
 
-    @Query("select c from Cargo c where c.clientBarcode like %:search% or c.pecCode like %:search%" )
+    @Query("select c from Cargo c where c.clientBarcode like %:search% or c.pecCode ilike %:search%")
     List<Cargo> searchCode(@Param("search") String search);
 }

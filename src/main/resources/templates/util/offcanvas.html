@@ -14,6 +14,18 @@
         <br>
         <div class="container" th:attr="data-code=${carg.clientBarcode()}">
         </div>
+        <p th:text="${carg.numberOfSeats()}">Мест</p>
+        <p th:text="${carg.weight()}">Вес(кг)</p>
+        <p th:text="${carg.volume()}">Объём</p>
+        <p th:text="${carg.dimensions()}">Габариты ДxШxВ</p>
+        <p th:text="${carg.localOrTransshipment()}">Местный/перевалочный</p>
+        <p th:text="${'Выдан: ' + carg.issuance()}  ? 'да' : 'нет'">Выдан</p>
+        <p th:text="${carg.processed()}? 'да': 'нет'">Принят</p>
+
+
+
+
+
     </div>
 </div>
 
