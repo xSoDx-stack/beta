@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
-<div th:fragment="EditCargo(carg)" class="offcanvas offcanvas-start" data-bs-backdrop="static" tabindex="-1" th:id="'staticBackdrop' + ${carg.id()}" aria-labelledby="staticBackdropLabel">
+<div th:fragment="EditCargo(carg)" class="offcanvas offcanvas-start" data-bs-backdrop="static" tabindex="-1" th:id="'staticBackdrop' + ${carg.getId()}" aria-labelledby="staticBackdropLabel">
     <div class="offcanvas-header">
         <h5 class="offcanvas-title" id="staticBackdropLabel">Обработка груза</h5>
         <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Закрыть"></button>
@@ -12,20 +12,89 @@
             <button class="btn btn-outline-success" type="submit">Поиск</button>
         </form>
         <br>
-        <div class="container" th:attr="data-code=${carg.clientBarcode()}">
+        <div class="container"  th:attr="data-code=${carg.getClientBarcode()}">
         </div>
-        <p th:text="${carg.numberOfSeats()}">Мест</p>
-        <p th:text="${carg.weight()}">Вес(кг)</p>
-        <p th:text="${carg.volume()}">Объём</p>
-        <p th:text="${carg.dimensions()}">Габариты ДxШxВ</p>
-        <p th:text="${carg.localOrTransshipment()}">Местный/перевалочный</p>
-        <p th:text="${'Выдан: ' + carg.issuance()}  ? 'да' : 'нет'">Выдан</p>
-        <p th:text="${carg.processed()}? 'да': 'нет'">Принят</p>
+        <form th:method="POST" th:action="@{/cargo/process}" th:object="(${cargo})">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th><input type="hidden" th:field="*{Id}" th:value="${carg.getId()}"></th>
+                    <th scope="col">Мест</th>
+                    <th scope="col">Вес</th>
+                    <th scope="col">Габариты</th>
+                    <th scope="col">Объём</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td th:text="${carg.getNumberOfSeats()}">Мест</td>
+                    <td th:text="${carg.getWeight()}">Вес</td>
+                    <td th:text="${carg.getDimensions()}">Габариты ДxШxВ</td>
+                    <td th:text="${carg.getVolume()}">Объём/td>
+                </tr>
+                <tr>
+                    <td colspan="4">
+
+                        <table class="table mb-0">
+                            <thead>
+                            <tr>
+                                <th scope="col">Пэк штрихкод</th>
+                                <th scope="col" th:if="${carg.getIssuanceByUser()}">Груз выдан</th>
+                            </tr>
+                            </thead>
+
+                            <tbody>
+                            <tr>
+                                <td th:unless="${carg.getPecCode()}">
+                                    <div class="input-group">
+                                        <label>
+                                            <input  type="text" class="form-control" th:field="*{pecCode}">
+                                        </label>
+                                    </div>
+                                </td>
+                                <td th:if="${carg.getPecCode()}">
+                                    <h5 th:text="${carg.getPecCode()}">ШК ПЭК</h5>
+                                </td>
+
+                                <td th:if="${!carg.isIssuance() and carg.isProcessed()}">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" th:field="*{issuance}"  id="issuance">
+                                        <label class="form-check-label" for="issuance">
+                                            Выдать груз
+                                        </label>
+                                    </div>
+
+                                <td th:if="${carg.isIssuance()}">
+                                    <h6 th:text="${#temporals.format(carg.getTimeOfIssue(), 'dd-MM-yyyy HH:mm zzz', 'Europe/Moscow')}"></h6>
+                                </td>
 
 
+                                <td>
+                                    <div class="form-check" th:if="${!carg.isProcessed()}">
+                                        <input class="form-check-input" type="checkbox"  th:field="*{processed}"  id="processed">
+                                        <label class="form-check-label" for="processed">
+                                            Принять груз
+                                        </label>
+                                    </div>
+                                </td>
 
+                            </tr>
+                            <tr>
+                                <td th:if="${carg.isIssuance()}" th:text="'Выдал: ' + 'Пупикин Залупкн'"></td>
+                                <td>
+                                    <h6 th:text="'Рейс: '"></h6><a th:text="${carg.getTrack().getTrackName()}" th:href="@{/truck/{id}/cargo(id=${carg.getTrack().getId()})}"/>
 
-
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <button type="submit" class="btn btn-primary"
+                    style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;" th:text="Сохранить">
+            </button>
+        </form>
     </div>
 </div>
 

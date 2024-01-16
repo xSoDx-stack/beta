@@ -4,9 +4,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.ConversionService;
 import org.springframework.stereotype.Service;
 import ru.pec.china.beta.dto.CargoDTO;
+import ru.pec.china.beta.entity.Cargo;
 import ru.pec.china.beta.repositories.CargoRepositories;
 
+import java.time.ZonedDateTime;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
@@ -14,11 +17,17 @@ public class CargoService {
 
     private final CargoRepositories cargoRepositories;
     private final ConversionService conversionService;
+    private final ZonedDateTime date = ZonedDateTime.now();
 
     @Autowired
     public CargoService(CargoRepositories cargoRepositories, ConversionService conversionService) {
         this.cargoRepositories = cargoRepositories;
         this.conversionService = conversionService;
+    }
+
+    public List<CargoDTO> findAll(){
+        return cargoRepositories.findAll().stream().map(cargo ->
+                conversionService.convert(cargo, CargoDTO.class)).toList();
     }
 
     public List<CargoDTO> findAllUnloaded(){
@@ -39,6 +48,16 @@ public class CargoService {
     public List<CargoDTO> findAllByTrackId(Integer id){
         return cargoRepositories.findAllByTruckId(id).stream().map(cargo ->
                 conversionService.convert(cargo, CargoDTO.class)).collect(Collectors.toList());
+    }
+
+    public void cargoUpdate(UUID id, CargoDTO cargoDTO){;
+        Cargo cargo = cargoRepositories.findById(id).orElse(null);
+        assert cargo != null;
+//        cargo.setIssuance(cargoDTO.get);
+//        cargo.setProcessed(cargoDTO.processed());
+//        cargo.setPecCode(cargoDTO.pecCode());
+//        cargo.setTimeOfIssue(date);
+//        cargoRepositories.save(cargo);
     }
 
 

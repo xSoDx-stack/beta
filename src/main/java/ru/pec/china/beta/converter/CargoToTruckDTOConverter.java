@@ -21,10 +21,11 @@ public class CargoToTruckDTOConverter implements Converter<Cargo, CargoDTO> {
                 dimension(source.getVolume(),source.getNumberOfSeats()),
                 source.getRecipient(),
                 source.getCity(),
-                source.getLocalOrTransshipment(),
                 source.getProcessedByUser(),
+                source.getLocalOrTransshipment(),
                 source.getIssuanceByUser(),
                 source.getTimeOfIssue(),
+                source.getTruck(),
                 source.isProcessed(),
                 source.isIssuance()
         );

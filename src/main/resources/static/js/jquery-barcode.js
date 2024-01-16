@@ -25,7 +25,7 @@
       marginHRI: 5,
       bgColor: "#FFFFFF",
       color: "#000000",
-      fontSize: 10,
+      fontSize: 30,
       output: "css",
       posX: 0,
       posY: 0

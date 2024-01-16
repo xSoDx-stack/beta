@@ -28,40 +28,40 @@
   </tr>
   </thead>
   <tbody class="table-secondary">
-  <tr th:each="carg,i :${cargos}" th:class="${carg.issuance()} ? 'table-warning' : (${carg.processed()} ? 'table-success':'table-secondary')">
+  <tr th:each="carg,i :${cargos}" th:class="${carg.getIssuanceByUser()} ? 'table-warning' : (${carg.getProcessedByUser()} ? 'table-success':'table-secondary')">
     <td>
-      <a th:text="${carg.clientBarcode()}" class="btn" data-bs-toggle="offcanvas" th:attr="data-bs-target='#staticBackdrop' + ${carg.id()}">></a>
+      <button th:text="${carg.getClientBarcode()}" class="btn" data-bs-toggle="offcanvas" th:attr="data-bs-target='#staticBackdrop' + ${carg.getId()}">></button>
       <div th:replace="~{util/offcanvas :: EditCargo(${carg})}"></div>
     </td>
     <td>
-      <h6 th:text="${carg.pecCode()}"/>
+      <h6 th:text="${carg.getPecCode()}"/>
     </td>
     <td>
-      <h6 th:text="${carg.numberOfSeats()}"/>
+      <h6 th:text="${carg.getNumberOfSeats()}"/>
     </td>
     <td>
-      <h6 th:text="${carg.numberOfSeatsUserScan()} + ' из ' + ${carg.numberOfSeats()}"/>
+      <h6 th:text="${carg.getNumberOfSeatsUserScan()} + ' из ' + ${carg.getNumberOfSeats()}"/>
     </td>
     <td>
-      <h6 th:text="${carg.weight()}"/>
+      <h6 th:text="${carg.getWeight()}"/>
     </td>
     <td>
-      <h6 th:text="${carg.volume()}"/>
+      <h6 th:text="${carg.getVolume()}"/>
     </td>
     <td>
-      <h6 th:text="${carg.dimensions()}"/>
+      <h6 th:text="${carg.getDimensions()}"/>
     </td>
     <td>
-      <h6 th:text="${carg.city()}"/>
+      <h6 th:text="${carg.getCity()}"/>
     </td>
     <td>
-      <h6 th:text="${carg.localOrTransshipment()}"/>
+      <h6 th:text="${carg.getLocalOrTransshipment()}"/>
     </td>
     <td>
-      <h6 th:text="${carg.issuance()} ? 'да' : 'нет'"/>
+      <h6 th:text="${carg.isIssuance()} ? 'да' : 'нет'"/>
     </td>
     <td>
-      <h6 th:text="${carg.processed()} ? 'да': 'нет'"/>
+      <h6 th:text="${carg.isProcessed()} ? 'да': 'нет'"/>
     </td>
   </tr>
   </tbody>

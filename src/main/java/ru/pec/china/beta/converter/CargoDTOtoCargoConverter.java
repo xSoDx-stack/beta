@@ -8,19 +8,21 @@ public class CargoDTOtoCargoConverter implements Converter<CargoDTO, Cargo> {
     @Override
     public Cargo convert(CargoDTO source) {
         var cargo = new Cargo();
-        cargo.setId(source.id());
-        cargo.setClientBarcode(source.clientBarcode());
-        cargo.setPecCode(source.pecCode());
-        cargo.setNumberOfSeats(source.numberOfSeats());
-        cargo.setNumberOfSeatsUserScan(source.numberOfSeatsUserScan());
-        cargo.setWeight(source.weight());
-        cargo.setVolume(source.volume());
-        cargo.setRecipient(source.recipient());
-        cargo.setCity(source.city());
-        cargo.setLocalOrTransshipment(source.localOrTransshipment());
-        cargo.setProcessedByUser(source.processedByUser());
-        cargo.setIssuanceByUser(source.issuanceByUser());
-        cargo.setTimeOfIssue(source.timeOfIssue());
+        cargo.setId(source.getId());
+        cargo.setClientBarcode(source.getClientBarcode());
+        cargo.setPecCode(source.getPecCode());
+        cargo.setNumberOfSeats(source.getNumberOfSeats());
+        cargo.setNumberOfSeatsUserScan(source.getNumberOfSeatsUserScan());
+        cargo.setWeight(source.getWeight());
+        cargo.setVolume(source.getVolume());
+        cargo.setRecipient(source.getRecipient());
+        cargo.setCity(source.getCity());
+        cargo.setLocalOrTransshipment(source.getLocalOrTransshipment());
+        cargo.setProcessedByUser(source.getProcessedByUser());
+        cargo.setIssuanceByUser(source.getIssuanceByUser());
+        cargo.setTimeOfIssue(source.getTimeOfIssue());
+        cargo.setIssuance(source.isIssuance());
+        cargo.setProcessed(source.isProcessed());
         return cargo;
     }
 }
