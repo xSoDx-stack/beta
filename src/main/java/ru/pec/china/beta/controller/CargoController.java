@@ -52,15 +52,8 @@ public class CargoController {
     }
 
     @PostMapping("/process")
-    public String  process (@ModelAttribute("cargo") CargoDTO cargo,
-                           Model model){
-        System.out.println("**************************");
-        System.out.println(cargo.getId());
-        System.out.println(cargo.getPecCode());
-        System.out.println(cargo.isProcessed());
-        System.out.println(cargo.isIssuance());
-        System.out.println("**************************");
-
+    public String  process (@ModelAttribute("cargo") CargoDTO cargo){
+        cargoService.cargoUpdate(cargo);
         return "redirect:/cargo";
     }
 

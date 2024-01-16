@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
-<div th:fragment="EditCargo(carg)" class="offcanvas offcanvas-start" data-bs-backdrop="static" tabindex="-1" th:id="'staticBackdrop' + ${carg.getId()}" aria-labelledby="staticBackdropLabel">
+<div th:fragment="EditCargo(carg)" class="offcanvas offcanvas-end" data-bs-backdrop="static" tabindex="-1" th:id="'staticBackdrop' + ${carg.getId()}" aria-labelledby="staticBackdropLabel">
     <div class="offcanvas-header">
         <h5 class="offcanvas-title" id="staticBackdropLabel">Обработка груза</h5>
         <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Закрыть"></button>
@@ -18,7 +18,7 @@
             <table class="table">
                 <thead>
                 <tr>
-                    <th><input type="hidden" th:field="*{Id}" th:value="${carg.getId()}"></th>
+                    <th><input type="hidden" th:value="${carg.getId()}" th:attr="name='id'"></th>
                     <th scope="col">Мест</th>
                     <th scope="col">Вес</th>
                     <th scope="col">Габариты</th>
@@ -63,6 +63,8 @@
                                             Выдать груз
                                         </label>
                                     </div>
+                                    <input type="hidden" th:if="${carg.isIssuance() and !carg.isProcessed()}" th:value="${carg.isIssuance()}" th:attr="name='issuance'">
+                                </td>
 
                                 <td th:if="${carg.isIssuance()}">
                                     <h6 th:text="${#temporals.format(carg.getTimeOfIssue(), 'dd-MM-yyyy HH:mm zzz', 'Europe/Moscow')}"></h6>
@@ -76,6 +78,7 @@
                                             Принять груз
                                         </label>
                                     </div>
+                                    <input type="hidden" th:if="${carg.isProcessed()}" th:value="${carg.isProcessed()}" th:attr="name='processed'">
                                 </td>
 
                             </tr>

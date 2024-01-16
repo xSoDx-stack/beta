@@ -9,7 +9,6 @@ import ru.pec.china.beta.repositories.CargoRepositories;
 
 import java.time.ZonedDateTime;
 import java.util.List;
-import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
@@ -50,14 +49,13 @@ public class CargoService {
                 conversionService.convert(cargo, CargoDTO.class)).collect(Collectors.toList());
     }
 
-    public void cargoUpdate(UUID id, CargoDTO cargoDTO){;
-        Cargo cargo = cargoRepositories.findById(id).orElse(null);
-        assert cargo != null;
-//        cargo.setIssuance(cargoDTO.get);
-//        cargo.setProcessed(cargoDTO.processed());
-//        cargo.setPecCode(cargoDTO.pecCode());
-//        cargo.setTimeOfIssue(date);
-//        cargoRepositories.save(cargo);
+    public void cargoUpdate( CargoDTO cargoDTO){
+        Cargo cargo = cargoRepositories.findById(cargoDTO.getId()).orElseThrow();
+        cargo.setIssuance(cargoDTO.isIssuance());
+        cargo.setProcessed(cargoDTO.isProcessed());
+        cargo.setPecCode(cargoDTO.getPecCode());
+        cargo.setTimeOfIssue(date);
+        cargoRepositories.save(cargo);
     }
 
 

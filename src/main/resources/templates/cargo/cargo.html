@@ -28,7 +28,7 @@
   </tr>
   </thead>
   <tbody class="table-secondary">
-  <tr th:each="carg,i :${cargos}" th:class="${carg.getIssuanceByUser()} ? 'table-warning' : (${carg.getProcessedByUser()} ? 'table-success':'table-secondary')">
+  <tr th:each="carg,i :${cargos}" th:class="${carg.isIssuance()} ? 'table-warning' : (${carg.isProcessed()} ? 'table-success':'table-secondary')">
     <td>
       <button th:text="${carg.getClientBarcode()}" class="btn" data-bs-toggle="offcanvas" th:attr="data-bs-target='#staticBackdrop' + ${carg.getId()}">></button>
       <div th:replace="~{util/offcanvas :: EditCargo(${carg})}"></div>
@@ -63,17 +63,16 @@
     <td>
       <h6 th:text="${carg.isProcessed()} ? 'да': 'нет'"/>
     </td>
+    <td>
+    </td>
   </tr>
   </tbody>
 </table>
 </body>
-
 <div th:replace="~{util/_modal :: UploadToModal}"></div>
 <script th:inline="javascript">
   $('.container').each(function() {
     $(this).barcode($(this).data('code'), 'code128', {barWidth:2, barHeight:130});
   });
 </script>
-
-
 </html>
