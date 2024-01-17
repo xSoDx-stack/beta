@@ -3,10 +3,8 @@ package ru.pec.china.beta.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+import ru.pec.china.beta.dto.CargoDTO;
 import ru.pec.china.beta.dto.TruckDTO;
 import ru.pec.china.beta.service.CargoService;
 import ru.pec.china.beta.service.TruckService;
@@ -26,8 +24,9 @@ public class TruckController {
 
     @GetMapping()
     public String index(Model model,
-                        @ModelAttribute("truck") TruckDTO truck){
-        model.addAttribute("trucks", truckService.findAll());
+                        @ModelAttribute("truck") TruckDTO truck,
+                        @RequestParam(defaultValue = "1", value = "page") int page){
+        model.addAttribute("trucks", truckService.getCustomerPage(page, 10));
         return "truck/truck";
     }
 
@@ -42,7 +41,7 @@ public class TruckController {
     public String cargoList(@PathVariable("id") int id,
                             Model model){
         model.addAttribute("cargos", cargoService.findAllByTrackId(id));
-        model.addAttribute("track_name", truckService.findById(id));
+        model.addAttribute("cargo", new CargoDTO());
         return "cargo/cargo";
     }
 }

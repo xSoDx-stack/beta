@@ -9,7 +9,7 @@
 <nav th:replace="~{/util/nav-bar :: NavBar}"></nav>
 
 <table class="table table-sm table-bordered border-primary text-center">
-  <caption th:if="${track_name}" th:text="'Рейс ' + ${track_name}"></caption>
+  <caption th:if="${cargos.get(0).track.trackName}" th:text="'Рейс ' + ${cargos.get(0).track.trackName}"></caption>
   <thead class="table-dark">
   <tr>
     <th scope="col">Код заказа клиента</th>
@@ -74,5 +74,25 @@
   $('.container').each(function() {
     $(this).barcode($(this).data('code'), 'code128', {barWidth:2, barHeight:130});
   });
+
+  $('#staticBackdrop').on('shown.bs.modal', function (event) {
+    let button = $(event.relatedTarget) // Button that triggered the modal
+    let userId = button.data('userid') // Extract info from data-* attributes
+
+    if (userId) {
+      $.get({
+        url: '/api/v1/user/' + userId,
+        success: (data) => {
+          let modal = $(this)
+          modal.find('#user-id').val(data.id)
+          modal.find('#user-name').val(data.username)
+          modal.find('#user-password').val(data.password)
+        },
+        error: (err) => {
+          alert(err);
+        }
+      });
+    }
+  })
 </script>
 </html>

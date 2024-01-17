@@ -17,12 +17,13 @@
         <form th:method="POST" th:action="@{/cargo/process}" th:object="(${cargo})">
             <table class="table">
                 <thead>
+
                 <tr>
-                    <th><input type="hidden" th:value="${carg.getId()}" th:attr="name='id'"></th>
                     <th scope="col">Мест</th>
                     <th scope="col">Вес</th>
                     <th scope="col">Габариты</th>
                     <th scope="col">Объём</th>
+                    <th><input type="hidden" th:value="${carg.getId()}" th:attr="name='id'"></th>
                 </tr>
                 </thead>
                 <tbody>
@@ -30,7 +31,7 @@
                     <td th:text="${carg.getNumberOfSeats()}">Мест</td>
                     <td th:text="${carg.getWeight()}">Вес</td>
                     <td th:text="${carg.getDimensions()}">Габариты ДxШxВ</td>
-                    <td th:text="${carg.getVolume()}">Объём/td>
+                    <td th:text="${carg.getVolume()}">Объём</td>
                 </tr>
                 <tr>
                     <td colspan="4">
@@ -83,10 +84,12 @@
 
                             </tr>
                             <tr>
-                                <td th:if="${carg.isIssuance()}" th:text="'Выдал: ' + 'Пупикин Залупкн'"></td>
+                                <td th:if="${carg.isIssuance()}">
+                                    <h6 th:text="'Выдал: '"></h6>
+                                    <p th:text="'Пупкин Залупкин'"></p>
+                                </td>
                                 <td>
                                     <h6 th:text="'Рейс: '"></h6><a th:text="${carg.getTrack().getTrackName()}" th:href="@{/truck/{id}/cargo(id=${carg.getTrack().getId()})}"/>
-
                                 </td>
                             </tr>
                         </table>
@@ -94,7 +97,7 @@
                 </tr>
                 </tbody>
             </table>
-            <button type="submit" class="btn btn-primary"
+            <button th:unless="${carg.isIssuance()}" type="submit" class="btn btn-primary"
                     style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;" th:text="Сохранить">
             </button>
         </form>
