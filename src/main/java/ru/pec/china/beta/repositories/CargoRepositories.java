@@ -1,5 +1,7 @@
 package ru.pec.china.beta.repositories;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -11,13 +13,13 @@ import java.util.UUID;
 
 @Repository
 public interface CargoRepositories extends JpaRepository<Cargo, UUID> {
-    List<Cargo> findAllByTruckId(Integer id);
+    Page<Cargo> findAllByTruckId(Integer id, Pageable pageable);
 
-    List<Cargo> findAllByProcessedTrueAndIssuanceFalse();
+    Page<Cargo> findAllByProcessedTrueAndIssuanceFalse(Pageable pageable);
 
-    List<Cargo> findAllByProcessedFalse();
+    Page<Cargo> findAllByProcessedFalse(Pageable pageable);
 
-    List<Cargo> findAllByIssuanceTrue();
+    Page<Cargo> findAllByIssuanceTrue(Pageable pageable);
 
     @Query("select c from Cargo c where c.clientBarcode like %:search% or c.pecCode ilike %:search%")
     List<Cargo> searchCode(@Param("search") String search);

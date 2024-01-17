@@ -23,12 +23,19 @@ public class TruckService {
     }
 
     public Page<TruckDTO> getCustomerPage(int page, int size) {
-        return truckRepositories.findAllByOrderByDateCreateDesc(PageRequest.of(page, size)).map(customer ->
+        return truckRepositories.findAllByOrderByDateCreateDesc(PageRequest.of(pageNumber(page), size)).map(customer ->
                 conversionService.convert(customer, TruckDTO.class));
+    }
+
+    public int pageNumber(int page){
+       return page <= 1 ? 0 : --page;
+    }
+
+    public String TruckName(int id){
+        return truckRepositories.findById(id).orElseThrow().getTrackName();
     }
 
     public void delete(Integer id){
         truckRepositories.findById(id).ifPresent(truckRepositories::delete);
     }
-
 }

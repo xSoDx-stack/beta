@@ -39,4 +39,53 @@
         </div>
     </div>
 </nav>
+<!---------------------------pagination--------------------------->
+
+<nav th:fragment="PageNavBar(object, href)" aria-label="Pagination" th:if="${object.getNumber() + 1 > 0}">
+    <ul class="pagination justify-content-center">
+        <li class="page-item" th:classappend="${object.getNumber() + 1 == 1} ? 'disabled'">
+            <a rel="tooltip" class="page-link"
+               th:href="@{${href} + 'page=' + 1}"
+               th:text="'<<'"
+               th:title="'Первая страница'">
+            </a>
+        </li>
+        <li class="page-item font-weight-bold" th:classappend="${object.getNumber() + 1 == 1} ? 'disabled'">
+            <a rel="tooltip" class="page-link"
+               th:href="@{ ${href} + 'page=' + ${object.getNumber()}}"
+               th:text="'Предыдущая'"
+               th:title="'Предыдущая страница'">
+            </a>
+        </li>
+        <li class="page-item disabled" th:if="${object.getNumber() > 1}">
+            <a class="page-link" href="#">...</a>
+        </li>
+        <li class="page-item" aria-current="page" th:classappend="${page == object.getNumber()+1} ? 'active'"
+            th:each="page : ${#numbers.sequence(object.getNumber()+1 > 2 ? object.getNumber() - 1 : 1, object.getNumber() + 3 < object.getTotalPages() ? object.getNumber() + 3 : object.getTotalPages())}">
+            <a rel="tooltip" class="page-link"
+               th:href="@{${href} + 'page=' + ${page}}"
+               th:text="${page}"
+               th:title="'Страница ' + ${page}">
+            </a>
+        </li>
+        <li class="page-item disabled" th:if="${object.getNumber() + 2 < object.getTotalPages()}">
+            <a class="page-link" href="#">...</a>
+        </li>
+        <li class="page-item font-weight-bold" th:classappend="${object.getNumber() + 1 == object.getTotalPages()} ? 'disabled'">
+            <a rel="tooltip" class="page-link"
+               th:href="@{${href} + 'page=' + ${object.getNumber() + 2}}"
+               th:text="'Следующая'"
+               th:title="'Следующая страница'">
+            </a>
+        </li>
+        <li class="page-item" th:classappend="${object.getNumber()+1 == object.getTotalPages()} ? 'disabled'">
+            <a rel="tooltip" class="page-link"
+               th:href="@{${href} + 'page=' + ${object.getTotalPages()}}"
+               th:text="'>>'"
+               th:title="'Последняя страница'">
+            </a>
+        </li>
+    </ul>
+
+</nav>
 

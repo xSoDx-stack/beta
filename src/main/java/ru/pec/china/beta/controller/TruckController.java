@@ -27,6 +27,7 @@ public class TruckController {
                         @ModelAttribute("truck") TruckDTO truck,
                         @RequestParam(defaultValue = "1", value = "page") int page){
         model.addAttribute("trucks", truckService.getCustomerPage(page, 10));
+        model.addAttribute("href","/?");
         return "truck/truck";
     }
 
@@ -39,9 +40,12 @@ public class TruckController {
 
     @GetMapping("/truck/{id}/cargo")
     public String cargoList(@PathVariable("id") int id,
-                            Model model){
-        model.addAttribute("cargos", cargoService.findAllByTrackId(id));
+                            Model model,
+                            @RequestParam(defaultValue = "1", value = "page") int page){
+        model.addAttribute("cargos", cargoService.findAllByTrackId(id, page, 50));
         model.addAttribute("cargo", new CargoDTO());
+        model.addAttribute("trackName", truckService.TruckName(id));
+        model.addAttribute("href","/truck/" + id +"/cargo?");
         return "cargo/cargo";
     }
 }
