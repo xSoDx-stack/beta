@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
-<div th:fragment="EditCargo(carg)" class="offcanvas offcanvas-end" data-bs-backdrop="static" tabindex="-1" th:id="'staticBackdrop' + ${carg.getId()}" aria-labelledby="staticBackdropLabel">
+<div th:fragment="EditCargo(carg)" class="offcanvas offcanvas-start" data-bs-backdrop="static" tabindex="-1" th:id="'staticBackdrop' + ${carg.getId()}" aria-labelledby="staticBackdropLabel">
     <div class="offcanvas-header">
         <h5 class="offcanvas-title" id="staticBackdropLabel">Обработка груза</h5>
         <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Закрыть"></button>
@@ -89,7 +89,7 @@
                                     <p th:text="'Пупкин Залупкин'"></p>
                                 </td>
                                 <td>
-                                    <h6 th:text="'Рейс: '"></h6><a th:text="${carg.getTrack().getTrackName()}" th:href="@{/truck/{id}/cargo(id=${carg.getTrack().getId()})}"/>
+                                    <h6 th:text="'Рейс: '"></h6><a th:text="${carg.getTruck().getTrackName()}" th:href="@{/truck/{id}/cargo(id=${carg.getTruckId()})}"/>
                                 </td>
                             </tr>
                         </table>

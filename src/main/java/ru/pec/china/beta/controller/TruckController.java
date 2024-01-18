@@ -42,7 +42,7 @@ public class TruckController {
     public String cargoList(@PathVariable("id") int id,
                             Model model,
                             @RequestParam(defaultValue = "1", value = "page") int page){
-        model.addAttribute("cargos", cargoService.findAllByTrackId(id, page, 50));
+        model.addAttribute("cargos", cargoService.findAllByTrackId(id, page, 15));
         model.addAttribute("cargo", new CargoDTO());
         model.addAttribute("trackName", truckService.TruckName(id));
         model.addAttribute("href","/truck/" + id +"/cargo?");

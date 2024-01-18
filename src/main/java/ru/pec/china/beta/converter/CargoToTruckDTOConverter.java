@@ -25,9 +25,12 @@ public class CargoToTruckDTOConverter implements Converter<Cargo, CargoDTO> {
                 source.getLocalOrTransshipment(),
                 source.getIssuanceByUser(),
                 source.getTimeOfIssue(),
+                source.getTimeOfProcessed(),
+                source.getTruckId(),
                 source.getTruck(),
                 source.isProcessed(),
-                source.isIssuance()
+                source.isIssuance(),
+                source.isClientIssue()
         );
     }
 

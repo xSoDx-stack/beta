@@ -15,12 +15,11 @@
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">Грузы</a>
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" th:href="@{/cargo/unloaded}">Все выгруженные</a></li>
-                        <li><a class="dropdown-item" th:href="@{/cargo/processed}">Принятые</a></li>
-                        <li><a class="dropdown-item" th:href="@{/cargo/issuance}">Выданные</a></li>
+                        <li><a class="dropdown-item" th:href="@{/cargo}">Все грузы</a></li>
                         <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item" href="#">Не обработанные</a></li>
-                        <li><a class="dropdown-item" href="#">На остатках</a></li>
+                        <li><a class="dropdown-item link-secondary" th:href="@{/cargo/unloaded}">Все выгруженные</a></li>
+                        <li><a class="dropdown-item link-success" th:href="@{/cargo/processed}">Принятые</a></li>
+                        <li><a class="dropdown-item link-warning" th:href="@{/cargo/issuance}">Выданные</a></li>
                     </ul>
                 </li>
                 <li class="nav-item">
@@ -41,7 +40,7 @@
 </nav>
 <!---------------------------pagination--------------------------->
 
-<nav th:fragment="PageNavBar(object, href)" aria-label="Pagination" th:if="${object.getNumber() + 1 > 0}">
+<nav th:fragment="PageNavBar(object, href)" aria-label="Pagination" th:if="${object.getTotalPages() > 1}">
     <ul class="pagination justify-content-center">
         <li class="page-item" th:classappend="${object.getNumber() + 1 == 1} ? 'disabled'">
             <a rel="tooltip" class="page-link"

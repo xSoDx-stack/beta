@@ -6,6 +6,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import ru.pec.china.beta.dto.CargoDTO;
 import ru.pec.china.beta.service.SearchService;
 
 @Controller
@@ -20,12 +22,14 @@ public class SearchController {
     }
 
     @GetMapping()
-    public String search(Model model, @Param("search") String search){
+    public String search(Model model, @Param("search") String search,
+                         @RequestParam(defaultValue = "1", value = "page") int page){
         if (search.isEmpty()){
             return "redirect:/";
         }
-        model.addAttribute("cargos", searchService.searchByAllCode(search));
-        model.addAttribute("keyword",search);
+        model.addAttribute("cargo", new CargoDTO());
+        model.addAttribute("cargos", searchService.searchByAllCode(search, page, 15));
+        model.addAttribute("keyword", search);
         return "cargo/cargo";
     }
 }

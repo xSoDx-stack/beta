@@ -17,7 +17,7 @@ import java.util.List;
 public class TruckDTO {
     private Integer id;
     private String trackName;
-    private ZonedDateTime zonedDateTime;
+    private ZonedDateTime dateCreate;
     private List<Cargo> cargos;
     private Integer processed; //количество обработанных
     private Integer issuance; // количество выданных

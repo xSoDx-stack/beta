@@ -21,7 +21,7 @@
     <tbody class="table-primary">
     <tr th:each="truck :${trucks}">
         <td>
-            <h6 th:text="${#temporals.format(truck.getZonedDateTime(), 'dd-MM-yyyy HH:mm zzz', 'Europe/Moscow')}"/>
+            <h6 th:text="${#temporals.format(truck.dateCreate, 'dd-MM-yyyy HH:mm zzz', 'Europe/Moscow')}"/>
         </td>
         <td>
             <h6> <a th:text="${truck.getTrackName()}" th:href="@{/truck/{id}/cargo(id=${truck.getId()})}"/></h6>

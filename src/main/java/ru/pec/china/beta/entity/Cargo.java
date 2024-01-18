@@ -58,8 +58,14 @@ public class Cargo {
     @Column(name = "time_of_issue")
     private ZonedDateTime timeOfIssue; //Время выдачи
 
-    @Column(name = "processed", columnDefinition = "boolean  default false")
+    @Column(name = "processed")
     private boolean processed; //обработанный да/нет
+
+    @Column(name = "time_of_processed")
+    private ZonedDateTime timeOfProcessed; //Время обработки
+
+    @Column(name = "client_issue")
+    private boolean clientIssue;
 
     @ManyToOne
     @JoinColumn(name = "track_id", nullable = false, updatable = false, insertable = false)

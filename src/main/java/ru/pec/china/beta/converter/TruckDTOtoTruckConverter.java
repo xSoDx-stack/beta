@@ -9,8 +9,9 @@ public class TruckDTOtoTruckConverter implements Converter<TruckDTO, Truck> {
     @Override
     public Truck convert(TruckDTO source) {
         var truck = new Truck();
+        truck.setId(source.getId());
         truck.setTrackName(source.getTrackName());
-        truck.setDateCreate(source.getZonedDateTime());
+        truck.setDateCreate(source.getDateCreate());
         truck.setCargos(source.getCargos());
         return truck;
     }
