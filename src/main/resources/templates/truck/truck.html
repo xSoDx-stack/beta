@@ -27,7 +27,7 @@
             <h6> <a th:text="${truck.getTrackName()}" th:href="@{/truck/{id}/cargo(id=${truck.getId()})}"/></h6>
         </td>
         <td>
-            <h6 th:text="${truck.getCargos().size()} + '/' + ${truck.getProcessed()} + '/' + ${truck.getIssuance()}"/>
+            <h6 th:text="${truck.getCargos()} + '/' + ${truck.getProcessed()} + '/' + ${truck.getIssuance()}"/>
         </td>
         <td>
             <a type="button" class="btn btn-secondary" th:href="@{/truck/delete/{id}/(id=${truck.getId()})}">

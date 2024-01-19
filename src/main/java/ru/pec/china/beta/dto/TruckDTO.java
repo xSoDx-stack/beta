@@ -1,24 +1,20 @@
 package ru.pec.china.beta.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import ru.pec.china.beta.entity.Cargo;
+import lombok.*;
 
 import java.time.ZonedDateTime;
-import java.util.List;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@ToString
 
 public class TruckDTO {
     private Integer id;
     private String trackName;
     private ZonedDateTime dateCreate;
-    private List<Cargo> cargos;
+    private int cargos; //количество грузов
     private Integer processed; //количество обработанных
     private Integer issuance; // количество выданных
 }

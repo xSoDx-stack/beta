@@ -49,23 +49,41 @@ public class Cargo {
     @Column(name = "issuance", columnDefinition = "boolean  default false")
     private boolean issuance; //выданный да/нет
 
+    @ManyToOne
+    @JoinColumn(name = "processed_by_user", updatable = false, insertable = false)
+    private Person processedByUser; //Обработка пользователем(id)
+
     @Column(name = "processed_by_user")
-    private Integer processedByUser; //Обработка пользователем(id)
+    private Integer personId;
+
+    @ManyToOne
+    @JoinColumn(name = "issuance_by_user", updatable = false, insertable = false)
+    private Person issuanceByUser; //Выдан пользователем
 
     @Column(name = "issuance_by_user")
-    private Integer issuanceByUser; //Выдан пользователем
+    private Integer issuanceByUserId;
 
     @Column(name = "time_of_issue")
     private ZonedDateTime timeOfIssue; //Время выдачи
 
-    @Column(name = "processed")
+    @Column(name = "processed", columnDefinition = "boolean default false")
     private boolean processed; //обработанный да/нет
 
     @Column(name = "time_of_processed")
     private ZonedDateTime timeOfProcessed; //Время обработки
 
-    @Column(name = "client_issue")
-    private boolean clientIssue;
+    @Column(name = "client_issue", columnDefinition = "boolean default false")
+    private boolean clientIssue; //клиентская выдача
+
+    @ManyToOne
+    @JoinColumn(name = "user_client_issue", updatable = false, insertable = false)
+    private Person userClientIssue; // кто сделал клиентскую выдачу
+
+    @Column(name = "user_client_issue")
+    private Integer userClientIssueId;
+
+    @Column(name = "time_client_issue")
+    private ZonedDateTime timeClientIssue; //время клиентской выдачи
 
     @ManyToOne
     @JoinColumn(name = "track_id", nullable = false, updatable = false, insertable = false)

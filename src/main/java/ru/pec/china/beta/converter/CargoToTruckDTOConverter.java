@@ -1,13 +1,18 @@
 package ru.pec.china.beta.converter;
 
+import org.springframework.core.convert.ConversionService;
 import org.springframework.core.convert.converter.Converter;
 import ru.pec.china.beta.dto.CargoDTO;
+import ru.pec.china.beta.dto.PersonDTO;
 import ru.pec.china.beta.entity.Cargo;
+import ru.pec.china.beta.entity.Person;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
 public class CargoToTruckDTOConverter implements Converter<Cargo, CargoDTO> {
+    private ConversionService conversionService;
+
     @Override
     public CargoDTO convert(Cargo source) {
         return new CargoDTO(
@@ -18,20 +23,28 @@ public class CargoToTruckDTOConverter implements Converter<Cargo, CargoDTO> {
                 source.getNumberOfSeatsUserScan(),
                 source.getWeight(),
                 source.getVolume(),
-                dimension(source.getVolume(),source.getNumberOfSeats()),
+                dimension(source.getVolume(), source.getNumberOfSeats()),
                 source.getRecipient(),
                 source.getCity(),
-                source.getProcessedByUser(),
                 source.getLocalOrTransshipment(),
-                source.getIssuanceByUser(),
+                person(source.getProcessedByUser()),
+                person(source.getUserClientIssue()),
+                person(source.getIssuanceByUser()),
                 source.getTimeOfIssue(),
                 source.getTimeOfProcessed(),
+                source.getTimeOfIssue(),
+                source.getTruck().getTrackName(),
                 source.getTruckId(),
-                source.getTruck(),
                 source.isProcessed(),
                 source.isIssuance(),
                 source.isClientIssue()
         );
+    }
+
+    private PersonDTO person(Person person){
+        if (person!=null )
+            return conversionService.convert(person, PersonDTO.class);
+        return null;
     }
 
     private BigDecimal dimension(Double volume, Integer numberOfSeats){

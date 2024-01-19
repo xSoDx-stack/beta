@@ -1,10 +1,17 @@
 package ru.pec.china.beta.converter;
 
+import org.springframework.core.convert.ConversionService;
 import org.springframework.core.convert.converter.Converter;
 import ru.pec.china.beta.dto.CargoDTO;
+import ru.pec.china.beta.dto.PersonDTO;
 import ru.pec.china.beta.entity.Cargo;
+import ru.pec.china.beta.entity.Person;
 
 public class CargoDTOtoCargoConverter implements Converter<CargoDTO, Cargo> {
+
+    private ConversionService conversionService;
+
+
     @Override
     public Cargo convert(CargoDTO source) {
         var cargo = new Cargo();
@@ -18,14 +25,18 @@ public class CargoDTOtoCargoConverter implements Converter<CargoDTO, Cargo> {
         cargo.setRecipient(source.getRecipient());
         cargo.setCity(source.getCity());
         cargo.setLocalOrTransshipment(source.getLocalOrTransshipment());
-        cargo.setProcessedByUser(source.getProcessedByUser());
-        cargo.setIssuanceByUser(source.getIssuanceByUser());
         cargo.setTimeOfIssue(source.getTimeOfIssue());
         cargo.setTimeOfProcessed(source.getTimeOfProcessed());
-        cargo.setTruckId(source.getTruckId());
+        cargo.setUserClientIssue(person(source.getUserClientIssue()));
+        cargo.setIssuanceByUser(person(source.getIssuanceByUser()));
+        cargo.setProcessedByUser(person(source.getProcessedByUser()));
         cargo.setClientIssue(source.isClientIssue());
         cargo.setIssuance(source.isIssuance());
         cargo.setProcessed(source.isProcessed());
         return cargo;
+    }
+
+    private Person person(PersonDTO personDTO){
+        return conversionService.convert(personDTO, Person.class);
     }
 }

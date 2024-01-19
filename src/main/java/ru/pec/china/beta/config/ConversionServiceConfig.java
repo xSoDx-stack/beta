@@ -4,10 +4,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.convert.ConversionService;
 import org.springframework.core.convert.support.DefaultConversionService;
-import ru.pec.china.beta.converter.CargoDTOtoCargoConverter;
-import ru.pec.china.beta.converter.CargoToTruckDTOConverter;
-import ru.pec.china.beta.converter.TruckDTOtoTruckConverter;
-import ru.pec.china.beta.converter.TruckToTruckDTOConverter;
+import ru.pec.china.beta.converter.*;
 
 @Configuration
 public class ConversionServiceConfig {
@@ -19,6 +16,8 @@ public class ConversionServiceConfig {
         conversionService.addConverter(new TruckToTruckDTOConverter());
         conversionService.addConverter(new CargoDTOtoCargoConverter());
         conversionService.addConverter(new CargoToTruckDTOConverter());
+        conversionService.addConverter(new PersonDTOtoPersonConverter());
+        conversionService.addConverter(new PersonToPersonDTOConverter());
         return conversionService;
     }
 }

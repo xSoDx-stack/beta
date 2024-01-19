@@ -21,9 +21,9 @@ public class CargoController {
 
     @GetMapping()
     public String index(Model model,
-                        @RequestParam(defaultValue = "1",value = "page") int page){
+                        @RequestParam(defaultValue = "1",value = "page") int page,
+                        @ModelAttribute("cargo") CargoDTO cargoDTO){
         model.addAttribute("cargos", cargoService.findAll(page, 15));
-        model.addAttribute("cargo",new CargoDTO());
         model.addAttribute("href", "/cargo?");
         return "cargo/cargo";
     }
@@ -56,12 +56,8 @@ public class CargoController {
     }
 
     @PostMapping("/process")
-    public String  process (@ModelAttribute("cargo") @Validated CargoDTO cargo){
-        cargoService.cargoUpdate(cargo);
+    public String  process (@ModelAttribute("cargo") @Validated CargoDTO cargoDTO){
+        cargoService.cargoUpdate(cargoDTO);
         return "redirect:/cargo";
     }
-
-
-
-
 }

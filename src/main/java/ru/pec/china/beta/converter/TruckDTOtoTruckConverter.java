@@ -12,7 +12,6 @@ public class TruckDTOtoTruckConverter implements Converter<TruckDTO, Truck> {
         truck.setId(source.getId());
         truck.setTrackName(source.getTrackName());
         truck.setDateCreate(source.getDateCreate());
-        truck.setCargos(source.getCargos());
         return truck;
     }
 }

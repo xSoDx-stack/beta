@@ -86,10 +86,11 @@
                             <tr>
                                 <td th:if="${carg.isIssuance()}">
                                     <h6 th:text="'Выдал: '"></h6>
-                                    <p th:text="'Пупкин Залупкин'"></p>
+                                    <p th:text="${carg.getIssuanceByUser.getfullName()}"></p>
+                                    <input type="hidden" th:value="${user}" th:attr="name='user'">
                                 </td>
                                 <td>
-                                    <h6 th:text="'Рейс: '"></h6><a th:text="${carg.getTruck().getTrackName()}" th:href="@{/truck/{id}/cargo(id=${carg.getTruckId()})}"/>
+                                    <h6 th:text="'Рейс: '"></h6><a th:text="${carg.getTruckName()}" th:href="@{/truck/{id}/cargo(id=${carg.getTruckId()})}"/>
                                 </td>
                             </tr>
                         </table>

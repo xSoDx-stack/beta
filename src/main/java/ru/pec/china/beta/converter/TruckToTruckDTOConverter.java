@@ -13,7 +13,7 @@ public class TruckToTruckDTOConverter implements Converter<Truck, TruckDTO> {
                 source.getId(),
                 source.getTrackName(),
                 source.getDateCreate(),
-                source.getCargos(),
+                source.getCargos().size(),
                 source.getCargos().stream().filter(Cargo::isProcessed).toList().size(),
                 source.getCargos().stream().filter(Cargo::isIssuance).toList().size()
         );

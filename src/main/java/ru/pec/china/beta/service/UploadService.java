@@ -32,8 +32,6 @@ public class UploadService {
 
     @Transactional
     public void upload(MultipartFile file) throws IOException {
-        System.out.println(date);
-
         HSSFWorkbook wb = new HSSFWorkbook(file.getInputStream());
         HSSFSheet sheet = wb.getSheetAt(0);
         int i = 0;
