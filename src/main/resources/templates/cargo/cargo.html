@@ -8,6 +8,7 @@
 <body>
 <nav th:replace="~{/util/nav-bar :: NavBar}"></nav>
 
+
 <table class="table table-sm table-bordered border-primary text-center">
   <caption th:if="${trackName}" th:text="'Рейс ' + ${trackName}"></caption>
   <thead class="table-dark">
@@ -30,8 +31,8 @@
   <tbody class="table-secondary">
   <tr th:each="carg,i :${cargos}" th:class="${carg.isIssuance()} ? 'table-warning' : (${carg.isProcessed()} ? 'table-success':'table-secondary')">
     <td>
-      <button th:text="${carg.getClientBarcode()}" class="btn" data-bs-toggle="offcanvas" th:attr="data-bs-target='#staticBackdrop' + ${carg.getId()}">></button>
-      <div th:replace="~{util/offcanvas :: EditCargo(${carg})}"></div>
+      <button th:text="${carg.getClientBarcode()}" class="btn"  th:onclick="openOffcanvas([[${carg.getId()}]])">></button>
+
     </td>
     <td>
       <h6 th:text="${carg.getPecCode()}"/>
@@ -68,35 +69,33 @@
   </tr>
   </tbody>
 </table>
-  <div th:replace="~{util/nav-bar :: PageNavBar(${cargos},${href})}"></div>
+<div th:replace="~{util/offcanvas-v1 :: EditCargo}"></div>
+<div th:replace="~{util/nav-bar :: PageNavBar(${cargos},${href})}"></div>
 </body>
 <div th:replace="~{util/_modal :: UploadToModal}"></div>
 
 
 
 <script th:inline="javascript">
-  $('.container').each(function() {
-    $(this).barcode($(this).data('code'), 'code128', {barWidth:2, barHeight:130});
-  });
 
-  $('#staticBackdrop').on('shown.bs.modal', function (event) {
-    let button = $(event.relatedTarget) // Button that triggered the modal
-    let userId = button.data('userid') // Extract info from data-* attributes
+  function openOffcanvas(id) {
+    $.get( "/api/v1/" + id, function( data ) {
+      // alert( "Data Loaded: " + data.clientBarcode);
+      var a = data;
+      $('#numberOfSeats').html(data.numberOfSeats);
+      $('#weight').html(data.weight);
+      $('#dimensions').html(data.dimensions);
+      $('#volume').html(data.volume);
+      $('#pecCode').html(data.pecCode);
+      $('#truckName').html(data.truckName);
+      $('#container').barcode(data.clientBarcode, 'code128', {barWidth:2, barHeight:130});
+    });
+    const myBackdrop = document.querySelector('#staticBackdrop');
+    const bsOffcanvas = new bootstrap.Offcanvas(myBackdrop);
+    bsOffcanvas.toggle();
+  }
 
-    if (userId) {
-      $.get({
-        url: '/api/v1/user/' + userId,
-        success: (data) => {
-          let modal = $(this)
-          modal.find('#user-id').val(data.id)
-          modal.find('#user-name').val(data.username)
-          modal.find('#user-password').val(data.password)
-        },
-        error: (err) => {
-          alert(err);
-        }
-      });
-    }
-  })
 </script>
+
+
 </html>
