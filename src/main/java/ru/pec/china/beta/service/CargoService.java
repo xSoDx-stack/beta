@@ -12,7 +12,9 @@ import ru.pec.china.beta.repositories.CargoRepositories;
 import ru.pec.china.beta.repositories.PersonRepositories;
 
 import java.time.ZonedDateTime;
+import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 public class CargoService {
@@ -37,6 +39,10 @@ public class CargoService {
     public Page<CargoDTO> findAll(int page, int size){
         return cargoRepositories.findAll(PageRequest.of(pageNumber(page), size)).map(cargo ->
                 conversionService.convert(cargo, CargoDTO.class));
+    }
+    public List<CargoDTO>findAll(){
+        return cargoRepositories.findAll().stream().map(cargo ->
+                conversionService.convert(cargo, CargoDTO.class)).collect(Collectors.toList());
     }
 
     public Page<CargoDTO> findAllUnloaded(int page, int size){

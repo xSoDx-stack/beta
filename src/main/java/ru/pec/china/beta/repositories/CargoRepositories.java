@@ -22,4 +22,7 @@ public interface CargoRepositories extends JpaRepository<Cargo, UUID> {
 
     @Query("select c from Cargo c where c.clientBarcode like %:search% or c.pecCode ilike %:search%")
     Page<Cargo> searchCode(@Param("search") String search, Pageable pageable);
+
+    @Query("select c from Cargo c where c.clientBarcode = :search")
+    Cargo searchCargoByPecCode(@Param("search") String search);
 }

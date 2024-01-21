@@ -28,7 +28,7 @@ public class SearchController {
             return "redirect:/";
         }
         model.addAttribute("cargo", new CargoDTO());
-        model.addAttribute("cargos", searchService.searchByAllCode(search, page, 15));
+        model.addAttribute("cargos", searchService.searchByCodeClient(search, page, 15));
         model.addAttribute("keyword", search);
         return "cargo/cargo";
     }

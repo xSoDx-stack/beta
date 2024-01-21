@@ -19,9 +19,12 @@ public class SearchService {
         this.conversionService = conversionService;
     }
 
-    public Page<CargoDTO> searchByAllCode(String keyword, int page, int size){
+    public Page<CargoDTO> searchByCodeClient(String keyword, int page, int size){
         return cargoRepositories.searchCode(keyword, PageRequest.of(pageNumber(page),size)).map(cargo ->
                 conversionService.convert(cargo, CargoDTO.class));
+    }
+    public CargoDTO searchByCodeClient(String keyword){
+        return conversionService.convert(cargoRepositories.searchCargoByPecCode(keyword), CargoDTO.class);
     }
     public int pageNumber(int page){
         return page <= 1 ? 0 : --page;
