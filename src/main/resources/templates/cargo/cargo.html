@@ -32,7 +32,6 @@
   <tr th:each="carg,i :${cargos}" th:class="${carg.isIssuance()} ? 'table-warning' : (${carg.isProcessed()} ? 'table-success':'table-secondary')">
     <td>
       <button th:text="${carg.getClientBarcode()}" class="btn"  th:onclick="openOffcanvas([[${carg.getId()}]])">></button>
-
     </td>
     <td>
       <h6 th:text="${carg.getPecCode()}"/>
@@ -64,38 +63,11 @@
     <td>
       <h6 th:text="${carg.isProcessed()} ? 'да': 'нет'"/>
     </td>
-    <td>
-    </td>
   </tr>
   </tbody>
 </table>
-<div th:replace="~{util/offcanvas-v1 :: EditCargo}"></div>
-<div th:replace="~{util/nav-bar :: PageNavBar(${cargos},${href})}"></div>
 </body>
+<div th:replace="~{util/offcanvas :: EditCargo}"></div>
+<div th:replace="~{util/nav-bar :: PageNavBar(${cargos},${href})}"></div>
 <div th:replace="~{util/_modal :: UploadToModal}"></div>
-
-
-
-<script th:inline="javascript">
-
-  function openOffcanvas(id) {
-    $.get( "/api/v1/" + id, function( data ) {
-      // alert( "Data Loaded: " + data.clientBarcode);
-      var a = data;
-      $('#numberOfSeats').html(data.numberOfSeats);
-      $('#weight').html(data.weight);
-      $('#dimensions').html(data.dimensions);
-      $('#volume').html(data.volume);
-      $('#pecCode').html(data.pecCode);
-      $('#truckName').html(data.truckName);
-      $('#container').barcode(data.clientBarcode, 'code128', {barWidth:2, barHeight:130});
-    });
-    const myBackdrop = document.querySelector('#staticBackdrop');
-    const bsOffcanvas = new bootstrap.Offcanvas(myBackdrop);
-    bsOffcanvas.toggle();
-  }
-
-</script>
-
-
 </html>
