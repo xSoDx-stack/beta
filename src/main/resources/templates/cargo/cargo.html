@@ -31,7 +31,7 @@
   <tbody class="table-secondary">
   <tr th:each="carg,i :${cargos}" th:class="${carg.isIssuance()} ? 'table-warning' : (${carg.isProcessed()} ? 'table-success':'table-secondary')">
     <td>
-      <button th:text="${carg.getClientBarcode()}" class="btn"  th:onclick="openOffcanvas([[${carg.getId()}]])">></button>
+      <button data-bs-toggle="offcanvas" th:text="${carg.getClientBarcode()}" class="btn" th:attr="data-bs-target='#staticBackdrop'"  th:onclick="getCargoById([[${carg.getId()}]])">></button>
     </td>
     <td>
       <h6 th:text="${carg.getPecCode()}"/>
@@ -67,7 +67,7 @@
   </tbody>
 </table>
 </body>
-<div th:replace="~{util/offcanvas :: EditCargo}"></div>
+<div th:replace="~{util/cargo-off-canvas :: EditCargo}"></div>
 <div th:replace="~{util/nav-bar :: PageNavBar(${cargos},${href})}"></div>
 <div th:replace="~{util/_modal :: UploadToModal}"></div>
 </html>

@@ -1,44 +1,56 @@
-function openOffcanvas(id) {
-    $.get( "/api/v1/" + id, function( data ) {
-        $('#container').barcode(data.clientBarcode, 'code128', {barWidth:2, barHeight:130});
-        $('#numberOfSeats').html(data.numberOfSeats);
-        $('#weight').html(data.weight);
-        $('#dimensions').html(data.dimensions);
-        $('#volume').html(data.volume);
 
-        if (data.pecCode === void 0 || data.pecCode === null || data.pecCode.trim() === '') {
-            $('#pecCode').hide();
-            $('#inputPecCode').show();
-        }
-        else{
-            $('#inputPecCode').hide();
-            $('#pecCode').show().html(data.pecCode);
 
-        }
-        if(data.processed){
-            $('#processed').hide();
-            if(data.issuance){
-                $('#issuance').hide();
-
-                $('#timeOfIssue').show().html(data.timeOfIssue);
-
-                $('#cellIssuanceByUser').show();
-                $('#issuanceByUser').html(data.issuanceByUser);
-            }
-            else{
-                $('#issuance').show();
-                $('#timeOfIssue').hide();
-                $('#cellIssuanceByUser').hide();
-            }
+function searchCargoByKeyword(){
+    const keyword = $('#search').val();
+    $.get("/api/v1/cargo/search/" + keyword, function (data){
+        if(Object.keys(data).length === 0) {
+            alert("Код не существует !!!!")
         }
         else {
-            $('#issuance').hide();
-            $('#processed').show();
+            showingCargoOffcanvas(data)
         }
-
-        $('#truckName').attr("href", "/truck/" + data.truckId + "/cargo").html(data.truckName);
     });
-    const myBackdrop = document.querySelector('#staticBackdrop');
-    const bsOffcanvas = new bootstrap.Offcanvas(myBackdrop);
-    bsOffcanvas.toggle();
+}
+
+function getCargoById(id) {
+    $.get( "/api/v1/cargo/" + id, function( data ) {
+        showingCargoOffcanvas(data)
+    });
+}
+
+function showingCargoOffcanvas (data) {
+    $('#container').barcode(data.clientBarcode, 'code128', {barWidth: 2, barHeight: 130});
+    $('#numberOfSeats').html(data.numberOfSeats);
+    $('#weight').html(data.weight);
+    $('#dimensions').html(data.dimensions);
+    $('#volume').html(data.volume);
+
+    if (data.pecCode === void 0 || data.pecCode === null || data.pecCode.trim() === '') {
+        $('#pecCode').hide();
+        $('#inputPecCode').show();
+    } else {
+        $('#inputPecCode').hide();
+        $('#pecCode').show().html(data.pecCode);
+
+    }
+    if (data.processed) {
+        $('#processed').hide();
+        if (data.issuance) {
+            $('#issuance').hide();
+
+            $('#timeOfIssue').show().html(data.timeOfIssue);
+
+            $('#cellIssuanceByUser').show();
+            $('#issuanceByUser').html(data.issuanceByUser);
+        } else {
+            $('#issuance').show();
+            $('#timeOfIssue').hide();
+            $('#cellIssuanceByUser').hide();
+        }
+    } else {
+        $('#issuance').hide();
+        $('#processed').show();
+    }
+
+    $('#truckName').attr("href", "/truck/" + data.truckId + "/cargo").html(data.truckName);
 }

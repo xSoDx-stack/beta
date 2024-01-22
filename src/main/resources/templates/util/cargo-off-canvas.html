@@ -7,12 +7,12 @@
         <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Закрыть"></button>
     </div>
     <div class="offcanvas-body">
-        <form class="d-flex" role="search">
-            <input class="form-control me-2 " type="search" placeholder="Поиск" aria-label="Поиск">
-            <button class="btn btn-outline-success" type="submit">Поиск</button>
-        </form>
+        <div class="d-flex" role="search">
+            <input id="search" class="form-control me-2" onchange="searchCargoByKeyword()" type="search" placeholder="Поиск" aria-label="Поиск">
+            <button class="btn btn-outline-success" th:onclick="searchCargoByKeyword()"  type="button">Поиск</button>
+        </div>
         <br>
-        <div class="container" id="container"  >
+        <div class="container" id="container">
         </div>
             <table class="table">
                 <thead>
@@ -90,7 +90,7 @@
                 </tr>
                 </tbody>
             </table>
-            <button type="submit" class="btn btn-primary"
+            <button type="button" class="btn btn-primary"
                     style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;" th:text="Сохранить">
             </button>
     </div>
