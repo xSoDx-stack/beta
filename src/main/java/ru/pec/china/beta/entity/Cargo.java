@@ -51,10 +51,10 @@ public class Cargo {
 
     @ManyToOne
     @JoinColumn(name = "processed_by_user", updatable = false, insertable = false)
-    private Person processedByUser; //Обработка пользователем(id)
+    private Person processedByUser; //Обработка пользователем
 
     @Column(name = "processed_by_user")
-    private Integer personId;
+    private Integer processedByUserId;
 
     @ManyToOne
     @JoinColumn(name = "issuance_by_user", updatable = false, insertable = false)

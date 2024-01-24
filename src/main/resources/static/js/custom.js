@@ -50,6 +50,10 @@ function showingCargoOffcanvas (data) {
     } else {
         $('#issuance').hide();
         $('#processed').show();
+        $('#cellIssuanceByUser').hide();
+    }
+    if(data.issuanceByUser === 'null'){
+        $('#cellIssuanceByUser').hide()
     }
 
     $('#truckName').attr("href", "/truck/" + data.truckId + "/cargo").html(data.truckName);

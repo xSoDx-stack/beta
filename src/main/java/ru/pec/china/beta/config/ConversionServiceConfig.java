@@ -15,7 +15,7 @@ public class ConversionServiceConfig {
         conversionService.addConverter(new TruckDTOtoTruckConverter());
         conversionService.addConverter(new TruckToTruckDTOConverter());
         conversionService.addConverter(new CargoDTOtoCargoConverter());
-        conversionService.addConverter(new CargoToTruckDTOConverter());
+        conversionService.addConverter(new CargoToCargoDTOConverter());
         conversionService.addConverter(new PersonDTOtoPersonConverter());
         conversionService.addConverter(new PersonToPersonDTOConverter());
         return conversionService;

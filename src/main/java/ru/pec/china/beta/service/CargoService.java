@@ -69,20 +69,19 @@ public class CargoService {
         Cargo cargo = cargoRepositories.findById(cargoDTO.getId()).orElseThrow();
 
         if(cargoDTO.isProcessed() & !cargoDTO.getPecCode().isEmpty()) {
-            cargo.setProcessedByUser(personRepositories.findById(cargoDTO.getProcessedByUser().getId()).orElse(null));
+            cargo.setProcessedByUser(personRepositories.findById(cargoDTO.getProcessedByUserId()).orElse(null));
             cargo.setProcessed(true);
             cargo.setPecCode(cargoDTO.getPecCode());
             cargo.setTimeOfProcessed(date);
             cargo.setProcessedByUser(conversionService.convert(cargoDTO.getProcessedByUser(), Person.class));
             if (true) {  //toDo cargoDTO.isClientIssue()
-                cargo.setUserClientIssue(personRepositories.findById(cargoDTO.getUserClientIssue().getId()).orElse(null));
+                cargo.setUserClientIssue(personRepositories.findById(cargoDTO.getUserClientIssueId()).orElse(null));
                 cargo.setTimeClientIssue(date);
                 cargo.setClientIssue(true);
                 if (cargoDTO.isIssuance()) {
-                    cargo.setIssuanceByUser(personRepositories.findById(cargoDTO.getIssuanceByUser().getId()).orElse(null));
+                    cargo.setIssuanceByUser(personRepositories.findById(cargoDTO.getIssuanceByUserId()).orElse(null));
                     cargo.setIssuance(true);
                     cargo.setTimeOfIssue(date);
-                    cargo.setIssuanceByUser(conversionService.convert(cargoDTO.getIssuanceByUser(), Person.class));
                 }
             }
             cargoRepositories.save(cargo);

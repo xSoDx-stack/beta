@@ -10,7 +10,7 @@ import ru.pec.china.beta.entity.Person;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
-public class CargoToTruckDTOConverter implements Converter<Cargo, CargoDTO> {
+public class CargoToCargoDTOConverter implements Converter<Cargo, CargoDTO> {
     private ConversionService conversionService;
 
     @Override
@@ -27,9 +27,12 @@ public class CargoToTruckDTOConverter implements Converter<Cargo, CargoDTO> {
                 source.getRecipient(),
                 source.getCity(),
                 source.getLocalOrTransshipment(),
-                person(source.getProcessedByUser()),
-                person(source.getUserClientIssue()),
-                person(source.getIssuanceByUser()),
+                source.getProcessedByUser().getFullName(),
+                source.getProcessedByUser().getId(),
+                source.getUserClientIssue().getFullName(),
+                source.getUserClientIssue().getId(),
+                source.getIssuanceByUser().getFullName(),
+                source.getIssuanceByUser().getId(),
                 source.getTimeOfIssue(),
                 source.getTimeOfProcessed(),
                 source.getTimeOfIssue(),
@@ -42,10 +45,13 @@ public class CargoToTruckDTOConverter implements Converter<Cargo, CargoDTO> {
     }
 
     private PersonDTO person(Person person){
-        if (person!=null )
+        if(person != null)
             return conversionService.convert(person, PersonDTO.class);
         return null;
     }
+
+
+
 
     private BigDecimal dimension(Double volume, Integer numberOfSeats){
         BigDecimal bd = new BigDecimal(Double.toString(volume/numberOfSeats));
