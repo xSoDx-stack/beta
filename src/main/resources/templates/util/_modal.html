@@ -11,7 +11,7 @@
                 <div class="modal-body">
                     <div class="mb-3">
                         <label for="formFile" class="form-label">Укажите файл таблицы</label>
-                        <input class="form-control" type="file" th:name="file" id="formFile">
+                        <input class="form-control" accept=".xls, .xlsx" type="file" th:name="file" id="formFile">
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -21,20 +21,5 @@
         </div>
     </div>
 </div>
-<!------------------------------------------------------------------------------------->
-<!-- Модальное окно для вывода штрих кода  -->
-<!--<div th:fragment="ModalToBarcode(barcode,id)" class="modal fade" th:id="'BarcodeModal' + ${id}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">-->
-<!--    <div class="modal-dialog modal-dialog-centered">-->
-<!--        <div class="modal-content">-->
-<!--            <div class="modal-header">-->
-<!--                <h1 class="modal-title fs-5" id="exampleModalLabel">Штрихкод груза</h1>-->
-<!--                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>-->
-<!--            </div>-->
-<!--                <div class="modal-body"  th:attr="data-code=${barcode}"></div>-->
-<!--            <div class="modal-footer">-->
-<!--                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--    </div>-->
-<!--</div>-->
+
 

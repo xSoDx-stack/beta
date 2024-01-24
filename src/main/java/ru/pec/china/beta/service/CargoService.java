@@ -75,11 +75,11 @@ public class CargoService {
             cargo.setTimeOfProcessed(date);
             cargo.setProcessedByUser(conversionService.convert(cargoDTO.getProcessedByUser(), Person.class));
             if (true) {  //toDo cargoDTO.isClientIssue()
-                cargo.setUserClientIssue(personRepositories.findById(cargoDTO.getUserClientIssueId()).orElse(null));
+                cargo.setIssuedToClientByUser(personRepositories.findById(cargoDTO.getIssuedToClientByUserId()).orElse(null));
                 cargo.setTimeClientIssue(date);
                 cargo.setClientIssue(true);
                 if (cargoDTO.isIssuance()) {
-                    cargo.setIssuanceByUser(personRepositories.findById(cargoDTO.getIssuanceByUserId()).orElse(null));
+                    cargo.setIssuedAtWarehouseByUser(personRepositories.findById(cargoDTO.getIssuedAtWarehouseByUserId()).orElse(null));
                     cargo.setIssuance(true);
                     cargo.setTimeOfIssue(date);
                 }

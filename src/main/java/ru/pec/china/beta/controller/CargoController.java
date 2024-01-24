@@ -23,7 +23,7 @@ public class CargoController {
     public String index(Model model,
                         @RequestParam(defaultValue = "1",value = "page") int page,
                         @ModelAttribute("cargo") CargoDTO cargoDTO){
-        model.addAttribute("cargos", cargoService.findAll(page, 15));
+        model.addAttribute("cargos", cargoService.findAll(page, 25));
         model.addAttribute("href", "/cargo?");
         return "cargo/cargo";
     }
@@ -32,7 +32,7 @@ public class CargoController {
     public String cargoListUnloaded(Model model,
                                     @RequestParam(defaultValue = "1", value = "page") int page){
         model.addAttribute("cargo",new CargoDTO());
-        model.addAttribute("cargos", cargoService.findAllUnloaded(page, 15));
+        model.addAttribute("cargos", cargoService.findAllUnloaded(page, 25));
         model.addAttribute("href", "/cargo/unloaded?");
         return "cargo/cargo";
     }
@@ -41,7 +41,7 @@ public class CargoController {
     public String processed(Model model,
                             @RequestParam(defaultValue = "1", value = "page") int page){
         model.addAttribute("cargo",new CargoDTO());
-        model.addAttribute("cargos", cargoService.findAllByProcessed(page, 15));
+        model.addAttribute("cargos", cargoService.findAllByProcessed(page, 25));
         model.addAttribute("href", "/cargo/processed?");
         return "cargo/cargo";
     }
@@ -50,7 +50,7 @@ public class CargoController {
     public String issuance(Model model,
                            @RequestParam(defaultValue = "1", value = "page") int page){
         model.addAttribute("cargo",new CargoDTO());
-        model.addAttribute("cargos", cargoService.findAllByIssuance(page, 15));
+        model.addAttribute("cargos", cargoService.findAllByIssuance(page, 25));
         model.addAttribute("href", "/cargo/issuance?");
         return "cargo/cargo";
     }

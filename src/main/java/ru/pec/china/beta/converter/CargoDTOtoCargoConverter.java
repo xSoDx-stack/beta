@@ -25,10 +25,10 @@ public class CargoDTOtoCargoConverter implements Converter<CargoDTO, Cargo> {
         cargo.setRecipient(source.getRecipient());
         cargo.setCity(source.getCity());
         cargo.setLocalOrTransshipment(source.getLocalOrTransshipment());
-        cargo.setTimeOfIssue(source.getTimeOfIssue());
+        cargo.setTimeOfIssue(source.getTimeOfIssueAtWarehouse());
         cargo.setTimeOfProcessed(source.getTimeOfProcessed());
-        cargo.setUserClientIssueId(source.getUserClientIssueId());
-        cargo.setIssuanceByUserId(source.getIssuanceByUserId());
+        cargo.setIssuedToClientByUserId(source.getIssuedToClientByUserId());
+        cargo.setIssuedAtWarehouseByUserId(source.getIssuedAtWarehouseByUserId());
         cargo.setProcessedByUserId(source.getProcessedByUserId());
         cargo.setClientIssue(source.isClientIssue());
         cargo.setIssuance(source.isIssuance());

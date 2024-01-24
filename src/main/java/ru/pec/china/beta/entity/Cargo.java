@@ -58,10 +58,10 @@ public class Cargo {
 
     @ManyToOne
     @JoinColumn(name = "issuance_by_user", updatable = false, insertable = false)
-    private Person issuanceByUser; //Выдан пользователем
+    private Person issuedAtWarehouseByUser; //Выдан пользователем
 
     @Column(name = "issuance_by_user")
-    private Integer issuanceByUserId;
+    private Integer issuedAtWarehouseByUserId;
 
     @Column(name = "time_of_issue")
     private ZonedDateTime timeOfIssue; //Время выдачи
@@ -77,10 +77,10 @@ public class Cargo {
 
     @ManyToOne
     @JoinColumn(name = "user_client_issue", updatable = false, insertable = false)
-    private Person userClientIssue; // кто сделал клиентскую выдачу
+    private Person issuedToClientByUser; // кто сделал клиентскую выдачу
 
     @Column(name = "user_client_issue")
-    private Integer userClientIssueId;
+    private Integer issuedToClientByUserId;
 
     @Column(name = "time_client_issue")
     private ZonedDateTime timeClientIssue; //время клиентской выдачи

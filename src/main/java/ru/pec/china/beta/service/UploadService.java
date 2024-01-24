@@ -35,8 +35,6 @@ public class UploadService {
         HSSFWorkbook wb = new HSSFWorkbook(file.getInputStream());
         HSSFSheet sheet = wb.getSheetAt(0);
         int i = 0;
-        Person person = personRepositories.findById(1).orElse(null);
-        System.out.println(person.getFullName());
         Truck truck = new Truck();
         while (true) {
             try{
@@ -61,9 +59,6 @@ public class UploadService {
                 cargo.setCity(sheet.getRow(i).getCell(9).getStringCellValue());
                 cargo.setLocalOrTransshipment(sheet.getRow(i).getCell(12).getStringCellValue());
                 cargo.setTruckId(truck.getId());
-                cargo.setIssuanceByUserId(person.getId());
-                cargo.setUserClientIssueId(person.getId());
-                cargo.setProcessedByUserId(person.getId());
                 cargoRepositories.save(cargo);
                 i++;
             } catch (NumberFormatException ignore) {

@@ -25,19 +25,19 @@ public class CargoDTO {
     private String localOrTransshipment; //местный или перевалочный
 
     private String processedByUser; //кто обработал груз
-    private int processedByUserId; //кто обработал груз id
+    private Integer processedByUserId; //кто обработал груз id
 
-    private String userClientIssue; //кто сделал клиентскую выдачу
-    private int userClientIssueId; //кто сделал клиентскую выдачу id
+    private String issuedToClientByUser; //кто сделал клиентскую выдачу
+    private Integer issuedToClientByUserId; //кто сделал клиентскую выдачу id
 
-    private String issuanceByUser; //кто сделал выдачу
-    private int issuanceByUserId; //кто сделал выдачу id
+    private String issuedAtWarehouseByUser; //кто сделал cкладскую выдачу
+    private Integer issuedAtWarehouseByUserId; //кто сделал cкладскую выдачу id
 
 
-    private ZonedDateTime timeOfIssue; //Время выдачи
+    private ZonedDateTime timeOfIssueAtWarehouse; //Время выдачи
     private ZonedDateTime timeOfProcessed; //Время обработки
+    private ZonedDateTime timeOfIssueToClient; //время клиентской выдачи
 
-    private ZonedDateTime timeOfClientIssue; //время клиентской выдачи
     private String truckName; //имя рейса
     private Integer truckId; //имя рейса id
     private boolean processed;//обработан да/нет

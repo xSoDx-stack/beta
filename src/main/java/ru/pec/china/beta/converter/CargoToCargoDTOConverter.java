@@ -9,12 +9,17 @@ import ru.pec.china.beta.entity.Person;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.util.Optional;
 
 public class CargoToCargoDTOConverter implements Converter<Cargo, CargoDTO> {
     private ConversionService conversionService;
 
     @Override
     public CargoDTO convert(Cargo source) {
+        Person processedByUser = source.getProcessedByUser();
+        Person issuedToClientByUser = source.getIssuedToClientByUser();
+        Person issuedAtWarehouseByUser = source.getIssuedAtWarehouseByUser();
+
         return new CargoDTO(
                 source.getId(),
                 source.getClientBarcode(),
@@ -27,12 +32,12 @@ public class CargoToCargoDTOConverter implements Converter<Cargo, CargoDTO> {
                 source.getRecipient(),
                 source.getCity(),
                 source.getLocalOrTransshipment(),
-                source.getProcessedByUser().getFullName(),
-                source.getProcessedByUser().getId(),
-                source.getUserClientIssue().getFullName(),
-                source.getUserClientIssue().getId(),
-                source.getIssuanceByUser().getFullName(),
-                source.getIssuanceByUser().getId(),
+                person(processedByUser).map(PersonDTO::getFullName).orElse(null),
+                person(processedByUser).map(PersonDTO::getId).orElse(null),
+                person(issuedToClientByUser).map(PersonDTO::getFullName).orElse(null),
+                person(issuedToClientByUser).map(PersonDTO::getId).orElse(null),
+                person(issuedAtWarehouseByUser).map(PersonDTO::getFullName).orElse(null),
+                person(issuedAtWarehouseByUser).map(PersonDTO::getId).orElse(null),
                 source.getTimeOfIssue(),
                 source.getTimeOfProcessed(),
                 source.getTimeOfIssue(),
@@ -44,14 +49,12 @@ public class CargoToCargoDTOConverter implements Converter<Cargo, CargoDTO> {
         );
     }
 
-    private PersonDTO person(Person person){
-        if(person != null)
-            return conversionService.convert(person, PersonDTO.class);
-        return null;
+
+    private Optional<PersonDTO> person(Person person){
+        if(person !=null)
+            return Optional.ofNullable(conversionService.convert(person, PersonDTO.class));
+        return Optional.empty();
     }
-
-
-
 
     private BigDecimal dimension(Double volume, Integer numberOfSeats){
         BigDecimal bd = new BigDecimal(Double.toString(volume/numberOfSeats));
