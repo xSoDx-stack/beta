@@ -10,7 +10,7 @@ import lombok.*;
 @ToString
 
 public class PersonDTO {
-        private int id;
+        private Integer id;
         private String fullName;
         private String role;
     }

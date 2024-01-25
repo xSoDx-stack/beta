@@ -94,12 +94,4 @@ public class CargoService {
     public int pageNumber(int page){
         return page <= 1 ? 0 : --page;
     }
-
-
-
-
-
-
-
-
 }
