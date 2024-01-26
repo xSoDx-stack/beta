@@ -1,50 +1,78 @@
+function saveCargo(){
+    let offCanvas = $('#staticBackdrop');
+    let cargo = {
+        id: offCanvas.find("#inputId").val(),
+        pecCode: offCanvas.find('#inputPecCode').val(),
+        processed: $("#labelProcessed").prop('checked'),
+        issuance: $("#labelIssuance").prop('checked')
+    }
 
+
+    $.ajax({
+        url: '/api/v1/cargo/save',
+        type: 'POST',
+        data: JSON.stringify(cargo),
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        success: (cargo) => {
+            showingCargoOffCanvas(cargo)
+        },
+        error: () => {
+            alert("Ошибка");
+        }
+    })
+}
 
 function searchCargoByKeyword(){
     const keyword = $('#search').val();
-    $.get("/api/v1/cargo/search/" + keyword, function (data){
-        if(Object.keys(data).length === 0) {
+    $.get("/api/v1/cargo/search/" + keyword, function (cargo){
+        if(Object.keys(cargo).length === 0) {
             alert("Код не существует !!!!")
         }
         else {
-            showingCargoOffcanvas(data)
+            showingCargoOffCanvas(cargo)
         }
     });
 }
 
+
+
+
 function getCargoById(id) {
-    $.get( "/api/v1/cargo/" + id, function( data ) {
-        showingCargoOffcanvas(data)
+    $.get( "/api/v1/cargo/" + id, function( cargo ) {
+        showingCargoOffCanvas(cargo)
     });
 }
 
-function showingCargoOffcanvas (data) {
-    $('#container').barcode(data.clientBarcode, 'code128', {barWidth: 2, barHeight: 130});
-    $('#numberOfSeats').html(data.numberOfSeats);
-    $('#weight').html(data.weight);
-    $('#dimensions').html(data.dimensions);
-    $('#volume').html(data.volume);
 
-    if (data.pecCode === void 0 || data.pecCode === null || data.pecCode.trim() === '') {
+function showingCargoOffCanvas (cargo) {
+    $('#inputId').val(cargo.id);
+    $('#container').barcode(cargo.clientBarcode, 'code128', {barWidth: 2, barHeight: 130});
+    $('#numberOfSeats').html(cargo.numberOfSeats);
+    $('#weight').html(cargo.weight);
+    $('#dimensions').html(cargo.dimensions);
+    $('#volume').html(cargo.volume);
+
+    if (cargo.pecCode === void 0 || cargo.pecCode === null || cargo.pecCode.trim() === '') {
         $('#pecCode').hide();
         $('#inputPecCode').show();
     } else {
         $('#inputPecCode').hide();
-        $('#pecCode').show().html(data.pecCode);
+        $('#pecCode').show().html(cargo.pecCode);
 
     }
-    if (data.processed) {
+    if (cargo.processed) {
         $('#processed').hide();
-        if (data.issuance) {
+        if (cargo.issuance) {
             $('#issuance').hide();
 
-            $('#timeOfIssue').show().html(data.timeOfIssue);
+            $('#timeOfIssueAtWarehouse').show().html(cargo.timeOfIssueAtWarehouse);
 
             $('#cellIssuanceByUser').show();
-            $('#issuanceByUser').html(data.issuanceByUser);
+            $('#issuanceByUser').html(cargo.issuanceByUser);
         } else {
             $('#issuance').show();
-            $('#timeOfIssue').hide();
+            $('#timeOfIssueAtWarehouse').hide();
             $('#cellIssuanceByUser').hide();
         }
     } else {
@@ -52,9 +80,9 @@ function showingCargoOffcanvas (data) {
         $('#processed').show();
         $('#cellIssuanceByUser').hide();
     }
-    if(data.issuanceByUser === 'null'){
+    if(cargo.issuanceByUser === 'null'){
         $('#cellIssuanceByUser').hide()
     }
 
-    $('#truckName').attr("href", "/truck/" + data.truckId + "/cargo").html(data.truckName);
+    $('#truckName').attr("href", "/truck/" + cargo.truckId + "/cargo").html(cargo.truckName);
 }

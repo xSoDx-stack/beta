@@ -7,7 +7,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import ru.pec.china.beta.dto.CargoDTO;
 import ru.pec.china.beta.entity.Cargo;
-import ru.pec.china.beta.entity.Person;
 import ru.pec.china.beta.repositories.CargoRepositories;
 import ru.pec.china.beta.repositories.PersonRepositories;
 
@@ -69,17 +68,17 @@ public class CargoService {
         Cargo cargo = cargoRepositories.findById(cargoDTO.getId()).orElseThrow();
 
         if(cargoDTO.isProcessed() & !cargoDTO.getPecCode().isEmpty()) {
-            cargo.setProcessedByUser(personRepositories.findById(cargoDTO.getProcessedByUserId()).orElse(null));
+//            cargo.setProcessedByUser(personRepositories.findById(cargoDTO.getProcessedByUserId()).orElse(null));
             cargo.setProcessed(true);
             cargo.setPecCode(cargoDTO.getPecCode());
             cargo.setTimeOfProcessed(date);
-            cargo.setProcessedByUser(conversionService.convert(cargoDTO.getProcessedByUser(), Person.class));
+//            cargo.setProcessedByUser(conversionService.convert(cargoDTO.getProcessedByUser(), Person.class));
             if (true) {  //toDo cargoDTO.isClientIssue()
-                cargo.setIssuedToClientByUser(personRepositories.findById(cargoDTO.getIssuedToClientByUserId()).orElse(null));
+//                cargo.setIssuedToClientByUser(personRepositories.findById(cargoDTO.getIssuedToClientByUserId()).orElse(null));
                 cargo.setTimeClientIssue(date);
                 cargo.setClientIssue(true);
                 if (cargoDTO.isIssuance()) {
-                    cargo.setIssuedAtWarehouseByUser(personRepositories.findById(cargoDTO.getIssuedAtWarehouseByUserId()).orElse(null));
+//                    cargo.setIssuedAtWarehouseByUser(personRepositories.findById(cargoDTO.getIssuedAtWarehouseByUserId()).orElse(null));
                     cargo.setIssuance(true);
                     cargo.setTimeOfIssue(date);
                 }

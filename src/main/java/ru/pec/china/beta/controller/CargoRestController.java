@@ -2,10 +2,7 @@ package ru.pec.china.beta.controller;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import ru.pec.china.beta.dto.CargoDTO;
 import ru.pec.china.beta.service.CargoService;
 import ru.pec.china.beta.service.SearchService;
@@ -38,6 +35,12 @@ public class CargoRestController {
     @GetMapping("/give-all")
     public List<CargoDTO> findAllByCargo(){
         return cargoService.findAll();
+    }
+
+    @PostMapping("/save")
+    public CargoDTO saveCargo(@RequestBody CargoDTO cargoDTO){
+        cargoService.cargoUpdate(cargoDTO);
+        return cargoService.findByOne(cargoDTO.getId());
     }
 
 }
