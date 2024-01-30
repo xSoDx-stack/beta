@@ -9,6 +9,7 @@ import ru.pec.china.beta.dto.CargoDTO;
 import ru.pec.china.beta.entity.Cargo;
 import ru.pec.china.beta.repositories.CargoRepositories;
 import ru.pec.china.beta.repositories.PersonRepositories;
+import ru.pec.china.beta.util.CargoNotFoundException;
 
 import java.time.ZonedDateTime;
 import java.util.List;
@@ -30,9 +31,9 @@ public class CargoService {
         this.personRepositories = personRepositories;
     }
 
-    public CargoDTO findByOne(UUID id){
+    public CargoDTO findByOne(UUID id) throws CargoNotFoundException {
         return cargoRepositories.findById(id).map(cargo ->
-                conversionService.convert(cargo, CargoDTO.class)).orElseThrow();
+                conversionService.convert(cargo, CargoDTO.class)).orElseThrow(CargoNotFoundException::new);
     }
 
     public Page<CargoDTO> findAll(int page, int size){
