@@ -22,6 +22,11 @@ public class TruckController {
         this.cargoService = cargoService;
     }
 
+    @GetMapping("favicon.ico")
+    @ResponseBody
+    public void disableFavicon() {
+    }
+
     @GetMapping()
     public String index(Model model,
                         @ModelAttribute("truck") TruckDTO truck,
@@ -43,7 +48,6 @@ public class TruckController {
                             Model model,
                             @RequestParam(defaultValue = "1", value = "page") int page){
         model.addAttribute("cargos", cargoService.findAllByTrackId(id, page, 25));
-        model.addAttribute("cargo", new CargoDTO());
         model.addAttribute("trackName", truckService.TruckName(id));
         model.addAttribute("href","/truck/" + id +"/cargo?");
         return "cargo/cargo";

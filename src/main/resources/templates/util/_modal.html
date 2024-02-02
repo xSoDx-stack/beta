@@ -7,19 +7,20 @@
                 <h1 class="modal-title fs-5" id="labelModal">Загрузка файла</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
             </div>
-            <form th:method="POST" th:action="@{/upload}" enctype="multipart/form-data">
+            <form id="formData"  enctype="multipart/form-data">
                 <div class="modal-body">
                     <div class="mb-3">
                         <label for="formFile" class="form-label">Укажите файл таблицы</label>
                         <input class="form-control" accept=".xls, .xlsx" type="file" th:name="file" id="formFile">
                     </div>
+                    <div id="invalidFormatFile" class="invalid-feedback">
+                        Неверный формат файла !
+                    </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" value="Import" class="btn btn-primary">Загрузить</button>
+                    <button type="button" onclick="uploadFile()" value="Import" class="btn btn-primary">Загрузить</button>
                 </div>
             </form>
         </div>
     </div>
 </div>
-
-

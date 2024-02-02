@@ -13,8 +13,29 @@ $(document).ready(function () {
     });
 });
 
+function uploadFile(){
+    const data = new FormData($("#formData")[0]);
+    $.ajax({
+        type: "POST",
+        url: "/api/v1/cargo/upload",
+        cache: false,
+        processData: false,
+        contentType: false,
+        data: data,
+        dataType: "json",
+        success:  ()=> {
+            $("#invalidFormatFile").hide();
+            location.reload()
+        },
+        error: () => {
+            $("#invalidFormatFile").show();
+        }
+    });
+}
 
-    function saveCargo(){
+
+
+function saveCargo(){
     let offCanvas = $('#staticBackdrop');
     let cargo = {
         id: offCanvas.find("#inputId").val(),
@@ -36,26 +57,31 @@ $(document).ready(function () {
         error: () => {
             alert("Ошибка");
         }
-    })
+    });
 }
 
 function searchCargoByKeyword(keyword){
-    $.get("/api/v1/cargo/search/" + keyword,
-        function (cargo){
-        if(Object.keys(cargo).length === 0) {
+        if(keyword.trim() === ''){
             $('#searchNotFound').show();
             $('#cargoOffCanvas').hide();
-
         }
         else {
-            $('#cargoOffCanvas').show();
-            $('#searchNotFound').hide();
-            showingCargoOffCanvas(cargo);
+            $.get("/api/v1/cargo/search/" + keyword,
+                function (cargo) {
+                    if (Object.keys(cargo).length === 0) {
+                        $('#searchNotFound').show();
+                        $('#cargoOffCanvas').hide();
+
+                    } else {
+                        $('#cargoOffCanvas').show();
+                        $('#searchNotFound').hide();
+                        showingCargoOffCanvas(cargo);
+                    }
+                }).fail(function () {
+                $('#searchNotFound').show();
+                $('#cargoOffCanvas').hide();
+            });
         }
-    }).fail(function (){
-        $('#searchNotFound').show();
-        $('#cargoOffCanvas').hide();
-    });
 }
 
 function getCargoById(id) {
@@ -71,7 +97,6 @@ function showingCargoOffCanvas (cargo) {
 
     if(cargo.timeOfIssueAtWarehouse != null) {
         date = moment(cargo.timeOfIssueAtWarehouse).format("DD-MM-YYYY HH:mm");
-        console.log(date)
     }
 
     $('#inputId').val(cargo.id);
@@ -129,4 +154,3 @@ function showingCargoOffCanvas (cargo) {
 
     $('#truckName').attr("href", "/truck/" + cargo.truckId + "/cargo").html(cargo.truckName);
 }
-

@@ -2,15 +2,15 @@ package ru.pec.china.beta.util;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
 @AllArgsConstructor
-public class CargoErrorResponse {
-
+@NoArgsConstructor
+public class ErrorResponse {
 
     private String massage;
-    private long timestamp;
 
 }

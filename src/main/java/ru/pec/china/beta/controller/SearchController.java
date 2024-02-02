@@ -27,7 +27,6 @@ public class SearchController {
         if (search.isEmpty()){
             return "redirect:/";
         }
-        model.addAttribute("cargo", new CargoDTO());
         model.addAttribute("cargos", searchService.searchByCodeClient(search, page, 15));
         model.addAttribute("keyword", search);
         return "cargo/cargo";
