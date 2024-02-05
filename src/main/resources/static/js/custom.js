@@ -13,6 +13,13 @@ $(document).ready(function () {
     });
 });
 
+function deletePecCode(){
+    const id = $('#inputId').val();
+    $.post( "/api/v1/cargo/delete/" + id, function(cargo) {
+        showingCargoOffCanvas(cargo)
+    });
+}
+
 function uploadFile(){
     const data = new FormData($("#formData")[0]);
     $.ajax({
@@ -111,10 +118,17 @@ function showingCargoOffCanvas (cargo) {
     if (cargo.pecCode === void 0 || cargo.pecCode === null || cargo.pecCode.trim() === '') {
         $('#pecCode').hide();
         $('#inputPecCode').show().val('');
+        $('#trashButton').hide();
 
     } else {
         $('#inputPecCode').hide().val(cargo.pecCode);
         $('#pecCode').show().html(cargo.pecCode);
+        if(cargo.issuance){
+            $('#trashButton').hide();
+        }
+        else{
+            $('#trashButton').show();
+        }
 
     }
     if (cargo.processed) {

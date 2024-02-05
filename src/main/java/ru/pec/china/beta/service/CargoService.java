@@ -65,8 +65,8 @@ public class CargoService {
                 conversionService.convert(cargo, CargoDTO.class));
     }
 
-    public void cargoUpdate( CargoDTO cargoDTO){
-        Cargo cargo = cargoRepositories.findById(cargoDTO.getId()).orElseThrow();
+    public void cargoUpdate( CargoDTO cargoDTO) throws CargoNotFoundException {
+        Cargo cargo = cargoRepositories.findById(cargoDTO.getId()).orElseThrow(CargoNotFoundException::new);
 
         if(cargoDTO.isProcessed() & !cargoDTO.getPecCode().isEmpty()) {
 //            cargo.setProcessedByUser(personRepositories.findById(cargoDTO.getProcessedByUserId()).orElse(null));
@@ -86,12 +86,19 @@ public class CargoService {
             }
             cargoRepositories.save(cargo);
         }
-        else
-            System.out.println("Параметры не изменены");
-
     }
 
-    public int pageNumber(int page){
+    private int pageNumber(int page){
         return page <= 1 ? 0 : --page;
+    }
+
+    public CargoDTO deletePecCode(UUID id) throws CargoNotFoundException {
+        Cargo cargo = cargoRepositories.findById(id).orElseThrow(CargoNotFoundException::new);
+        if(cargo.isIssuance()){
+            return conversionService.convert(cargo, CargoDTO.class);
+        }
+        cargo.setPecCode(null);
+        cargoRepositories.save(cargo);
+        return conversionService.convert(cargo, CargoDTO.class);
     }
 }

@@ -7,6 +7,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import ru.pec.china.beta.dto.CargoDTO;
 import ru.pec.china.beta.service.CargoService;
+import ru.pec.china.beta.util.CargoNotFoundException;
 
 @Controller
 @RequestMapping("/cargo")
@@ -52,8 +53,10 @@ public class CargoController {
     }
 
     @PostMapping("/process")
-    public String  process (@ModelAttribute("cargo") @Validated CargoDTO cargoDTO){
+    public String  process (@ModelAttribute("cargo") @Validated CargoDTO cargoDTO) throws CargoNotFoundException {
         cargoService.cargoUpdate(cargoDTO);
         return "redirect:/cargo";
     }
+
+
 }

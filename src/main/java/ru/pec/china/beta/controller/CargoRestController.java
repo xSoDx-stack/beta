@@ -65,6 +65,11 @@ public class CargoRestController {
                return uploadService.upload(file);
     }
 
+    @PostMapping("/delete/{id}")
+    public CargoDTO deletePecCode(@PathVariable("id") UUID id ) throws CargoNotFoundException {
+        return cargoService.deletePecCode(id);
+    }
+
 
 }
 
