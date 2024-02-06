@@ -3,11 +3,10 @@ package ru.pec.china.beta.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.*;
-import ru.pec.china.beta.dto.CargoDTO;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import ru.pec.china.beta.service.CargoService;
-import ru.pec.china.beta.util.CargoNotFoundException;
 
 @Controller
 @RequestMapping("/cargo")
@@ -51,12 +50,4 @@ public class CargoController {
         model.addAttribute("href", "/cargo/issuance?");
         return "cargo/cargo";
     }
-
-    @PostMapping("/process")
-    public String  process (@ModelAttribute("cargo") @Validated CargoDTO cargoDTO) throws CargoNotFoundException {
-        cargoService.cargoUpdate(cargoDTO);
-        return "redirect:/cargo";
-    }
-
-
 }

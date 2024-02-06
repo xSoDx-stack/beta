@@ -7,6 +7,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import ru.pec.china.beta.dto.CargoDTO;
 import ru.pec.china.beta.entity.Cargo;
+import ru.pec.china.beta.entity.Person;
 import ru.pec.china.beta.repositories.CargoRepositories;
 import ru.pec.china.beta.repositories.PersonRepositories;
 import ru.pec.china.beta.util.CargoNotFoundException;
@@ -65,21 +66,22 @@ public class CargoService {
                 conversionService.convert(cargo, CargoDTO.class));
     }
 
-    public void cargoUpdate( CargoDTO cargoDTO) throws CargoNotFoundException {
+    public void cargoUpdate(CargoDTO cargoDTO, String userDetails) throws CargoNotFoundException {
         Cargo cargo = cargoRepositories.findById(cargoDTO.getId()).orElseThrow(CargoNotFoundException::new);
+        Person person = personRepositories.findByLogin(userDetails).orElseThrow(null);
 
         if(cargoDTO.isProcessed() & !cargoDTO.getPecCode().isEmpty()) {
-//            cargo.setProcessedByUser(personRepositories.findById(cargoDTO.getProcessedByUserId()).orElse(null));
+            cargo.setProcessedByUserId(person.getId());
             cargo.setProcessed(true);
             cargo.setPecCode(cargoDTO.getPecCode());
             cargo.setTimeOfProcessed(date);
-//            cargo.setProcessedByUser(conversionService.convert(cargoDTO.getProcessedByUser(), Person.class));
+            cargo.setProcessedByUserId(person.getId());
             if (true) {  //toDo cargoDTO.isClientIssue()
-//                cargo.setIssuedToClientByUser(personRepositories.findById(cargoDTO.getIssuedToClientByUserId()).orElse(null));
+                cargo.setIssuedToClientByUserId(person.getId());
                 cargo.setTimeClientIssue(date);
                 cargo.setClientIssue(true);
                 if (cargoDTO.isIssuance()) {
-//                    cargo.setIssuedAtWarehouseByUser(personRepositories.findById(cargoDTO.getIssuedAtWarehouseByUserId()).orElse(null));
+                    cargo.setIssuedAtWarehouseByUserId(person.getId());
                     cargo.setIssuance(true);
                     cargo.setTimeOfIssue(date);
                 }

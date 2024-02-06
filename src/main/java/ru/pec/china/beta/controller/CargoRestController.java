@@ -4,6 +4,8 @@ package ru.pec.china.beta.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import ru.pec.china.beta.dto.CargoDTO;
@@ -55,8 +57,9 @@ public class CargoRestController {
 
 
     @PostMapping("/save")
-    public CargoDTO saveCargo(@RequestBody CargoDTO cargoDTO) throws CargoNotFoundException {
-        cargoService.cargoUpdate(cargoDTO);
+    public CargoDTO saveCargo(@RequestBody CargoDTO cargoDTO,
+                              @AuthenticationPrincipal UserDetails userDetails) throws CargoNotFoundException {
+        cargoService.cargoUpdate(cargoDTO, userDetails.getUsername());
         return cargoService.findByOne(cargoDTO.getId());
     }
 
@@ -69,7 +72,4 @@ public class CargoRestController {
     public CargoDTO deletePecCode(@PathVariable("id") UUID id ) throws CargoNotFoundException {
         return cargoService.deletePecCode(id);
     }
-
-
 }
-
