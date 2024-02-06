@@ -59,7 +59,8 @@ function saveCargo(){
         contentType: "application/json; charset=utf-8",
         dataType: "json",
         success: (cargo) => {
-            showingCargoOffCanvas(cargo)
+            searchCargoByKeyword(cargo.clientBarcode)
+            console.log(cargo.pecCode)
         },
         error: () => {
             alert("Ошибка");
@@ -103,7 +104,7 @@ function getCargoById(id) {
 function showingCargoOffCanvas (cargo) {
 
     if(cargo.timeOfIssueAtWarehouse != null) {
-        date = moment(cargo.timeOfIssueAtWarehouse).format("DD-MM-YYYY HH:mm");
+        date = moment(cargo.timeOfIssueAtWarehouse).format("DD.MM.YYYY HH:mm");
     }
 
     $('#inputId').val(cargo.id);
@@ -119,10 +120,12 @@ function showingCargoOffCanvas (cargo) {
         $('#pecCode').hide();
         $('#inputPecCode').show().val('');
         $('#trashButton').hide();
+        $('#issuance').hide();
 
     } else {
         $('#inputPecCode').hide().val(cargo.pecCode);
         $('#pecCode').show().html(cargo.pecCode);
+        $('#issuance').show();
         if(cargo.issuance){
             $('#trashButton').hide();
         }
@@ -136,7 +139,6 @@ function showingCargoOffCanvas (cargo) {
         $("#labelProcessed").prop('checked', true)
 
         if (cargo.issuance) {
-            $('#issuance').hide();
             $('#labelIssuance').prop('checked', true)
             $('#buttonSave').hide();
 
@@ -144,11 +146,11 @@ function showingCargoOffCanvas (cargo) {
                 $('#timeOfIssueAtWarehouse').show().html(date);
 
             $('#cellIssuanceByUser').show();
-            $('#issuanceByUser').html(cargo.issuanceByUser);
+            $('#issuanceByUser').html(cargo.issuedAtWarehouseByUser);
         } else {
             $('#buttonSave').show();
             $("#labelIssuance").prop('checked', false)
-            $('#issuance').show();
+
             $('#timeIssue').hide();
             $('#timeOfIssueAtWarehouse').hide()
             $('#cellIssuanceByUser').hide();

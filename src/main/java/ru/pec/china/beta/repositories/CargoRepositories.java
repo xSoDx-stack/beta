@@ -8,6 +8,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import ru.pec.china.beta.entity.Cargo;
 
+import java.util.Optional;
 import java.util.UUID;
 
 @Repository
@@ -24,5 +25,5 @@ public interface CargoRepositories extends JpaRepository<Cargo, UUID> {
     Page<Cargo> searchCode(@Param("search") String search, Pageable pageable);
 
     @Query("select c from Cargo c where c.clientBarcode = :search")
-    Cargo searchCargoByPecCode(@Param("search") String search);
+    Optional<Cargo> searchCargoByPecCode(@Param("search") String search);
 }

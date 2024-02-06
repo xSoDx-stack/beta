@@ -10,6 +10,7 @@ import ru.pec.china.beta.entity.Cargo;
 import ru.pec.china.beta.entity.Person;
 import ru.pec.china.beta.repositories.CargoRepositories;
 import ru.pec.china.beta.repositories.PersonRepositories;
+import ru.pec.china.beta.util.CargoBadSaveException;
 import ru.pec.china.beta.util.CargoNotFoundException;
 
 import java.time.ZonedDateTime;
@@ -66,11 +67,14 @@ public class CargoService {
                 conversionService.convert(cargo, CargoDTO.class));
     }
 
-    public void cargoUpdate(CargoDTO cargoDTO, String userDetails) throws CargoNotFoundException {
+    public CargoDTO cargoUpdate(CargoDTO cargoDTO, String userDetails) throws CargoNotFoundException, CargoBadSaveException {
         Cargo cargo = cargoRepositories.findById(cargoDTO.getId()).orElseThrow(CargoNotFoundException::new);
         Person person = personRepositories.findByLogin(userDetails).orElseThrow(null);
 
-        if(cargoDTO.isProcessed() & !cargoDTO.getPecCode().isEmpty()) {
+        if(cargoDTO.getPecCode() == null)
+            cargoDTO.setPecCode("");
+
+        if(cargoDTO.isProcessed() & !cargoDTO.getPecCode().isEmpty() ) {
             cargo.setProcessedByUserId(person.getId());
             cargo.setProcessed(true);
             cargo.setPecCode(cargoDTO.getPecCode());
@@ -87,7 +91,9 @@ public class CargoService {
                 }
             }
             cargoRepositories.save(cargo);
+            return conversionService.convert(cargo, CargoDTO.class);
         }
+        throw new CargoBadSaveException();
     }
 
     private int pageNumber(int page){

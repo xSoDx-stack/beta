@@ -12,6 +12,7 @@ import ru.pec.china.beta.dto.CargoDTO;
 import ru.pec.china.beta.service.CargoService;
 import ru.pec.china.beta.service.SearchService;
 import ru.pec.china.beta.service.UploadService;
+import ru.pec.china.beta.util.CargoBadSaveException;
 import ru.pec.china.beta.util.CargoNotFoundException;
 import ru.pec.china.beta.util.ErrorResponse;
 
@@ -33,19 +34,26 @@ public class CargoRestController {
     }
 
     @GetMapping("/search/{clientCode}")
-    public CargoDTO searchByClientCode(@PathVariable("clientCode") String clientCode) {
+    public CargoDTO searchByClientCode(@PathVariable("clientCode") String clientCode) throws CargoNotFoundException {
         return searchService.searchByCodeClient(clientCode);
     }
 
     @GetMapping("/{id}")
-    public CargoDTO getByID(@PathVariable("id") UUID id) throws Exception {
+    public CargoDTO getByID(@PathVariable("id") UUID id) throws IllegalArgumentException, CargoNotFoundException {
             return cargoService.findByOne(id);
     }
 
     @ExceptionHandler
-    private ResponseEntity<ErrorResponse> handlerException( Exception e) {
+    private ResponseEntity<ErrorResponse> handlerException( CargoNotFoundException ex) {
         ErrorResponse response = new ErrorResponse(
-                "Груза не существует"
+                "Груз не найден"
+        );
+        return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
+    }
+    @ExceptionHandler
+    private ResponseEntity<ErrorResponse> handlerException(IllegalArgumentException ex){
+        ErrorResponse response = new ErrorResponse(
+                "Неверно задан ID груза"
         );
         return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
     }
@@ -58,10 +66,19 @@ public class CargoRestController {
 
     @PostMapping("/save")
     public CargoDTO saveCargo(@RequestBody CargoDTO cargoDTO,
-                              @AuthenticationPrincipal UserDetails userDetails) throws CargoNotFoundException {
-        cargoService.cargoUpdate(cargoDTO, userDetails.getUsername());
-        return cargoService.findByOne(cargoDTO.getId());
+                              @AuthenticationPrincipal UserDetails userDetails) throws CargoBadSaveException, CargoNotFoundException {
+
+        return cargoService.cargoUpdate(cargoDTO, userDetails.getUsername());
     }
+
+    @ExceptionHandler
+    private ResponseEntity<ErrorResponse> handlerException(CargoBadSaveException ex){
+        ErrorResponse response = new ErrorResponse(
+                "Ошибка при обработке груза"
+        );
+        return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
+    }
+
 
     @PostMapping("/upload")
     public ResponseEntity<ErrorResponse> upload(@RequestParam("file") MultipartFile file){

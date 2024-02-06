@@ -7,6 +7,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import ru.pec.china.beta.dto.CargoDTO;
 import ru.pec.china.beta.repositories.CargoRepositories;
+import ru.pec.china.beta.util.CargoNotFoundException;
 
 @Service
 public class SearchService {
@@ -23,8 +24,8 @@ public class SearchService {
         return cargoRepositories.searchCode(keyword, PageRequest.of(pageNumber(page),size)).map(cargo ->
                 conversionService.convert(cargo, CargoDTO.class));
     }
-    public CargoDTO searchByCodeClient(String keyword){
-        return conversionService.convert(cargoRepositories.searchCargoByPecCode(keyword), CargoDTO.class);
+    public CargoDTO searchByCodeClient(String keyword) throws CargoNotFoundException {
+        return conversionService.convert(cargoRepositories.searchCargoByPecCode(keyword).orElseThrow(CargoNotFoundException::new), CargoDTO.class);
     }
     public int pageNumber(int page){
         return page <= 1 ? 0 : --page;
