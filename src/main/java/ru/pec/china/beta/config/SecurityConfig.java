@@ -5,8 +5,10 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import ru.pec.china.beta.security.RestAccessDeniedHandler;
 import ru.pec.china.beta.security.RestAuthenticationFailureHandler;
 import ru.pec.china.beta.security.RestAuthenticationSuccessHandler;
 
@@ -22,9 +24,11 @@ public class SecurityConfig {
                                 "/api/v1/cargo/save",
                                 "/api/v1/cargo/upload",
                                 "/api/v1/cargo/delete/*"))
-                .httpBasic(httpBasic->{})
-                .authorizeHttpRequests(auth->auth.anyRequest().authenticated())
-                .formLogin(httpSecurityFormLoginConfigurer -> {});
+                .httpBasic((httpBasic)->{})
+                .authorizeHttpRequests((auth)->auth
+                        .anyRequest()
+                        .authenticated())
+                .formLogin((form) ->{});
 
         return http.build();
     }
@@ -39,8 +43,8 @@ public class SecurityConfig {
         return new RestAuthenticationSuccessHandler();
     }
 
-//    @Bean
-//    public AccessDeniedHandler accessDeniedHandler(){
-//        return new RestAccessDeniedHandler();
-//    }
+    @Bean
+    public AccessDeniedHandler accessDeniedHandler(){
+        return new RestAccessDeniedHandler();
+    }
 }

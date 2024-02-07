@@ -26,11 +26,12 @@ public class AuthProviderImpl implements AuthenticationProvider {
         UserDetails personDetails = personService.loadUserByUsername(login);
         String password = authentication.getCredentials().toString();
 
-       if(false) {
+       if(!personDetails.getPassword().equals(password)) {
            throw new BadCredentialsException("Неправильный логин или пароль");
        }
         return new UsernamePasswordAuthenticationToken(personDetails, password,
                 Collections.emptyList());
+
     }
 
     @Override

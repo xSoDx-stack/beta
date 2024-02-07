@@ -25,7 +25,7 @@ public class PersonService implements UserDetailsService {
         Optional<Person> person = personRepositories.findByLogin(username);
 
         if(person.isEmpty()){
-            throw new UsernameNotFoundException("Пользователь не найден");
+            throw new UsernameNotFoundException("Неправильный логин или пароль");
         }
         return new PersonDetails(person.get());
     }

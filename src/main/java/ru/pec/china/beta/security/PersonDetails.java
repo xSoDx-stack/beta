@@ -19,10 +19,6 @@ public record PersonDetails(Person person) implements UserDetails {
         return this.person.getPassword();
     }
 
-    public String getUserFullName(){
-        return this.person.getFullName();
-    }
-
     @Override
     public String getUsername() {
         return this.person.getLogin();

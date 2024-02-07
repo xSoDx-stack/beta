@@ -125,12 +125,14 @@ function showingCargoOffCanvas (cargo) {
     } else {
         $('#inputPecCode').hide().val(cargo.pecCode);
         $('#pecCode').show().html(cargo.pecCode);
-        $('#issuance').show();
+
         if(cargo.issuance){
             $('#trashButton').hide();
+            $('#issuance').hide();
         }
         else{
             $('#trashButton').show();
+            $('#issuance').show();
         }
 
     }
