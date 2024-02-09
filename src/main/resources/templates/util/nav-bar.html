@@ -27,8 +27,10 @@
                        type="button"
                        data-bs-target="#UploadModal">Загрузить таблицу</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link disabled">Отключенная</a>
+                <li class="nav-item d-flex flex-row-reverse">
+                    <form th:action="@{/auth/logout}" th:method="POST">
+                        <button class="nav-link p-2"  th:text="Выход"/>
+                    </form>
                 </li>
             </ul>
             <form class="d-flex" role="search" th:action="@{/search}" th:method="GET">
