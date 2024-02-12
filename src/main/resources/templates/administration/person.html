@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{/util/bace :: common_header(~{::link}, ~{::title})}">
+    <meta charset="UTF-8">
+    <title>Администрирование</title>
+</head>
+<body>
+<nav th:replace="~{/util/nav-bar :: NavBar}"></nav>
+<table class="table table-sm table-bordered border-primary text-center">
+    <thead class="table-dark">
+    <tr>
+        <th scope="col">№</th>
+        <th scope="col">Логин</th>
+        <th scope="col">ФИО</th>
+        <th scope="col">Роль</th>
+        <th scope="col">Действия</th>
+    </tr>
+    </thead>
+    <tbody class="table-secondary">
+    <tr th:each="people,i :${person}" class="table-secondary">
+        <td>
+            <h6 th:text="${i.count}"/>
+        </td>
+        <td>
+            <h6 th:text="${people.getLogin()}"/>
+        </td>
+        <td>
+            <h6 th:text="${people.getFullName()}"/>
+        </td>
+        <td>
+            <h6 th:text="${people.getRole()}"/>
+        </td>
+        <td>
+            <h6 th:text="'Удалить, редактировать'"/>
+        </td>
+    </tr>
+    </tbody>
+</table>
+<button type="button" data-bs-toggle="modal" class="btn btn-secondary" data-bs-target="#personData">Создать нового пользователя</button>
+</body>
+<div th:replace="~{util/_modal :: personDataModal}"></div>
+</html>

@@ -6,6 +6,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import ru.pec.china.beta.service.PersonService;
 
@@ -14,9 +15,11 @@ import java.util.Collections;
 @Component
 public class AuthProviderImpl implements AuthenticationProvider {
     private final PersonService personService;
+    private final PasswordEncoder passwordEncoder;
 
-    public AuthProviderImpl(PersonService personService) {
+    public AuthProviderImpl(PersonService personService, PasswordEncoder passwordEncoder) {
         this.personService = personService;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
@@ -24,7 +27,12 @@ public class AuthProviderImpl implements AuthenticationProvider {
         String login = authentication.getName();
 
         UserDetails personDetails = personService.loadUserByUsername(login);
-        String password = authentication.getCredentials().toString();
+        String password = passwordEncoder.encode(authentication.getCredentials().toString());
+        System.out.println(password);
+        System.out.println(personDetails.getPassword());
+        System.out.println(!personDetails.getPassword().equals(password));
+
+
 
        if(!personDetails.getPassword().equals(password)) {
            throw new BadCredentialsException("Неправильный логин или пароль");

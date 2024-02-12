@@ -24,3 +24,36 @@
         </div>
     </div>
 </div>
+<!---------------------------модальное окно создание и редактирования пользователя---------------------------------->
+<div th:fragment="personDataModal" class="modal fade" id="personData" tabindex="-1" aria-labelledby="labelModal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 th:text="'Регистрация нового пользователя'"></h4>
+            </div>
+            <div class="modal-body">
+                <form id="form"  th:method="POST" th:action="@{/administration/person/new}" th:object="${person}">
+                    <div class="mb-3">
+                        <label for="loginInput" class="form-label">Логин</label>
+                        <input th:field="*{login}" type="text" class="form-control" id="loginInput" placeholder="Только латинские буквы">
+                    </div>
+                    <div class="mb-3">
+                        <label for="fullNameInput" class="form-label">Фамилию и инициалы пользователя</label>
+                        <input th:field="*{fullName}" type="text" class="form-control" id="fullNameInput" placeholder="Петров В.В">
+                    </div>
+                    <div class="mb-3">
+                        <label for="roleInput" class="form-label">Выбрать роль пользователя</label>
+                        <input th:field="*{role}" type="text" class="form-control" id="roleInput" placeholder="выбеете роль">
+                    </div>
+                    <div class="mb-3">
+                        <label for="passwordInput" class="form-label">Пароль для пользователя</label>
+                        <input th:field="*{password}" type="password" class="form-control" id="passwordInput" placeholder="пароль от 3 до 8 символов">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary" th:text="'Зарегестрировать'"></button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

@@ -18,7 +18,7 @@ public class Person {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Column(name = "login")
+    @Column(name = "login", unique = true)
     private String login;
 
     @Column(name = "password")
@@ -27,6 +27,6 @@ public class Person {
     @Column(name = "full_name")
     private String fullName;
 
-    @Column(name = "role")
+    @Column(name = "role", columnDefinition = "varchar(255) default 'OPERATOR'")
     private String role;
 }

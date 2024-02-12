@@ -13,14 +13,17 @@
                     <a class="nav-link active" aria-current="page" th:href="@{/}">Рейсы</a>
                 </li>
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">Грузы</a>
-                    <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" th:href="@{/cargo}">Все грузы</a></li>
-                        <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item link-secondary" th:href="@{/cargo/unloaded}">Все выгруженные</a></li>
-                        <li><a class="dropdown-item link-success" th:href="@{/cargo/processed}">Принятые</a></li>
-                        <li><a class="dropdown-item link-warning" th:href="@{/cargo/issuance}">Выданные</a></li>
-                    </ul>
+                <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">Грузы</a>
+                <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" th:href="@{/cargo}">Все грузы</a></li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li><a class="dropdown-item link-secondary" th:href="@{/cargo/unloaded}">Все выгруженные</a></li>
+                    <li><a class="dropdown-item link-success" th:href="@{/cargo/processed}">Принятые</a></li>
+                    <li><a class="dropdown-item link-warning" th:href="@{/cargo/issuance}">Выданные</a></li>
+                </ul>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" th:href="@{/administration/person}">Пользователи</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" data-bs-toggle="modal"

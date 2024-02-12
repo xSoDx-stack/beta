@@ -4,6 +4,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
@@ -26,15 +28,23 @@ public class SecurityConfig {
                                 "/api/v1/cargo/delete/*"))
                 .authorizeHttpRequests((auth)->auth
                         .requestMatchers(
+                                "/administration/*"
+                        ).hasRole("ADMIN")
+                        .requestMatchers(
                                 "/css/**",
                                 "/auth/login",
                                 "/auth/login?error",
                                 "/auth/logout"
                         )
-
                         .permitAll()
                         .anyRequest()
-                        .authenticated())
+                                .hasAnyRole(
+                                        "OPERATOR",
+                                        "MODERATOR",
+                                        "ADMIN"
+                                )
+                        )
+
                 .formLogin((form) ->form.loginPage("/auth/login")
                         .loginProcessingUrl("/auth/login")
                         .defaultSuccessUrl("/", true)
@@ -48,6 +58,11 @@ public class SecurityConfig {
                 );
 
         return http.build();
+    }
+
+    @Bean
+    public PasswordEncoder getPasswordEncoder(){
+        return new BCryptPasswordEncoder();
     }
 
     @Bean
