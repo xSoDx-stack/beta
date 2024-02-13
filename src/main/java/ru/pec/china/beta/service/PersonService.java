@@ -40,6 +40,7 @@ public class PersonService implements UserDetailsService {
         }
         return new PersonDetails(person.get());
     }
+
     @Transactional(readOnly = true)
     public List<PersonDTO> findAll(){
         return personRepositories.findAll().stream().map(person->

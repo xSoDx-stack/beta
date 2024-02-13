@@ -11,8 +11,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import ru.pec.china.beta.service.PersonService;
 
-import java.util.Collections;
-
 @Component
 public class AuthProviderImpl implements AuthenticationProvider {
     private final PersonService personService;
@@ -34,8 +32,7 @@ public class AuthProviderImpl implements AuthenticationProvider {
        if(!passwordEncoder.matches(password, personDetails.getPassword())) {
            throw new BadCredentialsException("Неправильный логин или пароль");
        }
-        return new UsernamePasswordAuthenticationToken(personDetails, personDetails.getPassword(),
-                Collections.emptyList());
+        return new UsernamePasswordAuthenticationToken(personDetails, personDetails.getPassword(), personDetails.getAuthorities());
     }
 
     @Override

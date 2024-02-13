@@ -32,7 +32,7 @@ public class SecurityConfig {
                         .requestMatchers(
                                 "/administration/**"
                         )
-                        .hasAnyRole("ADMIN", "OPERATOR")
+                        .hasAnyRole("ADMIN")
 
                         .requestMatchers(
                                 "/css/**",
