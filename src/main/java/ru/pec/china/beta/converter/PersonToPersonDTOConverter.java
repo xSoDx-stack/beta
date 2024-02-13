@@ -10,8 +10,8 @@ public class PersonToPersonDTOConverter implements Converter<Person, PersonDTO> 
         return new PersonDTO(
                 source.getId(),
                 source.getLogin(),
-                source.getPassword(),
                 source.getFullName(),
+                source.getPassword(),
                 source.getRole()
         );
     }

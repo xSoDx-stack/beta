@@ -1,5 +1,6 @@
 package ru.pec.china.beta.security;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -17,6 +18,7 @@ public class AuthProviderImpl implements AuthenticationProvider {
     private final PersonService personService;
     private final PasswordEncoder passwordEncoder;
 
+    @Autowired
     public AuthProviderImpl(PersonService personService, PasswordEncoder passwordEncoder) {
         this.personService = personService;
         this.passwordEncoder = passwordEncoder;
@@ -27,19 +29,13 @@ public class AuthProviderImpl implements AuthenticationProvider {
         String login = authentication.getName();
 
         UserDetails personDetails = personService.loadUserByUsername(login);
-        String password = passwordEncoder.encode(authentication.getCredentials().toString());
-        System.out.println(password);
-        System.out.println(personDetails.getPassword());
-        System.out.println(!personDetails.getPassword().equals(password));
+        String password = authentication.getCredentials().toString();
 
-
-
-       if(!personDetails.getPassword().equals(password)) {
+       if(!passwordEncoder.matches(password, personDetails.getPassword())) {
            throw new BadCredentialsException("Неправильный логин или пароль");
        }
-        return new UsernamePasswordAuthenticationToken(personDetails, password,
+        return new UsernamePasswordAuthenticationToken(personDetails, personDetails.getPassword(),
                 Collections.emptyList());
-
     }
 
     @Override

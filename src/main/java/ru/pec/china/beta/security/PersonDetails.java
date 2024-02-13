@@ -6,14 +6,19 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import ru.pec.china.beta.entity.Person;
 
+import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
+import java.util.List;
 
 public record PersonDetails(Person person) implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return Collections.singletonList(new SimpleGrantedAuthority(person.getRole()));
+        List<GrantedAuthority> list = new ArrayList<>();
+
+        list.add(new SimpleGrantedAuthority(person.getRole()));
+
+        return list;
     }
 
     @Override

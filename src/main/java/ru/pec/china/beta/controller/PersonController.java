@@ -21,18 +21,16 @@ public class PersonController {
         this.personService = personService;
     }
 
-
     @GetMapping("/person")
     public String personList(Model model,
-                             @ModelAttribute("person") PersonDTO personDTO){
+                             @ModelAttribute("persons") PersonDTO personDTO){
         model.addAttribute("person",personService.findAll());
         return "administration/person";
     }
 
-
     @PostMapping("/person/new")
-    public String registrationPerson(@ModelAttribute("person")PersonDTO personDTO){
+    public String registrationPerson(@ModelAttribute("persons") PersonDTO personDTO){
         personService.registerNewPerson(personDTO);
-        return "administration/person";
+        return "redirect:/administration/person";
     }
 }

@@ -27,6 +27,6 @@ public class Person {
     @Column(name = "full_name")
     private String fullName;
 
-    @Column(name = "role", columnDefinition = "varchar(255) default 'OPERATOR'")
+    @Column(name = "role", columnDefinition = "varchar(255) default 'ROLE_OPERATOR'")
     private String role;
 }

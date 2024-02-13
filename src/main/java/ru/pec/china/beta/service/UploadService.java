@@ -44,7 +44,7 @@ public class UploadService {
             Truck truck = new Truck();
             while (true) {
                 try {
-                    int tmp = Integer.parseInt(sheet.getRow(i).getCell(0).getStringCellValue());
+                    Integer.parseInt(sheet.getRow(i).getCell(0).getStringCellValue());
                     truck.setTrackName(sheet.getRow(i).getCell(1).getStringCellValue());
                     truck.setDateCreate(date);
                     truckRepositories.save(truck);
@@ -56,7 +56,7 @@ public class UploadService {
             i = 0;
             while (sheet.getRow(i) != null) {
                 try {
-                    int tmp = Integer.parseInt(sheet.getRow(i).getCell(0).getStringCellValue());
+                    Integer.parseInt(sheet.getRow(i).getCell(0).getStringCellValue());
                     Cargo cargo = new Cargo();
                     cargo.setClientBarcode(sheet.getRow(i).getCell(2).getStringCellValue());
                     cargo.setNumberOfSeats((int) sheet.getRow(i).getCell(4).getNumericCellValue());

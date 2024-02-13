@@ -55,9 +55,12 @@ public class PersonService implements UserDetailsService {
                 personDTO.setRole("ROLE_MODERATOR");
             }
             personDTO.setPassword(passwordEncoder.encode(personDTO.getPassword()));
-            personRepositories.save(Objects.requireNonNull(conversionService.convert(personDTO, Person.class)));
+            Person person = new Person();
+            person.setLogin(personDTO.getLogin());
+            person.setFullName(personDTO.getFullName());
+            person.setPassword(personDTO.getPassword());
+            person.setRole("ROLE_OPERATOR");
+            personRepositories.save(person);
         }
-
-
     }
 }

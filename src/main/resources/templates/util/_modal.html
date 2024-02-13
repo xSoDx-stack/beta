@@ -32,22 +32,22 @@
                 <h4 th:text="'Регистрация нового пользователя'"></h4>
             </div>
             <div class="modal-body">
-                <form id="form"  th:method="POST" th:action="@{/administration/person/new}" th:object="${person}">
+                <form id="form"  th:method="POST" th:action="@{/administration/person/new}" th:object="${persons}">
                     <div class="mb-3">
-                        <label for="loginInput" class="form-label">Логин</label>
-                        <input th:field="*{login}" type="text" class="form-control" id="loginInput" placeholder="Только латинские буквы">
+                        <label for="login" class="form-label">Логин</label>
+                        <input th:field="*{login}" type="text" class="form-control" id="login" placeholder="Только латинские буквы">
                     </div>
                     <div class="mb-3">
-                        <label for="fullNameInput" class="form-label">Фамилию и инициалы пользователя</label>
-                        <input th:field="*{fullName}" type="text" class="form-control" id="fullNameInput" placeholder="Петров В.В">
+                        <label for="fullName" class="form-label">Фамилию и инициалы пользователя</label>
+                        <input th:field="*{fullName}" type="text" class="form-control" id="fullName" placeholder="Петров В.В">
                     </div>
+<!--                    <div class="mb-3">-->
+<!--                        <label for="role" class="form-label">Выбрать роль пользователя</label>-->
+<!--                        <input  type="text" class="form-control" id="role" placeholder="выберете роль">-->
+<!--                    </div>-->
                     <div class="mb-3">
-                        <label for="roleInput" class="form-label">Выбрать роль пользователя</label>
-                        <input th:field="*{role}" type="text" class="form-control" id="roleInput" placeholder="выбеете роль">
-                    </div>
-                    <div class="mb-3">
-                        <label for="passwordInput" class="form-label">Пароль для пользователя</label>
-                        <input th:field="*{password}" type="password" class="form-control" id="passwordInput" placeholder="пароль от 3 до 8 символов">
+                        <label for="password" class="form-label">Пароль для пользователя</label>
+                        <input th:field="*{password}" type="password" class="form-control" id="password" placeholder="пароль от 3 до 8 символов">
                     </div>
                     <div class="modal-footer">
                         <button type="submit" class="btn btn-primary" th:text="'Зарегестрировать'"></button>

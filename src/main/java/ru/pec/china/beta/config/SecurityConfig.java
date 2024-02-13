@@ -20,44 +20,45 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http
+        return http
                 .csrf(csrf->csrf.
                         ignoringRequestMatchers(
                                 "/api/v1/cargo/save",
                                 "/api/v1/cargo/upload",
-                                "/api/v1/cargo/delete/*"))
+                                "/api/v1/cargo/delete/** "
+                        )
+                )
                 .authorizeHttpRequests((auth)->auth
                         .requestMatchers(
-                                "/administration/*"
-                        ).hasRole("ADMIN")
+                                "/administration/**"
+                        )
+                        .hasAnyRole("ADMIN", "OPERATOR")
+
                         .requestMatchers(
                                 "/css/**",
-                                "/auth/login",
                                 "/auth/login?error",
                                 "/auth/logout"
                         )
                         .permitAll()
                         .anyRequest()
-                                .hasAnyRole(
-                                        "OPERATOR",
-                                        "MODERATOR",
-                                        "ADMIN"
-                                )
-                        )
+                        .authenticated()
+                )
 
                 .formLogin((form) ->form.loginPage("/auth/login")
                         .loginProcessingUrl("/auth/login")
                         .defaultSuccessUrl("/", true)
                         .failureUrl("/auth/login?error")
+                        .permitAll()
                 )
                 .logout((logout)->logout
                         .logoutUrl("/auth/logout")
                         .logoutSuccessUrl("/auth/login")
                         .invalidateHttpSession(true)
                         .deleteCookies("JSESSIONID")
-                );
+                        .permitAll()
+                )
+                .build();
 
-        return http.build();
     }
 
     @Bean
@@ -79,4 +80,6 @@ public class SecurityConfig {
     public AccessDeniedHandler accessDeniedHandler(){
         return new RestAccessDeniedHandler();
     }
+
 }
+
