@@ -92,8 +92,17 @@ function searchCargoByKeyword(keyword){
         }
 }
 
+function getPersonById(id){
+    $.get("/administration/person/get/" + id, function (person){
+        $('#id').val(person.id)
+        $('#login').val(person.login)
+        $('#fullName').val(person.fullName)
+    });
+}
+
+
 function getCargoById(id) {
-    $.get( "/api/v1/cargo/" + id, function( cargo ) {
+    $.get("/api/v1/cargo/" + id, function( cargo ) {
         $('#cargoOffCanvas').show();
         $('#searchNotFound').hide();
         showingCargoOffCanvas(cargo);

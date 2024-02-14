@@ -2,6 +2,7 @@ package ru.pec.china.beta.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.ConversionService;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -12,6 +13,7 @@ import ru.pec.china.beta.dto.PersonDTO;
 import ru.pec.china.beta.entity.Person;
 import ru.pec.china.beta.repositories.PersonRepositories;
 import ru.pec.china.beta.security.PersonDetails;
+import ru.pec.china.beta.util.PersonNotFoundException;
 
 import java.util.List;
 import java.util.Objects;
@@ -47,21 +49,46 @@ public class PersonService implements UserDetailsService {
                 conversionService.convert(person, PersonDTO.class)).collect(Collectors.toList());
     }
     @Transactional
-    public void registerNewPerson(PersonDTO personDTO){
-        if(personDTO != null){
-            if(Objects.equals(personDTO.getRole(), "ROLE_ADMIN")){
-                personDTO.setRole("ROLE_ADMIN");
-            }
-            if(Objects.equals(personDTO.getRole(), "ROLE_MODERATOR")){
-                personDTO.setRole("ROLE_MODERATOR");
-            }
-            personDTO.setPassword(passwordEncoder.encode(personDTO.getPassword()));
+    public void registerNewPerson(PersonDTO personDTO) {
+
+        if(personDTO.getId() != null){
+            Person person = personRepositories.findById(personDTO.getId()).orElse(new Person());
+        }else {
             Person person = new Person();
-            person.setLogin(personDTO.getLogin());
-            person.setFullName(personDTO.getFullName());
-            person.setPassword(personDTO.getPassword());
-            person.setRole("ROLE_OPERATOR");
-            personRepositories.save(person);
         }
+
+
+
+        if(Objects.equals(personDTO.getRole(), "ROLE_ADMIN")){
+            personDTO.setRole("ROLE_ADMIN");
+        }
+
+        if(Objects.equals(personDTO.getRole(), "ROLE_MODERATOR")){
+            personDTO.setRole("ROLE_MODERATOR");
+        }
+
+        if(personDTO.getPassword() != null){
+            person.setPassword(passwordEncoder.encode(personDTO.getPassword()));
+        }
+        person.setLogin(personDTO.getLogin());
+        person.setFullName(personDTO.getFullName());
+        person.setRole("ROLE_OPERATOR");
+        personRepositories.save(person);
+
+    }
+    @Transactional
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public void deletePerson(int id, UserDetails userDetails) throws PersonNotFoundException {
+        Person person = personRepositories.findById(id).orElseThrow(PersonNotFoundException::new);
+        if(!person.getLogin().equals(userDetails.getUsername())){
+            personRepositories.delete(person);
+        }
+        System.out.println("Невозможно удалить самого себя");
+    }
+
+    @Transactional
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public PersonDTO findById(int id) throws PersonNotFoundException {
+       return personRepositories.findById(id).map((person)->conversionService.convert(person, PersonDTO.class)).orElseThrow(PersonNotFoundException::new);
     }
 }

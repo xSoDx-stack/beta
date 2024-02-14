@@ -34,6 +34,7 @@
             <div class="modal-body">
                 <form id="form"  th:method="POST" th:action="@{/administration/person/new}" th:object="${persons}">
                     <div class="mb-3">
+                        <input type="hidden" th:field="*{id}" id="id">
                         <label for="login" class="form-label">Логин</label>
                         <input th:field="*{login}" type="text" class="form-control" id="login" placeholder="Только латинские буквы">
                     </div>

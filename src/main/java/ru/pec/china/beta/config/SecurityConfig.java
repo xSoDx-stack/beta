@@ -2,6 +2,7 @@ package ru.pec.china.beta.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -13,7 +14,7 @@ import org.springframework.security.web.authentication.AuthenticationSuccessHand
 import ru.pec.china.beta.security.RestAccessDeniedHandler;
 import ru.pec.china.beta.security.RestAuthenticationFailureHandler;
 import ru.pec.china.beta.security.RestAuthenticationSuccessHandler;
-
+@EnableMethodSecurity(prePostEnabled = true)
 @EnableWebSecurity()
 @Configuration
 public class SecurityConfig {
@@ -36,8 +37,7 @@ public class SecurityConfig {
 
                         .requestMatchers(
                                 "/css/**",
-                                "/auth/login?error",
-                                "/auth/logout"
+                                "/auth/**"
                         )
                         .permitAll()
                         .anyRequest()
