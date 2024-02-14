@@ -13,6 +13,16 @@ $(document).ready(function () {
     });
 });
 
+$(document).ready(function () {
+    $('#inputPecCode').keydown (function(e) {
+        if (e.which === 13) {
+            $("#labelProcessed").prop('checked', true)
+            saveCargo()
+        }
+    });
+});
+
+
 function deletePecCode(){
     const id = $('#inputId').val();
     $.post( "/api/v1/cargo/delete/" + id, function(cargo) {
@@ -60,7 +70,6 @@ function saveCargo(){
         dataType: "json",
         success: (cargo) => {
             searchCargoByKeyword(cargo.clientBarcode)
-            console.log(cargo.pecCode)
         },
         error: () => {
             alert("Ошибка");

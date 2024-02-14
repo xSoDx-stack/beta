@@ -4,13 +4,13 @@
 <head th:fragment="common_header(links,title)">
     <link rel="stylesheet" th:href="@{/css/bootstrap.css}">
     <link rel="stylesheet" th:href="@{/css/form-login.css}">
-    <script type="text/javascript" th:src="@{/js/bootstrap.bundle.js}"></script>
     <script type="text/javascript" th:src="@{/js/jquery-3.7.1.min.js}"></script>
+    <script type="text/javascript" th:src="@{/js/bootstrap.bundle.min.js}"></script>
     <script type="text/javascript" th:src="@{/js/jquery-barcode.min.js}"></script>
-    <script type="text/javascript" th:src="@{/js/jquery-barcode.js}"></script>
-    <script type="text/javascript" th:src="@{/js/moment-with-locales.js}"></script>
+    <script type="text/javascript" th:src="@{/js/moment.min.js}"></script>
     <script type="text/javascript" th:src="@{/js/custom.js}"></script>
-
+    <meta id="_csrf" name="_csrf" th:content="${_csrf.token}"/>
+    <meta id="_csrf_header" name="_csrf_header" th:content="${_csrf.headerName}"/>
 
     <meta charset="UTF-8">
     <title th:replace="${title}">title</title>

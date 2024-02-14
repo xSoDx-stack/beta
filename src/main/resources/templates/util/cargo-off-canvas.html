@@ -18,7 +18,6 @@
         <div id="cargoOffCanvas">
             <div class="container" id="container">
             </div>
-            <form>
                 <table class="table text-center" >
                     <thead>
                     <tr>
@@ -52,7 +51,7 @@
                                     <td>
                                         <div class="input-group text-center">
                                             <span>
-                                            <h5 id="pecCode"></h5>
+                                                <h5 id="pecCode"></h5>
                                             <a id="trashButton" type="button" class="bi bi-trash link-danger" onclick="deletePecCode()">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
                                                     <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z"/>
@@ -60,9 +59,8 @@
                                                 </svg>
                                             </a>
                                             </span>
-                                            <label>
-                                                <input id="inputPecCode" type="text" class="form-control">
-                                            </label>
+                                            <label for="inputPecCode"></label>
+                                            <input id="inputPecCode" type="text" class="form-control" required>
                                         </div>
                                     </td>
                                     <td>
@@ -104,7 +102,6 @@
                             style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;" th:text="Сохранить">
                     </button>
                 </div>
-            </form>
         </div>
     </div>
 </div>

@@ -51,13 +51,12 @@ public class PersonService implements UserDetailsService {
     @Transactional
     public void registerNewPerson(PersonDTO personDTO) {
 
+        Person person;
         if(personDTO.getId() != null){
-            Person person = personRepositories.findById(personDTO.getId()).orElse(new Person());
+            person = personRepositories.findById(personDTO.getId()).orElse(new Person());
         }else {
-            Person person = new Person();
+            person = new Person();
         }
-
-
 
         if(Objects.equals(personDTO.getRole(), "ROLE_ADMIN")){
             personDTO.setRole("ROLE_ADMIN");

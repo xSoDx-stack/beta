@@ -26,7 +26,7 @@ public class SecurityConfig {
                         ignoringRequestMatchers(
                                 "/api/v1/cargo/save",
                                 "/api/v1/cargo/upload",
-                                "/api/v1/cargo/delete/** "
+                                "/api/v1/cargo/delete/"
                         )
                 )
                 .authorizeHttpRequests((auth)->auth
