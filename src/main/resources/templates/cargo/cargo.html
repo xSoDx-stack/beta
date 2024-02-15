@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head th:replace="~{/util/bace :: common_header(~{::link}, ~{::title})}">
-  <title>Грузы</title>
+  <title th:text="${titles}">val</title>
 </head>
 
 <body>

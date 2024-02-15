@@ -1,20 +1,32 @@
 const now = moment();
 let date = ''
 
+$(function () {
+    const token = $("meta[name='_csrf']").attr("content");
+    const header = $("meta[name='_csrf_header']").attr("content");
+    $(document).ajaxSend(function(e, xhr) {
+        xhr.setRequestHeader(header, token);
+    });
+});
+
+function resetData(){
+    $('#form')[0].reset();
+}
+
 $(document).ready(function () {
-    $('#search').keydown (function(e) {
-        if(e.which === 13) {
+    $('#search').keydown(function (e) {
+        if (e.which === 13) {
             searchCargoByKeyword($(this).val())
             $(this).val("");
         }
     });
-    $('#search-button').on("click", function (){
+    $('#search-button').on("click", function () {
         searchCargoByKeyword($('#search').val());
     });
 });
 
 $(document).ready(function () {
-    $('#inputPecCode').keydown (function(e) {
+    $('#inputPecCode').keydown(function (e) {
         if (e.which === 13) {
             $("#labelProcessed").prop('checked', true)
             saveCargo()
@@ -23,14 +35,14 @@ $(document).ready(function () {
 });
 
 
-function deletePecCode(){
+function deletePecCode() {
     const id = $('#inputId').val();
-    $.post( "/api/v1/cargo/delete/" + id, function(cargo) {
+    $.post("/api/v1/cargo/delete/" + id, function (cargo) {
         showingCargoOffCanvas(cargo)
     });
 }
 
-function uploadFile(){
+function uploadFile() {
     const data = new FormData($("#formData")[0]);
     $.ajax({
         type: "POST",
@@ -40,7 +52,7 @@ function uploadFile(){
         contentType: false,
         data: data,
         dataType: "json",
-        success:  ()=> {
+        success: () => {
             $("#invalidFormatFile").hide();
             location.reload()
         },
@@ -51,8 +63,7 @@ function uploadFile(){
 }
 
 
-
-function saveCargo(){
+function saveCargo() {
     let offCanvas = $('#staticBackdrop');
     let cargo = {
         id: offCanvas.find("#inputId").val(),
@@ -77,41 +88,41 @@ function saveCargo(){
     });
 }
 
-function searchCargoByKeyword(keyword){
-        if(keyword.trim() === ''){
+function searchCargoByKeyword(keyword) {
+    if (keyword.trim() === '') {
+        $('#searchNotFound').show();
+        $('#cargoOffCanvas').hide();
+    } else {
+        $.get("/api/v1/cargo/search/" + keyword,
+            function (cargo) {
+                if (Object.keys(cargo).length === 0) {
+                    $('#searchNotFound').show();
+                    $('#cargoOffCanvas').hide();
+
+                } else {
+                    $('#cargoOffCanvas').show();
+                    $('#searchNotFound').hide();
+                    showingCargoOffCanvas(cargo);
+                }
+            }).fail(function () {
             $('#searchNotFound').show();
             $('#cargoOffCanvas').hide();
-        }
-        else {
-            $.get("/api/v1/cargo/search/" + keyword,
-                function (cargo) {
-                    if (Object.keys(cargo).length === 0) {
-                        $('#searchNotFound').show();
-                        $('#cargoOffCanvas').hide();
-
-                    } else {
-                        $('#cargoOffCanvas').show();
-                        $('#searchNotFound').hide();
-                        showingCargoOffCanvas(cargo);
-                    }
-                }).fail(function () {
-                $('#searchNotFound').show();
-                $('#cargoOffCanvas').hide();
-            });
-        }
+        });
+    }
 }
 
-function getPersonById(id){
-    $.get("/administration/person/get/" + id, function (person){
+function getPersonById(id) {
+    $.get("/administration/person/get/" + id, function (person) {
         $('#id').val(person.id)
         $('#login').val(person.login)
         $('#fullName').val(person.fullName)
+        $('#selectRole').val(person.role).change();
     });
 }
 
 
 function getCargoById(id) {
-    $.get("/api/v1/cargo/" + id, function( cargo ) {
+    $.get("/api/v1/cargo/" + id, function (cargo) {
         $('#cargoOffCanvas').show();
         $('#searchNotFound').hide();
         showingCargoOffCanvas(cargo);
@@ -119,9 +130,8 @@ function getCargoById(id) {
 }
 
 
-function showingCargoOffCanvas (cargo) {
-
-    if(cargo.timeOfIssueAtWarehouse != null) {
+function showingCargoOffCanvas(cargo) {
+    if (cargo.timeOfIssueAtWarehouse != null) {
         date = moment(cargo.timeOfIssueAtWarehouse).format("DD.MM.YYYY HH:mm");
     }
 
@@ -144,11 +154,10 @@ function showingCargoOffCanvas (cargo) {
         $('#inputPecCode').hide().val(cargo.pecCode);
         $('#pecCode').show().html(cargo.pecCode);
 
-        if(cargo.issuance){
+        if (cargo.issuance) {
             $('#trashButton').hide();
             $('#issuance').hide();
-        }
-        else{
+        } else {
             $('#trashButton').show();
             $('#issuance').show();
         }
@@ -163,7 +172,7 @@ function showingCargoOffCanvas (cargo) {
             $('#buttonSave').hide();
 
             $('#timeIssue').show();
-                $('#timeOfIssueAtWarehouse').show().html(date);
+            $('#timeOfIssueAtWarehouse').show().html(date);
 
             $('#cellIssuanceByUser').show();
             $('#issuanceByUser').html(cargo.issuedAtWarehouseByUser);
@@ -184,7 +193,7 @@ function showingCargoOffCanvas (cargo) {
         $('#timeIssue').hide();
         $('#timeOfIssueAtWarehouse').hide()
     }
-    if(cargo.issuanceByUser === 'null'){
+    if (cargo.issuanceByUser === 'null') {
         $('#cellIssuanceByUser').hide()
     }
 

@@ -18,7 +18,6 @@ public class TruckToTruckDTOConverter implements Converter<Truck, TruckDTO> {
                 source.getCargos().stream().filter(Cargo::isIssuance).toList().size()
         );
     }
-
 }
 
 

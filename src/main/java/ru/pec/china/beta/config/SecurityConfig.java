@@ -8,13 +8,8 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.access.AccessDeniedHandler;
-import org.springframework.security.web.authentication.AuthenticationFailureHandler;
-import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
-import ru.pec.china.beta.security.RestAccessDeniedHandler;
-import ru.pec.china.beta.security.RestAuthenticationFailureHandler;
-import ru.pec.china.beta.security.RestAuthenticationSuccessHandler;
-@EnableMethodSecurity(prePostEnabled = true)
+
+@EnableMethodSecurity
 @EnableWebSecurity()
 @Configuration
 public class SecurityConfig {
@@ -22,13 +17,6 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         return http
-                .csrf(csrf->csrf.
-                        ignoringRequestMatchers(
-                                "/api/v1/cargo/save",
-                                "/api/v1/cargo/upload",
-                                "/api/v1/cargo/delete/"
-                        )
-                )
                 .authorizeHttpRequests((auth)->auth
                         .requestMatchers(
                                 "/administration/**"
@@ -37,11 +25,12 @@ public class SecurityConfig {
 
                         .requestMatchers(
                                 "/css/**",
-                                "/auth/**"
+                                "/js/**"
                         )
                         .permitAll()
-                        .anyRequest()
-                        .authenticated()
+                        .requestMatchers("/auth/login")
+                        .anonymous()
+                        .anyRequest().authenticated()
                 )
 
                 .formLogin((form) ->form.loginPage("/auth/login")
@@ -58,28 +47,10 @@ public class SecurityConfig {
                         .permitAll()
                 )
                 .build();
-
     }
 
     @Bean
     public PasswordEncoder getPasswordEncoder(){
         return new BCryptPasswordEncoder();
     }
-
-    @Bean
-    public AuthenticationFailureHandler authenticationFailureHandler(){
-        return new RestAuthenticationFailureHandler();
-    }
-
-    @Bean
-    public AuthenticationSuccessHandler authenticationSuccessHandler(){
-        return new RestAuthenticationSuccessHandler();
-    }
-
-    @Bean
-    public AccessDeniedHandler accessDeniedHandler(){
-        return new RestAccessDeniedHandler();
-    }
-
 }
-

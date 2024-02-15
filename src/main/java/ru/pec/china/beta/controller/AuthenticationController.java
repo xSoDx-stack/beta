@@ -12,5 +12,4 @@ public class AuthenticationController {
     public String loginPage(){
         return "authentication/login";
     }
-
 }

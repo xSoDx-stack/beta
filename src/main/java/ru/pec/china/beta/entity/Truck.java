@@ -26,5 +26,4 @@ public class Truck {
 
     @OneToMany(mappedBy = "truckId", cascade = {CascadeType.REMOVE, CascadeType.PERSIST}, fetch = FetchType.LAZY)
     private List<Cargo> cargos;
-
 }

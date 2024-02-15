@@ -24,6 +24,7 @@ public class CargoController {
                         @RequestParam(defaultValue = "1",value = "page") int page){
         model.addAttribute("cargos", cargoService.findAll(page, 25));
         model.addAttribute("href", "/cargo?");
+        model.addAttribute("titles", "Грузы");
         return "cargo/cargo";
     }
 
@@ -32,6 +33,7 @@ public class CargoController {
                                     @RequestParam(defaultValue = "1", value = "page") int page){
         model.addAttribute("cargos", cargoService.findAllUnloaded(page, 25));
         model.addAttribute("href", "/cargo/unloaded?");
+        model.addAttribute("titles", "Грузы выгруженные");
         return "cargo/cargo";
     }
 
@@ -40,6 +42,7 @@ public class CargoController {
                             @RequestParam(defaultValue = "1", value = "page") int page){
         model.addAttribute("cargos", cargoService.findAllByProcessed(page, 25));
         model.addAttribute("href", "/cargo/processed?");
+        model.addAttribute("titles", "Грузы принятые");
         return "cargo/cargo";
     }
 
@@ -48,6 +51,7 @@ public class CargoController {
                            @RequestParam(defaultValue = "1", value = "page") int page){
         model.addAttribute("cargos", cargoService.findAllByIssuance(page, 25));
         model.addAttribute("href", "/cargo/issuance?");
+        model.addAttribute("titles", "Грузы Выданные");
         return "cargo/cargo";
     }
 }

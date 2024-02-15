@@ -11,7 +11,6 @@ import org.springframework.web.multipart.MultipartFile;
 import ru.pec.china.beta.entity.Cargo;
 import ru.pec.china.beta.entity.Truck;
 import ru.pec.china.beta.repositories.CargoRepositories;
-import ru.pec.china.beta.repositories.PersonRepositories;
 import ru.pec.china.beta.repositories.TruckRepositories;
 import ru.pec.china.beta.util.ErrorResponse;
 
@@ -19,14 +18,12 @@ import java.time.ZonedDateTime;
 
 @Service
 public class UploadService {
-    private final PersonRepositories personRepositories;
     private final TruckRepositories truckRepositories;
     private final CargoRepositories cargoRepositories;
     private final ZonedDateTime date = ZonedDateTime.now();
 
     @Autowired
-    public UploadService(PersonRepositories personRepositories, TruckRepositories truckRepositories, CargoRepositories cargoRepositories) {
-        this.personRepositories = personRepositories;
+    public UploadService(TruckRepositories truckRepositories, CargoRepositories cargoRepositories) {
         this.truckRepositories = truckRepositories;
         this.cargoRepositories = cargoRepositories;
     }
@@ -80,5 +77,4 @@ public class UploadService {
         );
         return new ResponseEntity<>(excellent, HttpStatus.OK);
     }
-
 }

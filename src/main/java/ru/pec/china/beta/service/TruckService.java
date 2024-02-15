@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.ConversionService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.pec.china.beta.dto.TruckDTO;
@@ -35,6 +36,7 @@ public class TruckService {
         return truckRepositories.findById(id).orElseThrow().getTrackName();
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public void delete(Integer id){
         truckRepositories.findById(id).ifPresent(truckRepositories::delete);
     }

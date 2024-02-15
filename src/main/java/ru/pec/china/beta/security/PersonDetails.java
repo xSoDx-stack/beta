@@ -45,5 +45,4 @@ public record PersonDetails(Person person) implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
-
 }

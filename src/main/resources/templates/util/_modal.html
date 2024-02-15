@@ -29,7 +29,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 th:text="'Регистрация нового пользователя'"></h4>
+                <h4 th:text="'Регистрация/Изменение пользователя'"></h4>
             </div>
             <div class="modal-body">
                 <form id="form"  th:method="POST" th:action="@{/administration/person/new}" th:object="${persons}">
@@ -39,13 +39,16 @@
                         <input th:field="*{login}" type="text" class="form-control" id="login" placeholder="Только латинские буквы">
                     </div>
                     <div class="mb-3">
-                        <label for="fullName" class="form-label">Фамилию и инициалы пользователя</label>
+                        <label for="fullName" class="form-label">Фамилия и инициалы пользователя</label>
                         <input th:field="*{fullName}" type="text" class="form-control" id="fullName" placeholder="Петров В.В">
                     </div>
-<!--                    <div class="mb-3">-->
-<!--                        <label for="role" class="form-label">Выбрать роль пользователя</label>-->
-<!--                        <input  type="text" class="form-control" id="role" placeholder="выберете роль">-->
-<!--                    </div>-->
+                    <div class="mb-3">
+                        <select th:field="*{role}" id="selectRole" class="form-select" name="role" required aria-label="Выбор роли">
+                            <option value="">Выберете роль</option>
+                            <option value="ROLE_OPERATOR">Оператор</option>
+                            <option value="ROLE_ADMIN">Администратор</option>
+                        </select>
+                    </div>
                     <div class="mb-3">
                         <label for="password" class="form-label">Пароль для пользователя</label>
                         <input th:field="*{password}" type="password" class="form-control" id="password" placeholder="пароль от 3 до 8 символов">

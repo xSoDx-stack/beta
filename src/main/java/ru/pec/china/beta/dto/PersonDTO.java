@@ -15,4 +15,4 @@ public class PersonDTO {
         private String fullName;
         private String password;
         private String role;
-    }
+}

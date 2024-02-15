@@ -9,8 +9,10 @@
     <script type="text/javascript" th:src="@{/js/jquery-barcode.min.js}"></script>
     <script type="text/javascript" th:src="@{/js/moment.min.js}"></script>
     <script type="text/javascript" th:src="@{/js/custom.js}"></script>
-    <meta id="_csrf" name="_csrf" th:content="${_csrf.token}"/>
-    <meta id="_csrf_header" name="_csrf_header" th:content="${_csrf.headerName}"/>
+
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+
 
     <meta charset="UTF-8">
     <title th:replace="${title}">title</title>

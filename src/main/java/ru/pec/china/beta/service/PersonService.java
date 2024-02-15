@@ -61,17 +61,22 @@ public class PersonService implements UserDetailsService {
         if(Objects.equals(personDTO.getRole(), "ROLE_ADMIN")){
             personDTO.setRole("ROLE_ADMIN");
         }
-
-        if(Objects.equals(personDTO.getRole(), "ROLE_MODERATOR")){
+        else if(Objects.equals(personDTO.getRole(), "ROLE_MODERATOR")){
             personDTO.setRole("ROLE_MODERATOR");
+        }else {
+            personDTO.setRole("ROLE_OPERATOR");
         }
 
         if(personDTO.getPassword() != null){
             person.setPassword(passwordEncoder.encode(personDTO.getPassword()));
         }
+        System.out.println("-----------------------------");
+        System.out.println(personDTO.getPassword());
+        System.out.println("-----------------------------");
+
         person.setLogin(personDTO.getLogin());
         person.setFullName(personDTO.getFullName());
-        person.setRole("ROLE_OPERATOR");
+        person.setRole(personDTO.getRole());
         personRepositories.save(person);
 
     }

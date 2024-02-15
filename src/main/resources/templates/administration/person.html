@@ -47,7 +47,7 @@
     </tr>
     </tbody>
 </table>
-<button type="button" data-bs-toggle="modal" class="btn btn-secondary" th:attr="data-bs-target='#personData'">Создать нового пользователя</button>
+<button type="button" onclick="resetData()" data-bs-toggle="modal" class="btn btn-secondary" th:attr="data-bs-target='#personData'">Создать нового пользователя</button>
     </body>
 <div th:replace="~{util/_modal :: personDataModal}"></div>
 </html>
