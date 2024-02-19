@@ -4,10 +4,9 @@
 <head th:replace="~{/util/bace :: common_header(~{::link}, ~{::title})}">
   <title th:text="${titles}">val</title>
 </head>
-
 <body>
-<nav th:replace="~{/util/nav-bar :: NavBar}"></nav>
 
+<nav th:replace="~{/util/nav-bar :: NavBar}"></nav>
 
 <table class="table table-sm table-bordered border-primary text-center">
   <caption th:if="${trackName}" th:text="'Рейс: ' + ${trackName}"></caption>

@@ -1,17 +1,19 @@
 const now = moment();
 let date = '';
 
-(function () {
+$(document).ready(function () {
     const token = $("meta[name='_csrf']").attr("content");
     const header = $("meta[name='_csrf_header']").attr("content");
+
     $(document).ajaxSend(function(e, xhr) {
         xhr.setRequestHeader(header, token);
     });
+
     $.post("/api/v1/cargo/person/get",
         function (person) {
             $('#peopleData').html(person);
         });
-})();
+});
 
 function resetData(){
     $('#form')[0].reset();

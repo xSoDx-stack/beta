@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="~{/util/bace :: common_header(~{::link}, ~{::title})}">
-    <meta charset="UTF-8">
     <title>Администрирование</title>
 </head>
 <body>
+
 <nav th:replace="~{/util/nav-bar :: NavBar}"></nav>
+
 <table class="table table-sm table-bordered border-primary text-center">
     <thead class="table-dark">
     <tr>
@@ -50,4 +51,5 @@
 <button type="button" onclick="resetData()" data-bs-toggle="modal" class="btn btn-secondary" th:attr="data-bs-target='#personData'">Создать нового пользователя</button>
     </body>
 <div th:replace="~{util/_modal :: personDataModal}"></div>
+<div th:replace="~{util/_modal :: UploadToModal}"></div>
 </html>
