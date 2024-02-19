@@ -147,10 +147,10 @@ function showingCargoOffCanvas(cargo) {
     $('#weight').html(cargo.weight);
     $('#dimensions').html(cargo.dimensions);
     $('#weightOfOnePiece').html(cargo.weightOfOnePiece);
-    // if(cargo.city.trim() === ''){
-    //     $('#tableCity').hide();
-    // }else
-    //     $('#tableCity').show();
+    if(cargo.city.trim() === ''){
+        $('#tableCity').hide();
+    }else
+        $('#tableCity').show();
 
     $('#city').html(cargo.city);
     $('#volume').html(cargo.volume);
