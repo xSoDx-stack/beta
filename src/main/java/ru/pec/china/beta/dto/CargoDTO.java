@@ -20,6 +20,7 @@ public class CargoDTO {
     private Double weight; //Вес
     private Double volume; // Объём
     private BigDecimal dimensions; //габариты
+    private BigDecimal weightOfOnePiece; //все 1 места
     private String recipient; // Получатель
     private String city; //город
     private String localOrTransshipment; //местный или перевалочный

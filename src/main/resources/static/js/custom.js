@@ -13,6 +13,13 @@ function resetData(){
     $('#form')[0].reset();
 }
 
+$(function (){
+    $.post("/api/v1/cargo/person/get",
+        function (person) {
+            $('#personData').html(person);
+        });
+});
+
 $(document).ready(function () {
     $('#search').keydown(function (e) {
         if (e.which === 13) {
@@ -140,6 +147,13 @@ function showingCargoOffCanvas(cargo) {
     $('#numberOfSeats').html(cargo.numberOfSeats);
     $('#weight').html(cargo.weight);
     $('#dimensions').html(cargo.dimensions);
+    $('#weightOfOnePiece').html(cargo.weightOfOnePiece);
+    if(cargo.city.trim() === ''){
+        $('#tableCity').hide();
+    }else
+        $('#tableCity').show();
+
+    $('#city').html(cargo.city);
     $('#volume').html(cargo.volume);
     $('#search').val('').trigger("focus");
 

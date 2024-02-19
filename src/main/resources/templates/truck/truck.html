@@ -7,7 +7,7 @@
 
 <body>
 <nav th:replace="~{/util/nav-bar :: NavBar}"></nav>
-<table class="table table-bordered ">
+<table class="table table-bordered text-center">
     <thead class="table-dark">
     <tr>
 
@@ -18,10 +18,10 @@
 
     </tr>
     </thead>
-    <tbody class="table-primary">
+    <tbody class="table-primary" >
     <tr th:each="truck :${trucks}">
         <td>
-            <h6 th:text="${#temporals.format(truck.dateCreate, 'dd-MM-yyyy HH:mm zzz', 'Europe/Moscow')}"/>
+            <h6 th:text="${#temporals.format(truck.dateCreate, 'dd.MM.yyyy HH:mm zzz', 'Europe/Moscow')}"/>
         </td>
         <td>
             <h6> <a th:text="${truck.getTrackName()}" th:href="@{/truck/{id}/cargo(id=${truck.getId()})}"/></h6>

@@ -8,8 +8,8 @@
     </div>
     <div class="offcanvas-body">
         <div class="d-flex" role="search">
-            <input id="search" class="form-control me-2"  type="text" placeholder="Поиск" aria-label="Поиск" aria-describedby="searchNotFound" required>
-            <button id="search-button" class="btn btn-outline-success" type="button">Поиск</button>
+            <input   id="search" class="form-control me-2 border-success"  type="text" placeholder="Поиск" aria-label="Поиск" aria-describedby="searchNotFound" required>
+            <button id="search-button" class="btn btn-success" type="button">Поиск</button>
         </div>
         <div id="searchNotFound" class="invalid-feedback">
             Груз не найден !
@@ -23,6 +23,7 @@
                     <tr>
                         <th scope="col">Мест</th>
                         <th scope="col">Вес</th>
+                        <th scope="col">Вес места</th>
                         <th scope="col">Габариты</th>
                         <th scope="col">Объём</th>
                         <th>
@@ -32,13 +33,30 @@
                     </thead>
                     <tbody>
                     <tr>
-                        <td id="numberOfSeats">Мест</td>
-                        <td id="weight">Вес</td>
-                        <td id="dimensions">Габариты ДxШxВ</td>
-                        <td id="volume">Объём</td>
+                        <td id="numberOfSeats" class="fw-semibold">Мест</td>
+                        <td id="weight" class="fw-semibold">Вес</td>
+                        <td id="weightOfOnePiece" class="fw-semibold">Вес 1-го места</td>
+                        <td id="dimensions" class="fw-semibold">Габариты ДxШxВ</td>
+                        <td id="volume" class="fw-semibold">Объём</td>
+                    </tr>
+                    <tr id="tableCity">
+                        <td colspan="5">
+                            <table class="table mb-0 text-center">
+                                <thead>
+                                <tr>
+                                    <th scope="col">Город</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <td class="fw-semibold" id="city"></td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </td>
                     </tr>
                     <tr>
-                        <td colspan="4">
+                        <td colspan="5">
                             <table class="table mb-0 text-center">
                                 <thead>
                                 <tr>
@@ -60,18 +78,18 @@
                                             </a>
                                             </span>
                                             <label for="inputPecCode"></label>
-                                            <input id="inputPecCode" type="text" class="form-control" required>
+                                            <input id="inputPecCode" type="text" class="form-control border-black" required>
                                         </div>
                                     </td>
-                                    <td>
+                                    <td colspan="2">
                                         <div id="processed">
-                                            <input class="form-check-input" type="checkbox" id="labelProcessed" name="processed">
+                                            <input class="form-check-input border-black" type="checkbox" id="labelProcessed" name="processed">
                                             <label class="form-check-label" for="labelProcessed">
                                                 Принять груз
                                             </label>
                                         </div>
                                         <div id="issuance">
-                                            <input class="form-check-input" type="checkbox" id="labelIssuance" name="issuance">
+                                            <input class="form-check-input border-black" type="checkbox" id="labelIssuance" name="issuance">
                                             <label class="form-check-label" for="labelIssuance">
                                                 Выдать груз
                                             </label>

@@ -70,9 +70,6 @@ public class PersonService implements UserDetailsService {
         if(personDTO.getPassword() != null){
             person.setPassword(passwordEncoder.encode(personDTO.getPassword()));
         }
-        System.out.println("-----------------------------");
-        System.out.println(personDTO.getPassword());
-        System.out.println("-----------------------------");
 
         person.setLogin(personDTO.getLogin());
         person.setFullName(personDTO.getFullName());
@@ -94,5 +91,11 @@ public class PersonService implements UserDetailsService {
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public PersonDTO findById(int id) throws PersonNotFoundException {
        return personRepositories.findById(id).map((person)->conversionService.convert(person, PersonDTO.class)).orElseThrow(PersonNotFoundException::new);
+    }
+
+    @Transactional(readOnly = true)
+    public String getByLogin(String userDetails) throws PersonNotFoundException {
+        Person person = personRepositories.findByLogin(userDetails).orElseThrow(PersonNotFoundException::new);
+        return person.getFullName();
     }
 }

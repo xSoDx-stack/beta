@@ -5,7 +5,7 @@ plugins {
 }
 
 group = 'ru.pec.china'
-version = '0.0.1-SNAPSHOT'
+version = 'RELEASE_v1.0.0'
 
 java {
     sourceCompatibility = '21'
@@ -26,6 +26,7 @@ dependencies {
 
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
+    developmentOnly 'org.springframework.boot:spring-boot-docker-compose'
     runtimeOnly 'org.postgresql:postgresql'
     implementation 'org.apache.poi:poi:5.2.5'
     implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity6:3.1.2.RELEASE'
@@ -39,6 +40,4 @@ dependencies {
 
 }
 
-tasks.named('test') {
-    useJUnitPlatform()
-}
+

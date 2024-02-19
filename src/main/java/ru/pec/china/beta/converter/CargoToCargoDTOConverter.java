@@ -9,6 +9,8 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.Optional;
 
+import static java.lang.Math.cbrt;
+
 public class CargoToCargoDTOConverter implements Converter<Cargo, CargoDTO> {
 
 
@@ -26,7 +28,8 @@ public class CargoToCargoDTOConverter implements Converter<Cargo, CargoDTO> {
                 source.getNumberOfSeatsUserScan(),
                 source.getWeight(),
                 source.getVolume(),
-                dimension(source.getVolume(), source.getNumberOfSeats()),
+                dimension(source.getVolume()),
+                weightOfOnePiece(source.getWeight(), source.getNumberOfSeats()),
                 source.getRecipient(),
                 source.getCity(),
                 source.getLocalOrTransshipment(),
@@ -47,8 +50,13 @@ public class CargoToCargoDTOConverter implements Converter<Cargo, CargoDTO> {
         );
     }
 
-    private BigDecimal dimension(Double volume, Integer numberOfSeats){
-        BigDecimal bd = new BigDecimal(Double.toString(volume/numberOfSeats));
+    private BigDecimal weightOfOnePiece(Double weight, Integer numberOfSeats) {
+        BigDecimal bd = new BigDecimal(Double.toString(weight/numberOfSeats));
+        return bd.setScale(3,RoundingMode.HALF_UP);
+    }
+
+    private BigDecimal dimension(Double volume){
+        BigDecimal bd = new BigDecimal(Double.toString(cbrt(volume)));
         return bd.setScale(3, RoundingMode.HALF_UP);
     }
 }

@@ -35,13 +35,13 @@
                 <li class="nav-item d-flex" >
                     <form class="d-flex" role="search" th:action="@{/search}" th:method="GET">
                         <input class="form-control me-2" name="search"  th:value="${search}"  type="search" placeholder="Поиск" aria-label="Поиск">
-                        <button class="btn btn-outline-success" type="submit">Поиск</button>
+                        <button class="btn btn-success" type="submit">Поиск</button>
                     </form>
                 </li>
             </ul>
             <ul class="nav navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item d-flex">
-                    <h4 class="nav-link active" aria-current="page" th:text="${#authentication.name}">Имя пользователя</h4>
+                    <h4 class="nav-link active" id="personData" aria-current="page">Имя пользователя</h4>
                 </li>
             </ul>
                 <li class="nav-item d-flex">
