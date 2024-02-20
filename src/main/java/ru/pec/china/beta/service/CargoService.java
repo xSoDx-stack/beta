@@ -77,7 +77,7 @@ public class CargoService {
         if(cargoDTO.isProcessed() & !cargoDTO.getPecCode().isEmpty() ) {
             cargo.setProcessedByUserId(person.getId());
             cargo.setProcessed(true);
-            cargo.setPecCode(cargoDTO.getPecCode());
+            cargo.setPecCode(cargoDTO.getPecCode().substring(0,cargoDTO.getPecCode().length() - 4 ));
             cargo.setTimeOfProcessed(date);
             cargo.setProcessedByUserId(person.getId());
             if (true) {  //toDo cargoDTO.isClientIssue()
