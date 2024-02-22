@@ -15,6 +15,7 @@ $(document).ready(function () {
         });
 });
 
+
 function resetData(){
     $('#form')[0].reset();
 }
@@ -24,17 +25,20 @@ $(document).ready(function () {
         if (e.which === 13) {
             searchCargoByKeyword($(this).val())
             $(this).val("");
+
         }
     });
     $('#search-button').on("click", function () {
         searchCargoByKeyword($('#search').val());
+
     });
 });
 
 $(document).ready(function () {
     $('#inputPecCode').keydown(function (e) {
         if (e.which === 13) {
-            $("#labelProcessed").prop('checked', true)
+            $('#labelProcessed').prop('checked', true)
+            $('#search').focus();
             saveCargo()
         }
     });
@@ -109,6 +113,7 @@ function searchCargoByKeyword(keyword) {
                     $('#cargoOffCanvas').show();
                     $('#searchNotFound').hide();
                     showingCargoOffCanvas(cargo);
+                    $('#inputPecCode').focus();
                 }
             }).fail(function () {
             $('#searchNotFound').show();
@@ -165,7 +170,7 @@ function showingCargoOffCanvas(cargo) {
 
     } else {
         $('#inputPecCode').hide().val(cargo.pecCode);
-        $('#pecCode').show().html(cargo.pecCode);
+        $('#pecCode').show().html(cargo.pecCode.substring(0,12));
 
         if (cargo.issuance) {
             $('#trashButton').hide();

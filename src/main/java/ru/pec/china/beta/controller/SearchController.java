@@ -1,13 +1,11 @@
 package ru.pec.china.beta.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import ru.pec.china.beta.dto.CargoDTO;
 import ru.pec.china.beta.service.SearchService;
 
 @Controller
@@ -22,13 +20,13 @@ public class SearchController {
     }
 
     @GetMapping()
-    public String search(Model model, @Param("search") String search,
+    public String search(Model model, @RequestParam("search") String search,
                          @RequestParam(defaultValue = "1", value = "page") int page){
         if (search.isEmpty()){
             return "redirect:/";
         }
-        model.addAttribute("cargos", searchService.searchByCodeClient(search, page, 15));
-        model.addAttribute("keyword", search);
-        return "cargo/cargo";
+        model.addAttribute("href", "?search=" + search + "&");
+        model.addAttribute("cargos", searchService.searchByCodeClient(search, page, 25));
+        return "/cargo/cargo-warehouse";
     }
 }

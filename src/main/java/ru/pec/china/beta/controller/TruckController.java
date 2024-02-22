@@ -5,7 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import ru.pec.china.beta.dto.TruckDTO;
-import ru.pec.china.beta.service.CargoService;
+import ru.pec.china.beta.service.CargoWarehouseService;
 import ru.pec.china.beta.service.TruckService;
 
 @Controller
@@ -13,10 +13,10 @@ import ru.pec.china.beta.service.TruckService;
 public class TruckController {
 
     private final TruckService truckService;
-    private final CargoService cargoService;
+    private final CargoWarehouseService cargoService;
 
     @Autowired
-    public TruckController(TruckService truckService, CargoService cargoService) {
+    public TruckController(TruckService truckService, CargoWarehouseService cargoService) {
         this.truckService = truckService;
         this.cargoService = cargoService;
     }
@@ -42,13 +42,13 @@ public class TruckController {
         return "redirect:/";
     }
 
-    @GetMapping("/truck/{id}/cargo")
+    @GetMapping("/truck/{id}/warehouse/cargo")
     public String cargoList(@PathVariable("id") int id,
                             Model model,
                             @RequestParam(defaultValue = "1", value = "page") int page){
         model.addAttribute("cargos", cargoService.findAllByTrackId(id, page, 25));
         model.addAttribute("trackName", truckService.TruckName(id));
-        model.addAttribute("href","/truck/" + id +"/cargo?");
-        return "cargo/cargo";
+        model.addAttribute("href","/truck/" + id +"/warehouse/cargo?");
+        return "/cargo/cargo-warehouse";
     }
 }

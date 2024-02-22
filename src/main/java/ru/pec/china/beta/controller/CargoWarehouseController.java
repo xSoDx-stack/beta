@@ -6,16 +6,16 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import ru.pec.china.beta.service.CargoService;
+import ru.pec.china.beta.service.CargoWarehouseService;
 
 @Controller
-@RequestMapping("/cargo")
-public class CargoController {
+@RequestMapping("/cargo/warehouse")
+public class CargoWarehouseController {
 
-    private final CargoService cargoService;
+    private final CargoWarehouseService cargoService;
 
     @Autowired
-    public CargoController(CargoService cargoService) {
+    public CargoWarehouseController(CargoWarehouseService cargoService) {
         this.cargoService = cargoService;
     }
 
@@ -23,35 +23,37 @@ public class CargoController {
     public String index(Model model,
                         @RequestParam(defaultValue = "1",value = "page") int page){
         model.addAttribute("cargos", cargoService.findAll(page, 25));
-        model.addAttribute("href", "/cargo?");
+        model.addAttribute("href", "/cargo/warehouse?");
         model.addAttribute("titles", "Грузы");
-        return "cargo/cargo";
+        return "/cargo/cargo-warehouse";
     }
 
     @GetMapping("/unloaded")
     public String cargoListUnloaded(Model model,
                                     @RequestParam(defaultValue = "1", value = "page") int page){
         model.addAttribute("cargos", cargoService.findAllUnloaded(page, 25));
-        model.addAttribute("href", "/cargo/unloaded?");
+        model.addAttribute("href", "/cargo/warehouse/unloaded?");
         model.addAttribute("titles", "Грузы выгруженные");
-        return "cargo/cargo";
+        return "/cargo/cargo-warehouse";
     }
 
     @GetMapping("/processed")
     public String processed(Model model,
                             @RequestParam(defaultValue = "1", value = "page") int page){
         model.addAttribute("cargos", cargoService.findAllByProcessed(page, 25));
-        model.addAttribute("href", "/cargo/processed?");
+        model.addAttribute("href", "/cargo/warehouse/processed?");
         model.addAttribute("titles", "Грузы принятые");
-        return "cargo/cargo";
+        return "/cargo/cargo-warehouse";
     }
 
     @GetMapping("/issuance")
     public String issuance(Model model,
                            @RequestParam(defaultValue = "1", value = "page") int page){
         model.addAttribute("cargos", cargoService.findAllByIssuance(page, 25));
-        model.addAttribute("href", "/cargo/issuance?");
+        model.addAttribute("href", "/cargo/warehouse/issuance?");
         model.addAttribute("titles", "Грузы Выданные");
-        return "cargo/cargo";
+        return "/cargo/cargo-warehouse";
     }
+
 }
+

@@ -9,7 +9,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import ru.pec.china.beta.dto.CargoDTO;
-import ru.pec.china.beta.service.CargoService;
+import ru.pec.china.beta.service.CargoWarehouseService;
 import ru.pec.china.beta.service.PersonService;
 import ru.pec.china.beta.service.SearchService;
 import ru.pec.china.beta.service.UploadService;
@@ -24,13 +24,13 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/api/v1/cargo")
 public class CargoRestController {
-    private final CargoService cargoService;
+    private final CargoWarehouseService cargoService;
     private final SearchService searchService;
     private final UploadService uploadService;
     private final PersonService personService;
 
     @Autowired
-    public CargoRestController(CargoService cargoService, SearchService searchService, UploadService uploadService, PersonService personService) {
+    public CargoRestController(CargoWarehouseService cargoService, SearchService searchService, UploadService uploadService, PersonService personService) {
         this.cargoService = cargoService;
         this.searchService = searchService;
         this.uploadService = uploadService;

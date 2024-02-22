@@ -19,7 +19,7 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
-public class CargoService {
+public class CargoWarehouseService {
 
     private final CargoRepositories cargoRepositories;
     private final ConversionService conversionService;
@@ -27,7 +27,7 @@ public class CargoService {
     private final ZonedDateTime date = ZonedDateTime.now();
 
     @Autowired
-    public CargoService(CargoRepositories cargoRepositories, ConversionService conversionService, PersonRepositories personRepositories) {
+    public CargoWarehouseService(CargoRepositories cargoRepositories, ConversionService conversionService, PersonRepositories personRepositories) {
         this.cargoRepositories = cargoRepositories;
         this.conversionService = conversionService;
         this.personRepositories = personRepositories;
@@ -77,7 +77,7 @@ public class CargoService {
         if(cargoDTO.isProcessed() & !cargoDTO.getPecCode().isEmpty() ) {
             cargo.setProcessedByUserId(person.getId());
             cargo.setProcessed(true);
-            cargo.setPecCode(cargoDTO.getPecCode().substring(0,cargoDTO.getPecCode().length() - 4 ));
+            cargo.setPecCode(cargoDTO.getPecCode());
             cargo.setTimeOfProcessed(date);
             cargo.setProcessedByUserId(person.getId());
             if (true) {  //toDo cargoDTO.isClientIssue()
