@@ -25,6 +25,11 @@ public class Person {
     @Column(name = "full_name")
     private String fullName;
 
-    @Column(name = "role", columnDefinition = "varchar(255) default 'ROLE_OPERATOR'")
-    private String role;
+    @ManyToOne
+    @JoinColumn(name = "role", updatable = false, insertable = false)
+    private Role role;
+
+    @Column(name = "role")
+    private Integer roleId;
+
 }

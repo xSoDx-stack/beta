@@ -3,14 +3,9 @@ package ru.pec.china.beta.converter;
 import org.springframework.core.convert.ConversionService;
 import org.springframework.core.convert.converter.Converter;
 import ru.pec.china.beta.dto.CargoDTO;
-import ru.pec.china.beta.dto.PersonDTO;
 import ru.pec.china.beta.entity.Cargo;
-import ru.pec.china.beta.entity.Person;
 
 public class CargoDTOtoCargoConverter implements Converter<CargoDTO, Cargo> {
-
-    private ConversionService conversionService;
-
 
     @Override
     public Cargo convert(CargoDTO source) {
@@ -34,9 +29,5 @@ public class CargoDTOtoCargoConverter implements Converter<CargoDTO, Cargo> {
         cargo.setIssuance(source.isIssuance());
         cargo.setProcessed(source.isProcessed());
         return cargo;
-    }
-
-    private Person person(PersonDTO personDTO){
-        return conversionService.convert(personDTO, Person.class);
     }
 }

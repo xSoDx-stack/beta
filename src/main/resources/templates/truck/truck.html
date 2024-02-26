@@ -24,7 +24,9 @@
             <h6 th:text="${#temporals.format(truck.dateCreate, 'dd.MM.yyyy HH:mm zzz', 'Europe/Moscow')}"/>
         </td>
         <td>
-            <h6> <a th:text="${truck.getTrackName()}" th:href="@{/truck/{id}/warehouse/cargo(id=${truck.getId()})}"/></h6>
+            <h6 sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_OPERATOR')"> <a th:text="${truck.getTrackName()}" th:href="@{/truck/{id}/warehouse/cargo(id=${truck.getId()})}"/></h6>
+            <h6 sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_SPECIALIST')"> <a th:text="${truck.getTrackName()}" th:href="@{/truck/{id}/clienting/cargo(id=${truck.getId()})}"/></h6>
+
         </td>
         <td>
             <h6 th:text="${truck.getCargos()} + '/' + ${truck.getProcessed()} + '/' + ${truck.getIssuance()}"/>

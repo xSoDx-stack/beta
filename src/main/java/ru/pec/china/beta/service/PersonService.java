@@ -61,8 +61,8 @@ public class PersonService implements UserDetailsService {
         if(Objects.equals(personDTO.getRole(), "ROLE_ADMIN")){
             personDTO.setRole("ROLE_ADMIN");
         }
-        else if(Objects.equals(personDTO.getRole(), "ROLE_MODERATOR")){
-            personDTO.setRole("ROLE_MODERATOR");
+        else if(Objects.equals(personDTO.getRole(), "ROLE_SPECIALIST")){
+            personDTO.setRole("ROLE_SPECIALIST");
         }else {
             personDTO.setRole("ROLE_OPERATOR");
         }
@@ -73,7 +73,7 @@ public class PersonService implements UserDetailsService {
 
         person.setLogin(personDTO.getLogin());
         person.setFullName(personDTO.getFullName());
-        person.setRole(personDTO.getRole());
+        person.setRoleId(personDTO.getRoleId());
         personRepositories.save(person);
 
     }
