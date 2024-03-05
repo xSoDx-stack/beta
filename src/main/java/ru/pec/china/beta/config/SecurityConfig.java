@@ -1,5 +1,6 @@
 package ru.pec.china.beta.config;
 
+import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
@@ -18,18 +19,11 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         return http
                 .authorizeHttpRequests((auth)->auth
-                        .requestMatchers(
-                                "/administration/**"
-                        )
-                        .hasAnyRole("ADMIN")
-
-                        .requestMatchers(
-                                "/css/**",
-                                "/js/**"
-                        )
-                        .permitAll()
-                        .requestMatchers("/auth/login")
-                        .anonymous()
+                        .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
+                        .requestMatchers("/administration/**").hasRole("ADMIN")
+                        .requestMatchers("/cargo/warehouse/**", "/truck/{id}/warehouse/**").hasAnyRole("OPERATOR")
+                        .requestMatchers("/cargo/client/**", "/truck/{id}/client/**").hasAnyRole("SPECIALIST")
+                        .requestMatchers("/auth/login").permitAll()
                         .anyRequest().authenticated()
                 )
 

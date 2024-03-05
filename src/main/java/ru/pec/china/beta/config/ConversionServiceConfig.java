@@ -18,6 +18,7 @@ public class ConversionServiceConfig {
         conversionService.addConverter(new CargoToCargoDTOConverter());
         conversionService.addConverter(new PersonDTOtoPersonConverter());
         conversionService.addConverter(new PersonToPersonDTOConverter());
+        conversionService.addConverter(new RoleToRoleDTOConverter());
         return conversionService;
     }
 }

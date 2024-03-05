@@ -11,12 +11,15 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.pec.china.beta.dto.PersonDTO;
 import ru.pec.china.beta.entity.Person;
+import ru.pec.china.beta.entity.PersonRole;
+import ru.pec.china.beta.entity.Role;
 import ru.pec.china.beta.repositories.PersonRepositories;
+import ru.pec.china.beta.repositories.PersonRoleRepositories;
+import ru.pec.china.beta.repositories.RoleRepositories;
 import ru.pec.china.beta.security.PersonDetails;
 import ru.pec.china.beta.util.PersonNotFoundException;
 
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -25,17 +28,21 @@ public class PersonService implements UserDetailsService {
     private final PersonRepositories personRepositories;
     private final ConversionService conversionService;
     private final PasswordEncoder passwordEncoder;
+    private final RoleRepositories roleRepositories;
+    private final PersonRoleRepositories personRoleRepositories;
 
     @Autowired
-    public PersonService(PersonRepositories personRepositories, ConversionService conversionService, PasswordEncoder passwordEncoder) {
+    public PersonService(PersonRepositories personRepositories, ConversionService conversionService, PasswordEncoder passwordEncoder, RoleRepositories roleRepositories, PersonRoleRepositories personRoleRepositories) {
         this.personRepositories = personRepositories;
         this.conversionService = conversionService;
         this.passwordEncoder = passwordEncoder;
+        this.roleRepositories = roleRepositories;
+        this.personRoleRepositories = personRoleRepositories;
     }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Optional<Person> person = personRepositories.findByLogin(username);
+        Optional<Person> person = personRepositories.findByUsername(username);
 
         if(person.isEmpty()){
             throw new UsernameNotFoundException("Неправильный логин или пароль");
@@ -48,40 +55,49 @@ public class PersonService implements UserDetailsService {
         return personRepositories.findAll().stream().map(person->
                 conversionService.convert(person, PersonDTO.class)).collect(Collectors.toList());
     }
+
     @Transactional
-    public void registerNewPerson(PersonDTO personDTO) {
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public void saveOrUpdatePerson(PersonDTO personDTO) {
+        Person person = conversionService.convert(personDTO, Person.class);
 
-        Person person;
-        if(personDTO.getId() != null){
-            person = personRepositories.findById(personDTO.getId()).orElse(new Person());
-        }else {
-            person = new Person();
+        List<Role> roles = roleRepositories.findAllById(personDTO.getRoleId());
+        if (roles.size() != personDTO.getRoleId().size()) {
+            throw new RuntimeException("Одна или несколько ролей не найдены");
         }
 
-        if(Objects.equals(personDTO.getRole(), "ROLE_ADMIN")){
-            personDTO.setRole("ROLE_ADMIN");
-        }
-        else if(Objects.equals(personDTO.getRole(), "ROLE_SPECIALIST")){
-            personDTO.setRole("ROLE_SPECIALIST");
-        }else {
-            personDTO.setRole("ROLE_OPERATOR");
-        }
-
-        if(personDTO.getPassword() != null){
+        if (person != null && person.getId() == null) {
             person.setPassword(passwordEncoder.encode(personDTO.getPassword()));
-        }
+            Person savePerson = personRepositories.save(person);
+            personRoleRepositories.saveAll(createPersonRoles(savePerson, roles));
 
-        person.setLogin(personDTO.getLogin());
-        person.setFullName(personDTO.getFullName());
-        person.setRoleId(personDTO.getRoleId());
-        personRepositories.save(person);
-
+        } else if (person != null){
+            Person existingPerson = personRepositories.findById(person.getId()).orElseThrow(()->
+                    new RuntimeException("Пользователь не найден"));
+            personRoleRepositories.deleteByPersonId(existingPerson.getId());
+            person.setPassword(passwordEncoder.encode(personDTO.getPassword()));
+            Person savePerson = personRepositories.save(person);
+            personRoleRepositories.saveAll(createPersonRoles(savePerson, roles));
+        } else
+            throw new RuntimeException("Пользователь не может быть null");
     }
+
+    private List<PersonRole> createPersonRoles(Person person, List<Role> roles){
+        return roles.stream()
+                .map(role-> {
+                    PersonRole personRole = new PersonRole();
+                    personRole.setPersonId(person.getId());
+                    personRole.setRoleId(role.getId());
+                    return personRole;
+                })
+                .collect(Collectors.toList());
+    }
+
     @Transactional
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public void deletePerson(int id, UserDetails userDetails) throws PersonNotFoundException {
         Person person = personRepositories.findById(id).orElseThrow(PersonNotFoundException::new);
-        if(!person.getLogin().equals(userDetails.getUsername())){
+        if(!person.getUsername().equals(userDetails.getUsername())){
             personRepositories.delete(person);
         }
         System.out.println("Невозможно удалить самого себя");
@@ -93,9 +109,4 @@ public class PersonService implements UserDetailsService {
        return personRepositories.findById(id).map((person)->conversionService.convert(person, PersonDTO.class)).orElseThrow(PersonNotFoundException::new);
     }
 
-    @Transactional(readOnly = true)
-    public String getByLogin(String userDetails) throws PersonNotFoundException {
-        Person person = personRepositories.findByLogin(userDetails).orElseThrow(PersonNotFoundException::new);
-        return person.getFullName();
-    }
 }

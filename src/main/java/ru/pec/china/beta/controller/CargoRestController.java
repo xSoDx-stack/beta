@@ -10,13 +10,11 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import ru.pec.china.beta.dto.CargoDTO;
 import ru.pec.china.beta.service.CargoWarehouseService;
-import ru.pec.china.beta.service.PersonService;
 import ru.pec.china.beta.service.SearchService;
 import ru.pec.china.beta.service.UploadService;
 import ru.pec.china.beta.util.CargoBadSaveException;
 import ru.pec.china.beta.util.CargoNotFoundException;
 import ru.pec.china.beta.util.ErrorResponse;
-import ru.pec.china.beta.util.PersonNotFoundException;
 
 import java.util.List;
 import java.util.UUID;
@@ -27,14 +25,12 @@ public class CargoRestController {
     private final CargoWarehouseService cargoService;
     private final SearchService searchService;
     private final UploadService uploadService;
-    private final PersonService personService;
 
     @Autowired
-    public CargoRestController(CargoWarehouseService cargoService, SearchService searchService, UploadService uploadService, PersonService personService) {
+    public CargoRestController(CargoWarehouseService cargoService, SearchService searchService, UploadService uploadService) {
         this.cargoService = cargoService;
         this.searchService = searchService;
         this.uploadService = uploadService;
-        this.personService = personService;
     }
 
     @GetMapping("/search/{clientCode}")
@@ -94,8 +90,4 @@ public class CargoRestController {
         return cargoService.deletePecCode(id);
     }
 
-    @PostMapping("/person/get")
-    public String getAuthPerson(@AuthenticationPrincipal UserDetails userDetails) throws PersonNotFoundException {
-        return personService.getByLogin(userDetails.getUsername());
-    }
 }

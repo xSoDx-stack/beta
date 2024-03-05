@@ -10,12 +10,10 @@
 <table class="table table-bordered text-center">
     <thead class="table-dark">
     <tr>
-
         <th scope="col">Дата создания</th>
         <th scope="col">Номер машины</th>
         <th scope="col">индексы/обработано/выдано</th>
         <th sec:authorize="hasRole('ROLE_ADMIN')" scope="col">Действия</th>
-
     </tr>
     </thead>
     <tbody class="table-primary" >
@@ -24,9 +22,8 @@
             <h6 th:text="${#temporals.format(truck.dateCreate, 'dd.MM.yyyy HH:mm zzz', 'Europe/Moscow')}"/>
         </td>
         <td>
-            <h6 sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_OPERATOR')"> <a th:text="${truck.getTrackName()}" th:href="@{/truck/{id}/warehouse/cargo(id=${truck.getId()})}"/></h6>
-            <h6 sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_SPECIALIST')"> <a th:text="${truck.getTrackName()}" th:href="@{/truck/{id}/clienting/cargo(id=${truck.getId()})}"/></h6>
-
+            <h6 sec:authorize="hasRole('ROLE_OPERATOR')"> <a th:text="${truck.getTrackName()}" th:href="@{/truck/{id}/warehouse/cargo(id=${truck.getId()})}"/></h6>
+            <h6 sec:authorize="hasRole('ROLE_SPECIALIST')"> <a th:text="${truck.getTrackName()}" th:href="@{/truck/{id}/client/service/cargo(id=${truck.getId()})}"/></h6>
         </td>
         <td>
             <h6 th:text="${truck.getCargos()} + '/' + ${truck.getProcessed()} + '/' + ${truck.getIssuance()}"/>
@@ -42,11 +39,6 @@
     </tbody>
 </table>
 <div th:replace="~{util/nav-bar :: PageNavBar(${trucks}, ${href})}"></div>
-
-
-
-
-
 </body>
 <div th:replace="~{util/_modal :: UploadToModal}"></div>
 </html>

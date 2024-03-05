@@ -6,15 +6,14 @@ import ru.pec.china.beta.dto.PersonDTO;
 import ru.pec.china.beta.entity.Person;
 
 public class PersonDTOtoPersonConverter implements Converter<PersonDTO, Person> {
+
     @Override
     public Person convert(PersonDTO source) {
         var person = new Person();
         person.setId(source.getId());
-        person.setLogin(source.getLogin());
+        person.setUsername(source.getUsername());
         person.setFullName(source.getFullName());
         person.setPassword(source.getPassword());
-        person.setRoleId(source.getRoleId());
         return person;
-
     }
 }

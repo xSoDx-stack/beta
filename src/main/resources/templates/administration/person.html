@@ -23,13 +23,13 @@
             <h6 th:text="${i.count}"/>
         </td>
         <td>
-            <h6 th:text="${people.getLogin()}"/>
+            <h6 th:text="${people.getUsername()}"/>
         </td>
         <td>
             <h6 th:text="${people.getFullName()}"/>
         </td>
         <td>
-            <h6 th:text="${people.getRole()}"/>
+            <h6 th:text="${people.getRoleName()}"/>
         </td>
         <td>
             <a th:attr="data-bs-target='#personData'" type="button" data-bs-toggle="modal" class="bi bi-pencil" th:onclick="getPersonById([[${people.getId()}]])">

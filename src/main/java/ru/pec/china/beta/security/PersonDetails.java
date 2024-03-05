@@ -1,29 +1,38 @@
 package ru.pec.china.beta.security;
 
-
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import ru.pec.china.beta.entity.Person;
 
 import java.util.Collection;
-import java.util.Collections;
+import java.util.stream.Collectors;
 
-public record PersonDetails(Person person) implements UserDetails {
+public class PersonDetails implements UserDetails {
+    private final Person person;
+
+    public PersonDetails(Person person) {
+        this.person = person;
+    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return Collections.singletonList(new SimpleGrantedAuthority(person.getRole()));
+        return person.getPersonRoles().stream().map(role-> new SimpleGrantedAuthority("ROLE_" + role.getRoleId()))
+                .collect(Collectors.toList());
     }
 
     @Override
     public String getPassword() {
-        return this.person.getPassword();
+        return person.getPassword();
     }
 
     @Override
     public String getUsername() {
-        return this.person.getLogin();
+        return person.getUsername();
+    }
+
+    public String getFullName(){
+        return person.getFullName();
     }
 
     @Override

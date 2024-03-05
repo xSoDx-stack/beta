@@ -8,7 +8,7 @@
 
 <nav th:replace="~{/util/nav-bar :: NavBar}"></nav>
 
-<table class="table table-sm border-primary text-center">
+<table class="table table-sm table-bordered text-center">
   <caption th:if="${trackName}" th:text="'Рейс: ' + ${trackName}"></caption>
   <thead class="table-dark">
   <tr>
@@ -32,7 +32,7 @@
       <a href="#" data-bs-toggle="offcanvas" th:text="${carg.getClientBarcode()}" class="link-dark link-underline link-underline-opacity-0" th:attr="data-bs-target='#staticBackdrop'"  th:onclick="getCargoById([[${carg.getId()}]])"></a>
     </td>
     <td>
-      <h6 th:text="${#strings.abbreviate(carg.getPecCode(), 15)} "></h6>
+      <h6 th:text="${#strings.substring(carg.getPecCode(), 0, 12)} "></h6>
     </td>
     <td>
       <h6 th:text="${carg.getNumberOfSeats()}"/>

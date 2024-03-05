@@ -43,8 +43,23 @@ public class Cargo {
     @Column(name = "city")
     private String city; //Город
 
+    @Column(name = "phone-number")
+    private String phoneNumber; // номер телефона
+
     @Column(name = "local_or_transshipment")
     private String localOrTransshipment; //Местный или перевалочный
+
+    @Column(name = "to-the-door")
+    private String toTheDoor; // до двери
+
+    @Column(name = "name-transport-company")
+    private String nameTransportCompany; //название ТК
+
+    @Column(name = "payer")
+    private String payer; // плательщик
+
+    @Column(name = "form_of_payment")
+    private String formOfPayment; // форма оплаты
 
     @Column(name = "issuance", columnDefinition = "boolean  default false")
     private boolean issuance; //выданный да/нет
@@ -90,5 +105,14 @@ public class Cargo {
     private Truck truck;
 
     @Column(name = "track_id")
-    private Integer truckId;
+    private Integer truckId; // Ид рейса
+
+    @Column(name = "note")
+    private String note; // примечание
+
+    @Column(name = "relabeling_pec_code")
+    private String relabelingPecCode; // перимаркировка
+
+    @Column(name = "shipping_to_regions", columnDefinition = "boolean default false")
+    private boolean shippingToRegions;  //отправка на регионы
 }

@@ -59,8 +59,15 @@ public class UploadService {
                     cargo.setNumberOfSeats((int) sheet.getRow(i).getCell(4).getNumericCellValue());
                     cargo.setWeight(sheet.getRow(i).getCell(5).getNumericCellValue());
                     cargo.setVolume(sheet.getRow(i).getCell(6).getNumericCellValue());
+                    cargo.setRecipient(sheet.getRow(i).getCell(8).getStringCellValue());
                     cargo.setCity(sheet.getRow(i).getCell(9).getStringCellValue());
+                    cargo.setPhoneNumber(sheet.getRow(i).getCell(10).getStringCellValue());
                     cargo.setLocalOrTransshipment(sheet.getRow(i).getCell(12).getStringCellValue());
+                    cargo.setToTheDoor(sheet.getRow(i).getCell(13).getStringCellValue());
+                    cargo.setNameTransportCompany(sheet.getRow(i).getCell(14).getStringCellValue());
+                    cargo.setPayer(sheet.getRow(i).getCell(15).getStringCellValue());
+                    cargo.setFormOfPayment(sheet.getRow(i).getCell(16).getStringCellValue());
+
                     cargo.setTruckId(truck.getId());
                     cargoRepositories.save(cargo);
                     i++;

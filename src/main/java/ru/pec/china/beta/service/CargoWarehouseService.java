@@ -69,7 +69,7 @@ public class CargoWarehouseService {
 
     public CargoDTO cargoUpdate(CargoDTO cargoDTO, String userDetails) throws CargoNotFoundException, CargoBadSaveException {
         Cargo cargo = cargoRepositories.findById(cargoDTO.getId()).orElseThrow(CargoNotFoundException::new);
-        Person person = personRepositories.findByLogin(userDetails).orElseThrow(null);
+        Person person = personRepositories.findByUsername(userDetails).orElseThrow(null);
 
         if(cargoDTO.getPecCode() == null)
             cargoDTO.setPecCode("");

@@ -12,10 +12,10 @@
             <span class="description">Введите свой логин и пароль</span>
             <form class="form-horizontal" th:action="@{/auth/login}" th:method="POST">
                 <div class="form-group">
-                        <input name="username" type="text" class="form-control" th:classappend="${param.error}? 'is-invalid'" placeholder="Логин">
+                        <input name="username" type="text" class="form-control border-black" th:classappend="${param.error}? 'is-invalid'" placeholder="Логин">
                 </div>
                 <div class="form-group">
-                        <input name="password" aria-describedby="validationLogin" type="password"  class="form-control" th:classappend="${param.error}? 'is-invalid'" placeholder="Пароль">
+                        <input name="password" aria-describedby="validationLogin" type="password"  class="form-control border-black" th:classappend="${param.error}? 'is-invalid'" placeholder="Пароль">
                     <div id="validationLogin" class="invalid-feedback">
                         Неверный логин или пароль
                     </div>

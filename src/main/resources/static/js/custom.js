@@ -9,15 +9,11 @@ $(document).ready(function () {
         xhr.setRequestHeader(header, token);
     });
 
-    $.post("/api/v1/cargo/person/get",
-        function (person) {
-            $('#peopleData').html(person);
-        });
 });
 
 
 function resetData(){
-    $('#form')[0].reset();
+    $('#personFormData')[0].reset();
 }
 
 $(document).ready(function () {
@@ -125,9 +121,9 @@ function searchCargoByKeyword(keyword) {
 function getPersonById(id) {
     $.get("/administration/person/get/" + id, function (person) {
         $('#id').val(person.id)
-        $('#login').val(person.login)
+        $('#username').val(person.username)
         $('#fullName').val(person.fullName)
-        $('#selectRole').val(person.role).change();
+        $('#selectRole').val(person.roleId);
     });
 }
 
@@ -152,9 +148,9 @@ function showingCargoOffCanvas(cargo) {
     $('#weight').html(cargo.weight);
     $('#dimensions').html(cargo.dimensions);
     $('#weightOfOnePiece').html(cargo.weightOfOnePiece);
-    if(cargo.city.trim() === ''){
+    if (cargo.city.trim() === '') {
         $('#tableCity').hide();
-    }else
+    } else
         $('#tableCity').show();
 
     $('#city').html(cargo.city);
@@ -170,7 +166,7 @@ function showingCargoOffCanvas(cargo) {
 
     } else {
         $('#inputPecCode').hide().val(cargo.pecCode);
-        $('#pecCode').show().html(cargo.pecCode.substring(0,12));
+        $('#pecCode').show().html(cargo.pecCode.substring(0, 12));
 
         if (cargo.issuance) {
             $('#trashButton').hide();
@@ -216,4 +212,39 @@ function showingCargoOffCanvas(cargo) {
     }
 
     $('#truckName').attr("href", "/truck/" + cargo.truckId + "/cargo").html(cargo.truckName);
+}
+
+$(document).ready(function() {
+    $('#personFormData').on("submit", function (event) {
+        event.preventDefault();
+        const formData = {
+            id: $('#id').val(),
+            username:$('#username').val(),
+            fullName: $('#fullName').val(),
+            roleId: $('#roleId').val(),
+            password: $('#password').val()
+        };
+        $.ajax({
+            url: $(this).attr("action"),
+            type: $(this).attr("method"),
+            data: JSON.stringify(formData),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: () => {
+                location.reload();
+            },
+            error: function (xhr, textStatus, errorThrown) {
+                $('.form-control').removeClass('is-invalid');
+                $('.invalid-feedback').empty();
+                handleErrors(JSON.parse(xhr.responseText));
+            }
+        });
+    });
+});
+
+function handleErrors(errors) {
+    for (let field in errors) {
+        $(`[name=${field}]`).addClass('is-invalid');
+        $(`[name=${field}] + .invalid-feedback`).text(errors[field]);
+    }
 }

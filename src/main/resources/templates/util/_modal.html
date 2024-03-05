@@ -25,37 +25,44 @@
     </div>
 </div>
 <!---------------------------модальное окно создание и редактирования пользователя---------------------------------->
-<div th:fragment="personDataModal" class="modal fade" id="personData" tabindex="-1" aria-labelledby="labelModal" aria-hidden="true">
+<div th:fragment="personDataModal" class="modal fade" th:id="personData" tabindex="-1" aria-labelledby="labelModal" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
                 <h4 th:text="'Регистрация/Изменение пользователя'"></h4>
             </div>
             <div class="modal-body">
-                <form id="form"  th:method="POST" th:action="@{/administration/person/new}" th:object="${persons}">
+                <form id="personFormData"  th:method="POST" th:action="@{/administration/person/save-update}">
                     <div class="mb-3">
-                        <input type="hidden" th:field="*{id}" id="id">
-                        <label for="login" class="form-label">Логин</label>
-                        <input th:field="*{login}" type="text" class="form-control" id="login" placeholder="Только латинские буквы">
+                        <input type="hidden" id="id" name="id">
+                        <label for="username" class="form-label">Логин</label>
+                        <input type="text" class="form-control" id="username" name="username" placeholder="Только латинские буквы"
+                               aria-describedby="validationUsername" required>
+                        <div id="validationUsername" class="invalid-feedback">
+                            <ul id="errorMessages"></ul>
+                        </div>
                     </div>
                     <div class="mb-3">
                         <label for="fullName" class="form-label">Фамилия и инициалы пользователя</label>
-                        <input th:field="*{fullName}" type="text" class="form-control" id="fullName" placeholder="Петров В.В">
+                        <input type="text" class="form-control" id="fullName" name="fullName" placeholder="Петров В.В"
+                               aria-describedby="validationFullName" required>
+                        <div id="validationFullName" class="invalid-feedback">
+                        </div>
                     </div>
                     <div class="mb-3">
-                        <select th:field="*{role}" id="selectRole" class="form-select" name="role" required aria-label="Выбор роли">
-                            <option value="">Выберете роль</option>
-                            <option value="ROLE_OPERATOR">Оператор склада</option>
-                            <option value="ROLE_SPECIALIST">Специалист КО</option>
-                            <option value="ROLE_ADMIN">Администратор</option>
+                        <select  multiple="multiple" id="roleId" class="form-select" name="roleId" required aria-label="Выбор роли">
+                            <option th:each="role : ${roles}" th:value="${role.id}" th:text="${role.name}">val role</option>
                         </select>
                     </div>
                     <div class="mb-3">
                         <label for="password" class="form-label">Пароль для пользователя</label>
-                        <input th:field="*{password}" type="password" class="form-control" id="password" placeholder="пароль от 3 до 8 символов">
+                        <input type="password" class="form-control" id="password" name="password" placeholder="пароль от 6 до 8 символов"
+                               aria-describedby="validationPassword" required>
+                        <div id="validationPassword" class="invalid-feedback">
+                        </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="submit" class="btn btn-primary" th:text="'Зарегестрировать'"></button>
+                        <button type="submit" class="btn btn-primary" th:text="'Сохранить'"></button>
                     </div>
                 </form>
             </div>
