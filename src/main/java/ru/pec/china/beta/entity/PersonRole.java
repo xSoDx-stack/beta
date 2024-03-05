@@ -9,6 +9,8 @@ import java.time.ZonedDateTime;
 @Getter
 @Setter
 @Entity
+@Table(name = "person_role")
+
 public class PersonRole {
     @Id
     @Column(name = "id")

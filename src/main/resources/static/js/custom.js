@@ -123,7 +123,7 @@ function getPersonById(id) {
         $('#id').val(person.id)
         $('#username').val(person.username)
         $('#fullName').val(person.fullName)
-        $('#selectRole').val(person.roleId);
+        $('#roleId').val(person.roleId);
     });
 }
 
