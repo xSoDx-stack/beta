@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 
 import java.time.ZonedDateTime;
 import java.util.UUID;
@@ -66,6 +68,7 @@ public class Cargo {
 
     @ManyToOne
     @JoinColumn(name = "processed_by_user", updatable = false, insertable = false)
+    @Cascade(CascadeType.DETACH)
     private Person processedByUser; //Обработка пользователем
 
     @Column(name = "processed_by_user")
@@ -73,6 +76,7 @@ public class Cargo {
 
     @ManyToOne
     @JoinColumn(name = "issuance_by_user", updatable = false, insertable = false)
+    @Cascade(CascadeType.DETACH)
     private Person issuedAtWarehouseByUser; //Выдан пользователем
 
     @Column(name = "issuance_by_user")
@@ -92,6 +96,7 @@ public class Cargo {
 
     @ManyToOne
     @JoinColumn(name = "user_client_issue", updatable = false, insertable = false)
+    @Cascade(CascadeType.DETACH)
     private Person issuedToClientByUser; // кто сделал клиентскую выдачу
 
     @Column(name = "user_client_issue")
