@@ -7,17 +7,18 @@
 
 <nav th:replace="~{/util/nav-bar :: NavBar}"></nav>
 
-<table class="table table-sm table-bordered border-primary text-center">
+<table class="table table-sm table-bordered border-primary align-middle text-center">
     <thead class="table-dark">
-    <tr>
+    <tr class="align-middle text-center">
         <th scope="col">№</th>
         <th scope="col">Логин</th>
         <th scope="col">ФИО</th>
         <th scope="col">Роль</th>
+        <th style="width: 6rem;" scope="col">Состояние учётной записи</th>
         <th scope="col">Действия</th>
     </tr>
     </thead>
-    <tbody class="table-secondary">
+    <tbody class="table-secondary" >
     <tr th:each="people,i :${person}" class="table-secondary">
         <td>
             <h6 th:text="${i.count}"/>
@@ -32,12 +33,18 @@
             <h6 th:text="${people.getRoleName()}"/>
         </td>
         <td>
-            <a th:attr="data-bs-target='#personData'" type="button" data-bs-toggle="modal" class="bi bi-pencil" th:onclick="getPersonById([[${people.getId()}]])">
+            <h6 th:text="${people.isActive()} ? 'Активен':'Отключён'"/>
+            <p style="width: 6rem;" th:text="${#temporals.format(people.getDateTimeActive(), 'HH:mm zzz dd.MM.yyyy ', 'Europe/Moscow')}"/>
+        </td>
+        <td>
+            <a th:attr="data-bs-target='#personData'" type="button" data-bs-toggle="modal" class="btn" th:onclick="getPersonById([[${people.getId()}]])"
+               style="color: transparent;">
                 <img src="/images/pencil.svg"/>
             </a>
 
-            <a th:href="@{/administration/person/delete/{id}(id=${people.getId()})}" type="button" class="bi bi-trash">
-                <img src="/images/trash.svg"/>
+            <a th:href="@{/administration/person/active/{id}(id=${people.getId()})}" type="button " class="btn"
+               style="color: transparent;">
+                <img th:src="${people.isActive() ? '/images/person-enable.svg' : '/images/person-disable.svg' }"/>
             </a>
         </td>
     </tr>

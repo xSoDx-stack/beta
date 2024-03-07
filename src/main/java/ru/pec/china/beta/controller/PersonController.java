@@ -60,10 +60,10 @@ public class PersonController {
         return ResponseEntity.noContent().build();
     }
 
-    @GetMapping("/person/delete/{id}")
+    @GetMapping("/person/active/{id}")
     public String deletePerson(@PathVariable("id") int id,
                                @AuthenticationPrincipal UserDetails userDetails) throws PersonNotFoundException {
-        personService.deletePerson(id, userDetails);
+        personService.enableDisablePerson(id, userDetails);
         return "redirect:/administration/person";
     }
 

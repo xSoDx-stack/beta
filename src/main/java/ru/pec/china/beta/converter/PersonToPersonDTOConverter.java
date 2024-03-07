@@ -14,6 +14,8 @@ public class PersonToPersonDTOConverter implements Converter<Person, PersonDTO> 
                 source.getUsername(),
                 source.getPassword(),
                 source.getFullName(),
+                source.isActive(),
+                source.getDateTimeActive(),
                 source.getPersonRoles().stream().map(role->role.getRole().getId()).collect(Collectors.toList()),
                 source.getPersonRoles().stream().map(role->role.getRole().getName()).collect(Collectors.toList())
                 );

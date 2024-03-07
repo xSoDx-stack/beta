@@ -19,7 +19,7 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
-public class CargoWarehouseService {
+public class CargoService {
 
     private final CargoRepositories cargoRepositories;
     private final ConversionService conversionService;
@@ -27,7 +27,7 @@ public class CargoWarehouseService {
     private final ZonedDateTime date = ZonedDateTime.now();
 
     @Autowired
-    public CargoWarehouseService(CargoRepositories cargoRepositories, ConversionService conversionService, PersonRepositories personRepositories) {
+    public CargoService(CargoRepositories cargoRepositories, ConversionService conversionService, PersonRepositories personRepositories) {
         this.cargoRepositories = cargoRepositories;
         this.conversionService = conversionService;
         this.personRepositories = personRepositories;

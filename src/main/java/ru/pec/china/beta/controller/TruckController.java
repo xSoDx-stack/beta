@@ -5,7 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import ru.pec.china.beta.dto.TruckDTO;
-import ru.pec.china.beta.service.CargoWarehouseService;
+import ru.pec.china.beta.service.CargoService;
 import ru.pec.china.beta.service.TruckService;
 
 @Controller
@@ -13,10 +13,10 @@ import ru.pec.china.beta.service.TruckService;
 public class TruckController {
 
     private final TruckService truckService;
-    private final CargoWarehouseService cargoService;
+    private final CargoService cargoService;
 
     @Autowired
-    public TruckController(TruckService truckService, CargoWarehouseService cargoService) {
+    public TruckController(TruckService truckService, CargoService cargoService) {
         this.truckService = truckService;
         this.cargoService = cargoService;
     }

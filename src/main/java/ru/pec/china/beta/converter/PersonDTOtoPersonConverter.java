@@ -14,6 +14,7 @@ public class PersonDTOtoPersonConverter implements Converter<PersonDTO, Person> 
         person.setUsername(source.getUsername());
         person.setFullName(source.getFullName());
         person.setPassword(source.getPassword());
+        person.setActive(source.isActive());
         return person;
     }
 }

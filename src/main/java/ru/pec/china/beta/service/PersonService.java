@@ -19,6 +19,7 @@ import ru.pec.china.beta.repositories.RoleRepositories;
 import ru.pec.china.beta.security.PersonDetails;
 import ru.pec.china.beta.util.PersonNotFoundException;
 
+import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -47,10 +48,15 @@ public class PersonService implements UserDetailsService {
         if(person.isEmpty()){
             throw new UsernameNotFoundException("Неправильный логин или пароль");
         }
-        return new PersonDetails(person.get());
+        if(person.get().isActive()){
+            return new PersonDetails(person.get());
+        }
+        System.out.println("Пользователь отключён");
+        throw new UsernameNotFoundException("Пользователь отключён");
     }
 
     @Transactional(readOnly = true)
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public List<PersonDTO> findAll(){
         return personRepositories.findAll().stream().map(person->
                 conversionService.convert(person, PersonDTO.class)).collect(Collectors.toList());
@@ -59,8 +65,8 @@ public class PersonService implements UserDetailsService {
     @Transactional
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public void saveOrUpdatePerson(PersonDTO personDTO) {
+        ZonedDateTime date = ZonedDateTime.now();
         Person person = conversionService.convert(personDTO, Person.class);
-
         List<Role> roles = roleRepositories.findAllById(personDTO.getRoleId());
         if (roles.size() != personDTO.getRoleId().size()) {
             throw new RuntimeException("Одна или несколько ролей не найдены");
@@ -68,6 +74,7 @@ public class PersonService implements UserDetailsService {
 
         if (person != null && person.getId() == null) {
             person.setPassword(passwordEncoder.encode(personDTO.getPassword()));
+            person.setDateTimeActive(date);
             Person savePerson = personRepositories.save(person);
             personRoleRepositories.saveAll(createPersonRoles(savePerson, roles));
 
@@ -95,10 +102,13 @@ public class PersonService implements UserDetailsService {
 
     @Transactional
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public void deletePerson(int id, UserDetails userDetails) throws PersonNotFoundException {
+    public void enableDisablePerson (int id, UserDetails userDetails) throws PersonNotFoundException {
+        ZonedDateTime date = ZonedDateTime.now();
         Person person = personRepositories.findById(id).orElseThrow(PersonNotFoundException::new);
         if(!person.getUsername().equals(userDetails.getUsername())){
-            personRepositories.delete(person);
+            person.setActive(!person.isActive());
+            person.setDateTimeActive(date);
+            personRepositories.save(person);
         }
         System.out.println("Невозможно удалить самого себя");
     }

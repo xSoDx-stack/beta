@@ -23,7 +23,15 @@ public class CargoDTO {
     private BigDecimal weightOfOnePiece; //все 1 места
     private String recipient; // Получатель
     private String city; //город
+    private String phoneNumber;  // номер телефона
     private String localOrTransshipment; //местный или перевалочный
+    private String toTheDoor; // до двери
+    private String nameTransportCompany; //название ТК
+    private String payer; // плательщик
+    private String formOfPayment; // форма оплаты
+    private String relabelingPecCode; // перимаркировка
+    private String note; // примечание
+    private boolean shippingToRegions;  //отправка на регионы
 
     private String processedByUser; //кто обработал груз
     private Integer processedByUserId; //кто обработал груз id

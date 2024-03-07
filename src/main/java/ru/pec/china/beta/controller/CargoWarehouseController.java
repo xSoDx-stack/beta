@@ -6,16 +6,16 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import ru.pec.china.beta.service.CargoWarehouseService;
+import ru.pec.china.beta.service.CargoService;
 
 @Controller
 @RequestMapping("/cargo/warehouse")
 public class CargoWarehouseController {
 
-    private final CargoWarehouseService cargoService;
+    private final CargoService cargoService;
 
     @Autowired
-    public CargoWarehouseController(CargoWarehouseService cargoService) {
+    public CargoWarehouseController(CargoService cargoService) {
         this.cargoService = cargoService;
     }
 

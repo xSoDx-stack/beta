@@ -16,10 +16,10 @@
         <th sec:authorize="hasRole('ROLE_ADMIN')" scope="col">Действия</th>
     </tr>
     </thead>
-    <tbody class="table-primary" >
+    <tbody class="table-primary align-middle text-center" >
     <tr th:each="truck :${trucks}">
         <td>
-            <h6 th:text="${#temporals.format(truck.dateCreate, 'dd.MM.yyyy HH:mm zzz', 'Europe/Moscow')}"/>
+            <h6 th:text="${#temporals.format(truck.dateCreate, 'HH:mm zzz dd.MM.yyyy ', 'Europe/Moscow')}"/>
         </td>
         <td>
             <h6 sec:authorize="hasRole('ROLE_OPERATOR')"> <a th:text="${truck.getTrackName()}" th:href="@{/truck/{id}/warehouse/cargo(id=${truck.getId()})}"/></h6>

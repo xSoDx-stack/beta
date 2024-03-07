@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.ZonedDateTime;
 import java.util.List;
 
 @Getter
@@ -28,6 +29,12 @@ public class Person {
 
     @Column(name = "full_name")
     private String fullName;
+
+    @Column(name = "active", columnDefinition = "boolean default true")
+    private boolean active;
+
+    @Column(name = "date-active")
+    private ZonedDateTime dateTimeActive;
 
     @OneToMany(mappedBy = "personId", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<PersonRole> personRoles;

@@ -7,6 +7,7 @@ import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.*;
 
+import java.time.ZonedDateTime;
 import java.util.List;
 
 @Setter
@@ -21,7 +22,7 @@ public class PersonDTO {
 
         @NotBlank(message = "Логин не может быть пустым")
         @Size(min = 3, max = 20, message = "Логин должен быть от 3 до 20 символов")
-        @Pattern(regexp = "^[a-zA-Z]+$", message = "Логин может состоять только из английских букв")
+        @Pattern(regexp = "^[a-zA-Z.]+$", message = "Логин может состоять только из английских букв")
         private String username;
 
         @NotBlank(message = "Пароль не может быть пустым")
@@ -32,6 +33,10 @@ public class PersonDTO {
         @Pattern(regexp = "[А-ЯЁа-яё]+ [А-ЯЁ]\\.[А-ЯЁ]\\.",
                 message = "Запись в неверном формате, должно быть Фамилия И.О.")
         private String fullName;
+
+        private boolean isActive;
+
+        private ZonedDateTime dateTimeActive;
 
         @NotEmpty(message = "Выберете роль, она не может быть пустой")
         private List<String> roleId;
