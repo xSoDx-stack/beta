@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{/util/bace :: common_header(~{::link}, ~{::title})}">
+    <title th:text="${titles}">val</title>
+</head>
+<body>
+<nav th:replace="~{/util/nav-bar :: NavBar}"></nav>
+
+<table class="table table-sm table-bordered table-hover">
+    <caption th:if="${trackName}" th:text="'Рейс: ' + ${trackName}"></caption>
+    <thead class="table-dark">
+    <tr class="align-middle text-center">
+        <th scope="col">ШК клиента</th>
+        <th scope="col">ПЭК ШК</th>
+        <th scope="col">Получатель</th>
+        <th scope="col">Город</th>
+        <th scope="col">Местный/перевалочный</th>
+        <th scope="col">До двери</th>
+        <th scope="col">Плательщик</th>
+        <th scope="col">Номер телефона</th>
+        <th scope="col">Примечание</th>
+        <th scope="col">Кто обработал</th>
+    </tr>
+    </thead>
+    <tbody class="table-secondary align-middle text-center border-secondary">
+    <tr th:each="carg,i :${cargos}"
+        th:class="${carg.clientIssue? 'purple' : '' }" data-bs-toggle="offcanvas"
+        th:attr="data-bs-target='#officeEdit'" style="cursor: pointer"
+        th:onclick="getCargoById([[${carg.getId()}]])">
+        <td>
+            <h6 style="white-space: nowrap" th:text="${carg.clientBarcode}"/>
+        </td>
+        <td th:class="${carg.relabelingPecCode ? 'yellow':''}">
+            <del th:if="${carg.relabelingPecCode}"><h6 th:text="${carg.oldPecCode}"/></del>
+            <h6 th:text="${#strings.substring(carg.pecCode, 0, 12)} "/>
+        </td>
+        <td>
+            <h6 th:text="${carg.recipient} "/>
+        </td>
+        <td>
+            <h6 th:text="${carg.city}"/>
+        </td>
+        <td>
+            <h6 style="width: 6rem;" th:text="${carg.localOrTransshipment}"/>
+        </td>
+        <td>
+            <h6 style="width: 6rem;" th:text="${carg.toTheDoor}"/>
+        </td>
+        <td>
+            <h6 style="width: 6rem;" th:text="${carg.payer}"/>
+        </td>
+        <td>
+            <h6 th:text="${carg.phoneNumber}"/>
+        </td>
+        <td>
+            <h6 style="width: 6rem;" th:text="${carg.note}"/>
+        </td>
+        <td>
+            <h6 th:text="${carg.clientIssue? carg.getIssuedToClientByUser(): 'Никто'}"/>
+        </td>
+    </tr>
+    </tbody>
+
+</table>
+
+</body>
+<div th:replace="~{util/cargo-off-canvas :: EditCargoOffice}"></div>
+<div th:replace="~{util/nav-bar :: PageNavBar(${cargos},${href})}"></div>
+<div th:replace="~{util/_modal :: UploadToModal}"></div>
+</html>

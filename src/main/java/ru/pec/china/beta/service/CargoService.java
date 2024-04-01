@@ -57,13 +57,19 @@ public class CargoService {
                 conversionService.convert(cargo, CargoDTO.class));
     }
 
+
     public Page<CargoDTO> findAllByIssuance(int page, int size){
         return cargoRepositories.findAllByIssuanceTrue(PageRequest.of(pageNumber(page),size)).map(cargo ->
                 conversionService.convert(cargo, CargoDTO.class));
     }
 
     public Page<CargoDTO> findAllByTrackId(Integer id, int page, int size){
-        return cargoRepositories.findAllByTruckId(id, PageRequest.of(pageNumber(page), size)).map(cargo ->
+        return cargoRepositories.findAllByTruckIdOrderByTimeClientIssue(id, PageRequest.of(pageNumber(page), size)).map(cargo ->
+                conversionService.convert(cargo, CargoDTO.class));
+    }
+
+    public Page<CargoDTO> findAllByTrackIdAndCargoProcessedTrue(Integer id, int page, int size){
+        return cargoRepositories.findAllByTruckIdAndProcessedTrue(id, PageRequest.of(pageNumber(page), size)).map(cargo ->
                 conversionService.convert(cargo, CargoDTO.class));
     }
 
@@ -80,7 +86,7 @@ public class CargoService {
             cargo.setPecCode(cargoDTO.getPecCode());
             cargo.setTimeOfProcessed(date);
             cargo.setProcessedByUserId(person.getId());
-            if (true) {  //toDo cargoDTO.isClientIssue()
+            if (cargo.isClientIssue()) {
                 cargo.setIssuedToClientByUserId(person.getId());
                 cargo.setTimeClientIssue(date);
                 cargo.setClientIssue(true);

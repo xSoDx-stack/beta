@@ -25,7 +25,7 @@ public class CargoWarehouseController {
         model.addAttribute("cargos", cargoService.findAll(page, 25));
         model.addAttribute("href", "/cargo/warehouse?");
         model.addAttribute("titles", "Грузы");
-        return "/cargo/cargo-warehouse";
+        return "cargo/cargo-warehouse";
     }
 
     @GetMapping("/unloaded")
@@ -34,7 +34,7 @@ public class CargoWarehouseController {
         model.addAttribute("cargos", cargoService.findAllUnloaded(page, 25));
         model.addAttribute("href", "/cargo/warehouse/unloaded?");
         model.addAttribute("titles", "Грузы выгруженные");
-        return "/cargo/cargo-warehouse";
+        return "cargo/cargo-warehouse";
     }
 
     @GetMapping("/processed")
@@ -43,7 +43,7 @@ public class CargoWarehouseController {
         model.addAttribute("cargos", cargoService.findAllByProcessed(page, 25));
         model.addAttribute("href", "/cargo/warehouse/processed?");
         model.addAttribute("titles", "Грузы принятые");
-        return "/cargo/cargo-warehouse";
+        return "cargo/cargo-warehouse";
     }
 
     @GetMapping("/issuance")
@@ -52,7 +52,7 @@ public class CargoWarehouseController {
         model.addAttribute("cargos", cargoService.findAllByIssuance(page, 25));
         model.addAttribute("href", "/cargo/warehouse/issuance?");
         model.addAttribute("titles", "Грузы Выданные");
-        return "/cargo/cargo-warehouse";
+        return "cargo/cargo-warehouse";
     }
 
 }

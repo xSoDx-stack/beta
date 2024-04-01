@@ -21,8 +21,8 @@ public class SecurityConfig {
                 .authorizeHttpRequests((auth)->auth
                         .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
                         .requestMatchers("/administration/**").hasRole("ADMIN")
-                        .requestMatchers("/cargo/warehouse/**", "/truck/{id}/warehouse/**").hasAnyRole("OPERATOR")
-                        .requestMatchers("/cargo/client/**", "/truck/{id}/client/**").hasAnyRole("SPECIALIST")
+                        .requestMatchers("/cargo/warehouse/**", "/truck/{id}/cargo/warehouse/**").hasAnyRole("OPERATOR")
+                        .requestMatchers("/cargo/client/**", "/truck/{id}/cargo/client/service/**").hasAnyRole("SPECIALIST")
                         .requestMatchers("/auth/login").permitAll()
                         .anyRequest().authenticated()
                 )

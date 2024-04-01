@@ -138,80 +138,89 @@ function getCargoById(id) {
 
 
 function showingCargoOffCanvas(cargo) {
+    let date = '';
     if (cargo.timeOfIssueAtWarehouse != null) {
         date = moment(cargo.timeOfIssueAtWarehouse).format("DD.MM.YYYY HH:mm");
     }
 
     $('#inputId').val(cargo.id);
     $('#container').barcode(cargo.clientBarcode, 'code128', {barWidth: 2, barHeight: 130});
-    $('#numberOfSeats').html(cargo.numberOfSeats);
-    $('#weight').html(cargo.weight);
-    $('#dimensions').html(cargo.dimensions);
-    $('#weightOfOnePiece').html(cargo.weightOfOnePiece);
-    if (cargo.city.trim() === '') {
-        $('#tableCity').hide();
-    } else
-        $('#tableCity').show();
-
-    $('#city').html(cargo.city);
-    $('#volume').html(cargo.volume);
+    $('#numberOfSeats').text(cargo.numberOfSeats);
+    $('#weight').text(cargo.weight);
+    $('#dimensions').text(cargo.dimensions);
+    $('#weightOfOnePiece').text(cargo.weightOfOnePiece ? cargo.weightOfOnePiece : '---');
+    toggleElement('#tableCity', cargo.city.trim() !== '');
+    $('#city').text(cargo.city ? cargo.city : '---');
+    $('#volume').text(cargo.volume);
     $('#search').val('').trigger("focus");
+    $('#clientCode').text(cargo.clientBarcode);
+    $('#recipient').text(cargo.recipient ? cargo.recipient : '---');
+    $('#localOrTransshipment').text(cargo.localOrTransshipment ? cargo.localOrTransshipment : '---');
+    $('#toTheDoor').text(cargo.toTheDoor ? cargo.toTheDoor : '---');
+    $('#payer').text(cargo.payer ? cargo.payer : '---' );
+    $('#phoneNumber').text(cargo.phoneNumber ? cargo.phoneNumber : '---');
+    $('#issuedToClientByUser').text(cargo.issuedToClientByUser ? cargo.issuedToClientByUser : '---')
+    $('#timeOfIssueToClient').text(cargo.timeOfIssueToClient ? moment(cargo.timeOfIssueToClient).format("DD.MM.YYYY HH:mm")  : '---')
+    
+    toggleElement('#note', !!cargo.note && cargo.note.trim());
+    toggleElement('#editNote', !cargo.note || !cargo.note.trim());
+    $('#inputEditNote').val(cargo.note);
 
 
-    if (cargo.pecCode === void 0 || cargo.pecCode === null || cargo.pecCode.trim() === '') {
+    if (!cargo.pecCode) {
         $('#pecCode').hide();
         $('#inputPecCode').show().val('');
         $('#trashButton').hide();
         $('#issuance').hide();
-
     } else {
         $('#inputPecCode').hide().val(cargo.pecCode);
         $('#pecCode').show().html(cargo.pecCode.substring(0, 12));
-
-        if (cargo.issuance) {
-            $('#trashButton').hide();
-            $('#issuance').hide();
-        } else {
-            $('#trashButton').show();
-            $('#issuance').show();
-        }
-
+        toggleElement('#trashButton', !cargo.issuance);
+        toggleElement('#issuance', !cargo.issuance);
     }
+
     if (cargo.processed) {
         $('#processed').hide();
-        $("#labelProcessed").prop('checked', true)
-
-        if (cargo.issuance) {
-            $('#labelIssuance').prop('checked', true)
+        $("#labelProcessed").prop('checked', true);
+        if(cargo.issuance){
+            $('#labelIssuance').prop('checked', true);
             $('#buttonSave').hide();
+            toggleElement('#timeIssue', true);
+            $('#timeOfIssueAtWarehouse').show().text(date);
+            $('#issuanceByUser').text(cargo.issuedAtWarehouseByUser ? cargo.issuedAtWarehouseByUser : '---');
+            $('#clientIssue').hide()
+        }else {
+            if(cargo.clientIssue){
+                $("#labelIssuance").prop('checked', false);
+                $('#clientIssue').hide()
+                $('#buttonSave').show();
+            }else {
+                $('#issuance').hide()
+                $('#clientIssue').show()
+                $('#buttonSave').hide();
+            }
 
-            $('#timeIssue').show();
-            $('#timeOfIssueAtWarehouse').show().html(date);
+            toggleElement('#timeIssue', false);
+            $('#timeOfIssueAtWarehouse').hide();
 
-            $('#cellIssuanceByUser').show();
-            $('#issuanceByUser').html(cargo.issuedAtWarehouseByUser);
-        } else {
-            $('#buttonSave').show();
-            $("#labelIssuance").prop('checked', false)
 
-            $('#timeIssue').hide();
-            $('#timeOfIssueAtWarehouse').hide()
-            $('#cellIssuanceByUser').hide();
         }
-    } else {
+    }else {
         $('#buttonSave').show();
-        $("#labelProcessed").prop('checked', false)
+        $("#labelProcessed").prop('checked', false);
         $('#issuance').hide();
         $('#processed').show();
-        $('#cellIssuanceByUser').hide();
-        $('#timeIssue').hide();
-        $('#timeOfIssueAtWarehouse').hide()
-    }
-    if (cargo.issuanceByUser === 'null') {
-        $('#cellIssuanceByUser').hide()
+        $('#timeOfIssueAtWarehouse').hide();
+        toggleElement('#timeIssue', false);
+        $('#clientIssue').hide()
     }
 
+    toggleElement('#cellIssuanceByUser', cargo.issuanceByUser !== 'null');
     $('#truckName').attr("href", "/truck/" + cargo.truckId + "/cargo").html(cargo.truckName);
+}
+
+function toggleElement(element, condition) {
+    $(element).toggle(condition);
 }
 
 $(document).ready(function() {
@@ -241,6 +250,8 @@ $(document).ready(function() {
         });
     });
 });
+
+
 
 function handleErrors(errors) {
     for (let field in errors) {

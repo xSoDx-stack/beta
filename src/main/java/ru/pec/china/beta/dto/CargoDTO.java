@@ -20,7 +20,7 @@ public class CargoDTO {
     private Double weight; //Вес
     private Double volume; // Объём
     private BigDecimal dimensions; //габариты
-    private BigDecimal weightOfOnePiece; //все 1 места
+    private BigDecimal weightOfOnePiece; //вес 1 места
     private String recipient; // Получатель
     private String city; //город
     private String phoneNumber;  // номер телефона
@@ -29,9 +29,11 @@ public class CargoDTO {
     private String nameTransportCompany; //название ТК
     private String payer; // плательщик
     private String formOfPayment; // форма оплаты
-    private String relabelingPecCode; // перимаркировка
+    private boolean relabelingPecCode; // перимаркировка
+    private String oldPecCode; //старый код ПЭК
     private String note; // примечание
-    private boolean shippingToRegions;  //отправка на регионы
+
+    private boolean shippingToRegions;  //отправка на регионы//
 
     private String processedByUser; //кто обработал груз
     private Integer processedByUserId; //кто обработал груз id

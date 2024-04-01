@@ -13,9 +13,11 @@ import java.util.UUID;
 
 @Repository
 public interface CargoRepositories extends JpaRepository<Cargo, UUID> {
-    Page<Cargo> findAllByTruckId(Integer id, Pageable pageable);
+    Page<Cargo> findAllByTruckIdOrderByTimeClientIssue(Integer id, Pageable pageable);
 
     Page<Cargo> findAllByProcessedTrueAndIssuanceFalse(Pageable pageable);
+
+    Page<Cargo> findAllByTruckIdAndProcessedTrue(Integer id, Pageable pageable);
 
     Page<Cargo> findAllByProcessedFalse(Pageable pageable);
 

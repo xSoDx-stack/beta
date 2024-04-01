@@ -115,8 +115,11 @@ public class Cargo {
     @Column(name = "note")
     private String note; // примечание
 
-    @Column(name = "relabeling_pec_code")
-    private String relabelingPecCode; // перимаркировка
+    @Column(name = "old_pec_code")
+    private String oldPecCode; // старый код ПЭК
+
+    @Column(name = "relabeling_pec_code", columnDefinition = "boolean default false")
+    private boolean relabelingPecCode; // перемаркировка да/нет
 
     @Column(name = "shipping_to_regions", columnDefinition = "boolean default false")
     private boolean shippingToRegions;  //отправка на регионы

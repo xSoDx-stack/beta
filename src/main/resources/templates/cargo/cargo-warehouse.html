@@ -21,8 +21,8 @@
     <th style="width: 6rem;" scope="col">Габариты ДxШxВ</th>
     <th scope="col">Город</th>
     <th scope="col">Местный/перевалочный</th>
-    <th scope="col">Выдан</th>
-    <th scope="col">Принят</th>
+    <th scope="col">Выдача КО</th>
+    <th style="width: 6rem;" scope="col">Выдан со склада</th>
 
   </tr>
   </thead>
@@ -56,10 +56,10 @@
       <h6 th:text="${carg.getLocalOrTransshipment()}"/>
     </td>
     <td>
-      <h6 th:text="${carg.isIssuance()} ? 'да' : 'нет'"/>
+      <h6 th:text="${carg.isClientIssue()} ? 'да': 'нет'"/>
     </td>
     <td>
-      <h6 th:text="${carg.isProcessed()} ? 'да': 'нет'"/>
+      <h6 th:text="${carg.isIssuance()} ? 'да' : 'нет'"/>
     </td>
   </tr>
   </tbody>

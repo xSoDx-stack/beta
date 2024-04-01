@@ -79,7 +79,6 @@
                                             </span>
                                             <label for="inputPecCode"></label>
                                             <input id="inputPecCode" type="text" class="form-control border-black" required>
-
                                         </div>
                                     </td>
                                     <td colspan="2">
@@ -95,6 +94,7 @@
                                                 Выдать груз
                                             </label>
                                         </div>
+                                        <h6 id="clientIssue"  style="width: 10rem;">Выдавать можно только после оформление выдачи в КО</h6>
                                         <div>
                                             <h6 id="timeOfIssueAtWarehouse"></h6>
                                         </div>
@@ -124,4 +124,74 @@
         </div>
     </div>
 </div>
+
+<div th:fragment="EditCargoOffice" class="offcanvas offcanvas-start" data-bs-backdrop="static" tabindex="-1" th:id="officeEdit" aria-labelledby="staticBackdropLabel">\
+    <div class="offcanvas-header">
+        <h5 class="offcanvas-title" id="offcanvasBottomLabel">Обработка КО</h5>
+        <button onclick="location.reload()" type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Закрыть"></button>
+    </div>
+    <div class="offcanvas-body small">
+        <table class="table border-black text-center table-bordered">
+            <thead>
+            <tr class="table-primary">
+                <th scope="col">ШК клиента</th>
+                <th scope="col">ШК ПЭК</th>
+                <th scope="col">Получатель</th>
+                <th scope="col">Номер телефона</th>
+
+                <input type="hidden" id="inputId">
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td id="clientCode"></td>
+                <td id="pecCode"></td>
+                <td id="recipient"></td>
+                <td style="width: 7rem;" id="phoneNumber"></td>
+            </tr>
+            <tr class="table-primary">
+                <th colspan="4" scope="col">Город</th>
+            </tr>
+            <tr>
+                <td style="width: 6rem;" colspan="4" id="city"></td>
+            </tr>
+
+            <tr class="table-primary">
+                <th scope="col">Местный/перевалочный</th>
+                <th scope="col">До двери</th>
+                <th scope="col"  colspan="2">Плательщик</th>
+            </tr>
+            <tr>
+                <td id="localOrTransshipment"></td>
+                <td id="toTheDoor">---</td>
+                <td id="payer" colspan="2"></td>
+            </tr>
+            <tr class="table-primary">
+                <th colspan="4" scope="col">Примечание</th>
+            </tr>
+            <tr>
+                <td id="editNote" colspan="3">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col">
+                                <textarea id="inputEditNote" class="form-control" rows="5"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            <tr class="table-primary">
+                <th scope="col" colspan="2">Кто обработал</th>
+                <th scope="col" colspan="2">Время обработки</th>
+            </tr>
+            <tr>
+                <td colspan="2" id="issuedToClientByUser">
+                <td colspan="2" id="timeOfIssueToClient">
+            </tr>
+
+            </tbody>
+        </table>
+    </div>
+</div>
+
 </html>

@@ -42,13 +42,25 @@ public class TruckController {
         return "redirect:/";
     }
 
-    @GetMapping("/truck/{id}/warehouse/cargo")
-    public String cargoList(@PathVariable("id") int id,
+    @GetMapping("/truck/{id}/cargo/warehouse")
+    public String cargoListWarehouse(@PathVariable("id") int id,
                             Model model,
                             @RequestParam(defaultValue = "1", value = "page") int page){
         model.addAttribute("cargos", cargoService.findAllByTrackId(id, page, 25));
         model.addAttribute("trackName", truckService.TruckName(id));
-        model.addAttribute("href","/truck/" + id +"/warehouse/cargo?");
-        return "/cargo/cargo-warehouse";
+        model.addAttribute("href","/truck/" + id +"/cargo/warehouse?");
+        model.addAttribute("titles", "Складская обработка");
+        return "cargo/cargo-warehouse";
+    }
+
+    @GetMapping("/truck/{id}/cargo/client/service")
+    public String cargoListOffice(@PathVariable("id") int id,
+                            Model model,
+                            @RequestParam(defaultValue = "1", value = "page") int page){
+        model.addAttribute("cargos", cargoService.findAllByTrackIdAndCargoProcessedTrue(id, page, 25));
+        model.addAttribute("trackName", truckService.TruckName(id));
+        model.addAttribute("href","/truck/" + id +"/cargo/client/service?");
+        model.addAttribute("titles", "Клиентская обработка");
+        return "cargo/cargo-office";
     }
 }

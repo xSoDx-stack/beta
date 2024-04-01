@@ -83,6 +83,7 @@ public class PersonService implements UserDetailsService {
                     new RuntimeException("Пользователь не найден"));
             personRoleRepositories.deleteByPersonId(existingPerson.getId());
             person.setPassword(passwordEncoder.encode(personDTO.getPassword()));
+            person.setActive(existingPerson.isActive());
             Person savePerson = personRepositories.save(person);
             personRoleRepositories.saveAll(createPersonRoles(savePerson, roles));
         } else

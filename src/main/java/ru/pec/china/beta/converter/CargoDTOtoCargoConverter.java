@@ -24,7 +24,8 @@ public class CargoDTOtoCargoConverter implements Converter<CargoDTO, Cargo> {
         cargo.setNameTransportCompany(source.getNameTransportCompany());
         cargo.setPayer(source.getPayer());
         cargo.setFormOfPayment(source.getFormOfPayment());
-        cargo.setRelabelingPecCode(source.getRelabelingPecCode());
+        cargo.setRelabelingPecCode(source.isRelabelingPecCode());
+        cargo.setOldPecCode(source.getOldPecCode());
         cargo.setNote(source.getNote());
         cargo.setShippingToRegions(source.isShippingToRegions());
         cargo.setTimeOfIssue(source.getTimeOfIssueAtWarehouse());

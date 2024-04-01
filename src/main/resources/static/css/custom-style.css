@@ -1,0 +1,9 @@
+tr.purple {
+        --bs-table-color: #000000;
+        --bs-table-bg: #9782b7;
+}
+td.yellow {
+        --bs-table-color: #000000;
+        --bs-table-bg: #dece83;
+}
+
