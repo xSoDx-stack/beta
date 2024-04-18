@@ -6,7 +6,7 @@
 <body>
 <nav th:replace="~{/util/nav-bar :: NavBar}"></nav>
 
-<table class="table table-sm table-bordered table-hover">
+<table class="table table-sm table-bordered">
     <caption th:if="${trackName}" th:text="'Рейс: ' + ${trackName}"></caption>
     <thead class="table-dark">
     <tr class="align-middle text-center">
@@ -19,7 +19,9 @@
         <th scope="col">Плательщик</th>
         <th scope="col">Номер телефона</th>
         <th scope="col">Примечание</th>
-        <th scope="col">Кто обработал</th>
+        <th scope="col">Обработан</th>
+        <th scope="col">Статус</th>
+
     </tr>
     </thead>
     <tbody class="table-secondary align-middle text-center border-secondary">
@@ -31,8 +33,7 @@
             <h6 style="white-space: nowrap" th:text="${carg.clientBarcode}"/>
         </td>
         <td th:class="${carg.relabelingPecCode ? 'yellow':''}">
-            <del th:if="${carg.relabelingPecCode}"><h6 th:text="${carg.oldPecCode}"/></del>
-            <h6 th:text="${#strings.substring(carg.pecCode, 0, 12)} "/>
+            <h6 th:text="${carg.pecCode != null} ? (${#strings.length(carg.pecCode) lt 12} ? ${carg.pecCode} : ${#strings.substring(carg.pecCode, 0, 12)}) : ''"/>
         </td>
         <td>
             <h6 th:text="${carg.recipient} "/>
@@ -53,11 +54,15 @@
             <h6 th:text="${carg.phoneNumber}"/>
         </td>
         <td>
-            <h6 style="width: 6rem;" th:text="${carg.note}"/>
+            <h6 style="width: 6rem;" th:text="${#strings.abbreviate(carg.note, 12)}" th:title="${carg.note}"/>
         </td>
         <td>
-            <h6 th:text="${carg.clientIssue? carg.getIssuedToClientByUser(): 'Никто'}"/>
+            <h6 th:text="${carg.clientIssue? carg.getIssuedToClientByUser(): 'нет'}"/>
         </td>
+        <td th:class="${carg.issuance? 'green':''}">
+            <h6 th:text="${carg.issuance? 'Выдан': 'На складе'}"/>
+        </td>
+
     </tr>
     </tbody>
 

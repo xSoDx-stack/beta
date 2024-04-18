@@ -30,6 +30,7 @@ public class CargoDTOtoCargoConverter implements Converter<CargoDTO, Cargo> {
         cargo.setShippingToRegions(source.isShippingToRegions());
         cargo.setTimeOfIssue(source.getTimeOfIssueAtWarehouse());
         cargo.setTimeOfProcessed(source.getTimeOfProcessed());
+        cargo.setTimeClientIssue(source.getTimeOfIssueToClient());
         cargo.setIssuedToClientByUserId(source.getIssuedToClientByUserId());
         cargo.setIssuedAtWarehouseByUserId(source.getIssuedAtWarehouseByUserId());
         cargo.setProcessedByUserId(source.getProcessedByUserId());

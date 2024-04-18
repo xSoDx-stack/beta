@@ -6,4 +6,8 @@ td.yellow {
         --bs-table-color: #000000;
         --bs-table-bg: #dece83;
 }
+td.green {
+        --bs-table-color: #000000;
+        --bs-table-bg: #84ea67;
+}
 

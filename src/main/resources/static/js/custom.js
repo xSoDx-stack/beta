@@ -35,15 +35,48 @@ $(document).ready(function () {
         if (e.which === 13) {
             $('#labelProcessed').prop('checked', true)
             $('#search').focus();
-            saveCargo()
+            saveCargoWarehouse()
+        }
+    });
+});
+
+$(document).ready(function () {
+    $('#inputRelabeling').keydown(function (e) {
+        if (e.which === 13) {
+            const cargo ={
+                id: $('#inputId').val(),
+                pecCode: $('#inputRelabeling').val()
+            };
+
+            $.ajax({
+                url: '/api/v1/cargo/update/relabeling',
+                type: 'POST',
+                data: JSON.stringify(cargo),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: (cargo) => {
+                    getCargoById(cargo.id)
+                },
+                error: () => {
+                    alert("Поле не может быть пустым");
+                }
+            });
         }
     });
 });
 
 
+
 function deletePecCode() {
     const id = $('#inputId').val();
     $.post("/api/v1/cargo/delete/" + id, function (cargo) {
+        showingCargoOffCanvas(cargo)
+    });
+}
+
+function relabelingPecCode(){
+    const id = $('#inputId').val();
+    $.post("/api/v1/cargo/relabeling/" + id, function (cargo) {
         showingCargoOffCanvas(cargo)
     });
 }
@@ -68,17 +101,18 @@ function uploadFile() {
     });
 }
 
-
-function saveCargo() {
+function saveCargoWarehouse() {
     let offCanvas = $('#staticBackdrop');
     let cargo = {
         id: offCanvas.find("#inputId").val(),
         pecCode: offCanvas.find('#inputPecCode').val(),
         processed: $("#labelProcessed").prop('checked'),
         issuance: $("#labelIssuance").prop('checked')
-    }
+    };
+    ajaxSave(cargo);
+}
 
-
+function ajaxSave(cargo){
     $.ajax({
         url: '/api/v1/cargo/save',
         type: 'POST',
@@ -93,6 +127,37 @@ function saveCargo() {
         }
     });
 }
+
+function cargoUpdateClient() {
+    const currentSrc = $('#imgSave').attr('src');
+    let cargo = {
+        id: $('#inputId').val(),
+        note: $('#inputEditNote').val(),
+    }
+    if (currentSrc === '/images/pencil.svg') {
+        $('#imgSave').attr('src', '/images/floppy.svg');
+        $('#inputEditNote').prop('readonly', false);
+
+    } else {
+        $('#imgSave').attr('src', '/images/pencil.svg');
+    }
+    $.ajax({
+        url: '/api/v1/cargo/update',
+        type: 'POST',
+        data: JSON.stringify(cargo),
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        success: (cargo) => {
+            getCargoById(cargo.id)
+        },
+        error: () => {
+            alert("Нельзя изменять выданный груз");
+            getCargoById($('#inputId').val())
+
+        }
+    });
+}
+
 
 function searchCargoByKeyword(keyword) {
     if (keyword.trim() === '') {
@@ -118,24 +183,23 @@ function searchCargoByKeyword(keyword) {
     }
 }
 
-function getPersonById(id) {
-    $.get("/administration/person/get/" + id, function (person) {
-        $('#id').val(person.id)
-        $('#username').val(person.username)
-        $('#fullName').val(person.fullName)
-        $('#roleId').val(person.roleId);
-    });
-}
-
-
 function getCargoById(id) {
     $.get("/api/v1/cargo/" + id, function (cargo) {
         $('#cargoOffCanvas').show();
         $('#searchNotFound').hide();
-        showingCargoOffCanvas(cargo);
+        return showingCargoOffCanvas(cargo);
     });
 }
 
+function getNextCargo(){
+    $.get("/api/v1/cargo/next")
+        .done(function (cargo) {
+            showingCargoOffCanvas(cargo);
+        })
+        .fail(function (){
+            alert("Больше нет обработанного груза, нужно подождать пока склад обработает груз");
+        });
+}
 
 function showingCargoOffCanvas(cargo) {
     let date = '';
@@ -161,22 +225,41 @@ function showingCargoOffCanvas(cargo) {
     $('#phoneNumber').text(cargo.phoneNumber ? cargo.phoneNumber : '---');
     $('#issuedToClientByUser').text(cargo.issuedToClientByUser ? cargo.issuedToClientByUser : '---')
     $('#timeOfIssueToClient').text(cargo.timeOfIssueToClient ? moment(cargo.timeOfIssueToClient).format("DD.MM.YYYY HH:mm")  : '---')
-    
-    toggleElement('#note', !!cargo.note && cargo.note.trim());
-    toggleElement('#editNote', !cargo.note || !cargo.note.trim());
-    $('#inputEditNote').val(cargo.note);
+    $('#shippingToRegions').prop('checked', cargo.shippingToRegions);
+
+    if(!!cargo.note && cargo.note.trim()){
+        $('#inputEditNote').text(cargo.note).prop('readonly', 'readonly');
+        $('#imgSave').attr('src', '/images/pencil.svg' )
+
+    }else{
+        $('#imgSave').attr('src', '/images/floppy.svg' )
+        $('#inputEditNote').text(cargo.note).prop('readonly', false);
+    }
 
 
     if (!cargo.pecCode) {
         $('#pecCode').hide();
         $('#inputPecCode').show().val('');
+        $('#inputRelabeling').show().val('');
         $('#trashButton').hide();
+        $('#relabeling').hide();
         $('#issuance').hide();
     } else {
+        if(cargo.shippingToRegions){
+            $('#oldPecCode').text(cargo.oldPecCode.substring(0, 12)).css('text-decoration', 'line-through').show();
+            $('#colorPecCell').addClass("yellow")
+        }
+        else{
+            $('#oldPecCode').hide();
+            $('#colorPecCell').removeClass("yellow")
+        }
         $('#inputPecCode').hide().val(cargo.pecCode);
+        $('#inputRelabeling').hide().val(cargo.pecCode)
         $('#pecCode').show().html(cargo.pecCode.substring(0, 12));
         toggleElement('#trashButton', !cargo.issuance);
+        toggleElement('#relabeling', !cargo.issuance);
         toggleElement('#issuance', !cargo.issuance);
+
     }
 
     if (cargo.processed) {
@@ -250,7 +333,6 @@ $(document).ready(function() {
         });
     });
 });
-
 
 
 function handleErrors(errors) {

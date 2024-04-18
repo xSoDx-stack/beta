@@ -32,7 +32,7 @@
       <a href="#" data-bs-toggle="offcanvas" th:text="${carg.getClientBarcode()}" class="link-dark link-underline link-underline-opacity-0" th:attr="data-bs-target='#staticBackdrop'"  th:onclick="getCargoById([[${carg.getId()}]])"></a>
     </td>
     <td>
-      <h6 th:text="${#strings.substring(carg.getPecCode(), 0, 12)} "></h6>
+      <h6 th:text="${carg.pecCode != null} ? (${#strings.length(carg.pecCode) lt 12} ? ${carg.pecCode} : ${#strings.substring(carg.pecCode, 0, 12)}) : ''"></h6>
     </td>
     <td>
       <h6 th:text="${carg.getNumberOfSeats()}"/>

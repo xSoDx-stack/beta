@@ -113,6 +113,7 @@ public class Cargo {
     private Integer truckId; // Ид рейса
 
     @Column(name = "note")
+    @Lob
     private String note; // примечание
 
     @Column(name = "old_pec_code")

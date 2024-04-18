@@ -50,7 +50,7 @@ public class CargoToCargoDTOConverter implements Converter<Cargo, CargoDTO> {
                 issuedAtWarehouseByUser.map(Person::getId).orElse(null),
                 source.getTimeOfIssue(),
                 source.getTimeOfProcessed(),
-                source.getTimeOfIssue(),
+                source.getTimeClientIssue(),
                 source.getTruck().getTrackName(),
                 source.getTruckId(),
                 source.isProcessed(),
