@@ -28,7 +28,7 @@ public class Cargo {
     private String pecCode;     //Код ПЭК
 
     @Column(name = "number_of_seats")
-    private Integer numberOfSeats; //Количество мест
+    private Integer numberOfSeats; //Количество мест по факту
 
     @Column(name = "number_of_seats_user_scan", columnDefinition = "integer default 0")
     private int numberOfSeatsUserScan;
@@ -124,4 +124,16 @@ public class Cargo {
 
     @Column(name = "shipping_to_regions", columnDefinition = "boolean default false")
     private boolean shippingToRegions;  //отправка на регионы
+
+    @Column(name = "not_complete", columnDefinition = "boolean default false")
+    private boolean notComplete; // у груза не полное количество мест да/нет
+
+    @Column(name = "places_announced")
+    private Integer placesAnnounced; // заявлено мест
+
+    @Column(name = "cargo_on_fact", columnDefinition = "boolean default false")
+    private boolean cargoOnFact; // груз прибывший по факту, не значащийся в списках
+
+    @Column(name = "not_arrive", columnDefinition = "boolean default false")
+    private boolean notArrive; //грз отсутствует в рейсе
 }
